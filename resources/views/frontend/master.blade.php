@@ -41,8 +41,8 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logoconcertation.png" alt="">
+      <a href="#" class="logo d-flex align-items-center">
+        <img src="assets/img/logg.png" alt="">
         <!-- Uncomment the line below if you also wish to use text logo -->
         <!-- <h1 class="sitename">Butterfly</h1>  -->
       </a>
@@ -50,9 +50,10 @@
       <nav id="navmenu" class="navmenu">
         <ul>
         <li><a href="#">Accueil</a></li>
-        <li><a href="#services">Objectifs</a></li>
-        <li><a href="#team">A propos</a></li>
-          <li><a href="#about">Je participe</a></li>
+        <li><a href="#services">Thémes</a></li>
+    
+          <li><a href="{{ route('participation.form') }}">Donnez-nous votre avis</a></li>
+
        
           <!--  <li><a href="#portfolio">Portfolio</a></li>
           <li><a href="#team">Team</a></li>
@@ -73,7 +74,8 @@
               <li><a href="#">Dropdown 4</a></li>
             </ul>
           </li>-->
-          <li><a href="#contact">Connexion</a></li>
+          <li><a href="{{ route('login') }}">Connexion</a></li>
+
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -84,174 +86,122 @@
   <main class="main">
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section light-background">
-
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-md-start" data-aos="fade-up">
-            <h3>PLATEFORME DES CONCERTATIONS NATIONALES POUR LA REFORME DES SERVICES PUBLICS </h3>
-           
-            <div class="d-flex mt-4 justify-content-center justify-content-md-start">
-              <a href="#about" class="cta-btn">Donnez-nous votre avis</a>
-            </div>
-          </div>
-          <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
-           <!-- <img src="assets/img/hero-img.png" class="img-fluid animated" alt="">-->
-            <img src="assets/img/bigdioms.jpg" class="img-fluid animated" alt="">
-          </div>
+<section id="hero" class="hero section light-background">
+  <div class="container">
+    <div class="row gy-4 align-items-center">
+      <!-- Text Section -->
+      <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-md-start" data-aos="fade-up">
+        <h3 class="hero-title">PLATEFORME DES CONCERTATIONS NATIONALES POUR LA REFORME DU SERVICE PUBLIC</h3>
+        <p class="hero-subtitle">Participez activement à la réforme en donnant votre avis.</p>
+        <div class="d-flex mt-4 justify-content-center justify-content-md-start">
+          <a href="{{ route('participation.form') }}" class="cta-btn">Votre avis compte</a>
         </div>
       </div>
-
-    </section><!-- /Hero Section -->
+      <!-- Image Section -->
+      <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
+        <img src="assets/img/bigdioms.jpg" class="img-fluid animated rounded-4 shadow-lg" alt="Hero Image">
+      </div>
+    </div>
+  </div>
+</section>
  <!-- Services Section -->
- <section id="services" class="services section light-background">
- <div class="container section-title" data-aos="fade-up">
-    <h2>Comprendre les Réformes et Termes Techniques</h2>
-    <p>
-      Afin de participer efficacement à la concertation nationale, il est essentiel de comprendre ce que sont les réformes et certains termes techniques utilisés. Cette section vous guide à travers ces concepts clés.
-    </p>
+  <br>
+  <section id="reforme" class="services section light-background">
+  <div class="container section-title" data-aos="fade-up">
+    <h1 class="title-highlight">La Réforme du Service Public</h1>
   </div><!-- End Section Title -->
 
   <div class="container">
-
     <div class="row gy-4">
-
       <!-- Bloc 1 : Qu'est-ce qu'une Réforme ? -->
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="reforme-item position-relative">
-          <div class="icon">
-            <i class="bi bi-journal-text" style="color: #0dcaf0;"></i>
-          </div>
-          <h3>Qu'est-ce qu'une Réforme ?</h3>
-          <p>
-            Une réforme est un changement significatif apporté aux politiques ou aux systèmes en place afin d'améliorer leur fonctionnement ou de répondre à de nouveaux besoins.
-          </p>
+      <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="reforme-item card-shadow position-relative d-flex flex-column justify-content-between" style="height: 100%;">
+         
+          <img src="assets/img/reforme.webp" style="height: 150px;width:50%;margin-left:25%;border-radius:10px" alt="">
+          <h3 class="item-title">Qu'est-ce qu'une Réforme ?</h3>
+          <p class="item-description">Une réforme est un changement significatif apporté aux politiques ou aux systèmes en place afin d'améliorer leur fonctionnement ou de répondre à de nouveaux besoins.</p>
         </div>
       </div><!-- End Reforme Item -->
 
       <!-- Bloc 2 : Termes Clés à Connaître -->
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-        <div class="reforme-item position-relative">
-          <div class="icon">
-            <i class="bi bi-bookmark" style="color: #fd7e14;"></i>
-          </div>
-          <h3>Termes Clés à Connaître</h3>
-          <ul>
+      <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="reforme-item card-shadow position-relative d-flex flex-column justify-content-between" style="height: 100%;">
+        <img src="assets/img/image.png" style="height: 150px;width:50%;margin-left:25%;border-radius:10px" alt="">
+        <br>
+          <h3 class="item-title">Termes Clés à Connaître</h3>
+          <ul class="item-list">
             <li><strong>Concertation :</strong> Processus de consultation des citoyens pour recueillir leur avis.</li>
             <li><strong>Service public :</strong> Services offerts par l’État pour répondre aux besoins des citoyens (santé, éducation, etc.).</li>
-            <li><strong>Transparence :</strong> Le principe selon lequel les actions de l’État doivent être claires et accessibles aux citoyens.</li>
-            <li><strong>Réforme structurelle :</strong> Changements en profondeur dans l'organisation d'un service ou d'une institution.</li>
           </ul>
         </div>
       </div><!-- End Reforme Item -->
-
-      <!-- Bloc 3 : Objectifs de la Concertation -->
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-        <div class="reforme-item position-relative">
-          <div class="icon">
-            <i class="bi bi-gear" style="color: #20c997;"></i>
-          </div>
-          <h3>Objectifs de la Concertation</h3>
-          <p>
-            La concertation nationale vise à recueillir les avis des citoyens sur les services publics afin de mieux répondre à leurs besoins. Ce processus permet de :
-          </p>
-          <ul>
-            <li><strong>Exprimer les besoins réels :</strong> Les citoyens peuvent faire part de leurs attentes et préoccupations.</li>
-            <li><strong>Améliorer les services publics :</strong> Les retours permettront de mieux adapter les services publics aux réalités locales.</li>
-            <li><strong>Renforcer la transparence :</strong> Le dialogue entre l'État et les citoyens favorise la transparence et la participation citoyenne.</li>
-            <li><strong>Créer un avenir meilleur :</strong> La concertation permet d'apporter des réformes concrètes qui améliorent le quotidien de chacun.</li>
-          </ul>
-        </div>
-      </div><!-- End Reforme Item -->
-
     </div>
-
   </div>
+</section><!-- /Réforme Section -->
 
-<!-- Section Title -->
-<div class="container section-title" data-aos="fade-up">
-  <h2>Objectifs</h2>
-  <p>Dans le cadre de la concertation nationale, l’État a mis en place cette plateforme pour permettre à tout citoyen de donner son opinion sur les services publics.</p>
-</div><!-- End Section Title -->
+<section id="objectifs">
+  <div class="container section-title" data-aos="fade-up">
+    <h1>Thèmes Phares des Concerattions</h1>
+  </div><!-- End Section Title -->
 
-<div class="container">
+  <div class="container">
+    <div class="row gy-4 text-center">
+      <!-- Renforcer la Transparence -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="icon" style="font-size: 50px;">
+        <img src="assets/img/Qualité.webp" style="height: 150px;width:50%;margin-left:%;border-radius:10px" alt="">
 
-  <div class="row gy-4">
-
-    <!-- Bloc 1 : Importance de Donner Votre Avis -->
-    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-      <div class="service-item position-relative">
-        <div class="icon">
-          <i class="bi bi-chat-left-dots" style="color: #0dcaf0;"></i>
         </div>
-        <h3>Pourquoi Donner Votre Avis ?</h3>
-        <p>En tant que citoyens, vous êtes les principaux utilisateurs des services publics. Vos retours sont essentiels pour comprendre comment améliorer ces services selon vos besoins.</p>
+        </br>
+        <h5>Qualité du service public</h5>
       </div>
-    </div><!-- End Service Item -->
 
-    <!-- Bloc 2 : Un Droit et un Devoir Civique -->
-    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-      <div class="service-item position-relative">
-        <div class="icon">
-          <i class="bi bi-award" style="color: #fd7e14;"></i>
+      <!-- Améliorer l'Efficacité des Services -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="icon" style="font-size: 50px;">
+        <img src="assets/img/transparence.webp" style="height: 150px;width:50%;margin-left:%;border-radius:10px" alt="">
         </div>
-        <h3>Un Droit et un Devoir Civique</h3>
-        <p>Donner votre avis sur les services publics est non seulement un droit, mais aussi un devoir. Votre voix aide à rendre les institutions plus transparentes et efficaces.</p>
+       
+        <h5>Transparence,Equité et redevabilité</h5>
       </div>
-    </div><!-- End Service Item -->
 
-    <!-- Bloc 3 : Participation Cruciale aux Réformes -->
-    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-      <div class="service-item position-relative">
-        <div class="icon">
-          <i class="bi bi-bullseye" style="color: #20c997;"></i>
+      <!-- Favoriser l'Inclusion Sociale -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="icon" style="font-size: 50px;">
+        <img src="assets/img/digit.webp" style="height: 150px;width:50%;margin-left:%;border-radius:10px" alt="">
         </div>
-        <h3>Participation Cruciale aux Réformes</h3>
-        <p>En participant à cette plateforme, vous assurez que les réformes du services publics tiennent compte de vos besoins réels, améliorant ainsi la qualité de vie au quotidien.</p>
+        <h5>Transformation digitale de l'Administration</h5>
       </div>
-    </div><!-- End Service Item -->
 
-    <!-- Bloc 4 : Impact Direct sur Votre Quotidien -->
-    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-      <div class="service-item position-relative">
-        <div class="icon">
-          <i class="bi bi-people" style="color: #df1529;"></i>
+      <!-- Encourager la Participation Citoyenne -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="icon" style="font-size: 50px;">
+        <img src="assets/img/grh.png" style="height: 150px;width:50%;margin-left:%;border-radius:10px" alt="">
         </div>
-        <h3>Impact Direct sur Votre Quotidien</h3>
-        <p>Une meilleure qualité des services publics signifie un meilleur accès aux soins de santé, une administration plus rapide, et des infrastructures améliorées pour tous.</p>
+        <h5>Cadre de gestion des ressources humaines</h5>
       </div>
-    </div><!-- End Service Item -->
 
-    <!-- Bloc 5 : Amélioration de la Qualité des Services -->
-    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-      <div class="service-item position-relative">
-        <div class="icon">
-          <i class="bi bi-bar-chart-line" style="color: #6610f2;"></i>
+      <!-- Renforcer la Responsabilité des Institutions -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+        <div class="icon" style="font-size: 50px;">
+        <img src="assets/img/organisation.png" style="height: 150px;width:50%;margin-left:%;border-radius:10px" alt="">
         </div>
-        <h3>Amélioration de la Qualité des Services</h3>
-        <p>Vos retours contribuent à l'amélioration continue des services publics en permettant une meilleure allocation des ressources et une réponse adaptée aux besoins.</p>
+        <h5>Cadre organisationnel des services publics</h5>
       </div>
-    </div><!-- End Service Item -->
 
-    <!-- Bloc 6 : Une Opportunité de Changement -->
-    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
-      <div class="service-item position-relative">
-        <div class="icon">
-          <i class="bi bi-lightbulb" style="color: #f3268c;"></i>
+      <!-- Promouvoir l'Innovation dans les Services Publics -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+        <div class="icon" style="font-size: 50px;">
+        <img src="assets/img/autre.png" style="height: 150px;width:50%;margin-left:%;border-radius:10px" alt="">
         </div>
-        <h3>Une Opportunité de Changement</h3>
-        <p>En partageant votre expérience, vous permettez à l’État de mieux comprendre les défis et d’adopter des réformes plus efficaces pour un avenir meilleur.</p>
+        <h5>Autres</h5>
       </div>
-    </div><!-- End Service Item -->
-
+    </div>
   </div>
-
-</div>
-
-</section><!-- /Services Section -->
+</section>
 
     <!-- About Section -->
-    <section id="about" class="about section">
+<section id="about" class="about section">
 
 <div class="container">
 
@@ -259,7 +209,7 @@
 
     <!-- Image section -->
     <div class="col-lg-6 position-relative" data-aos="fade-up" data-aos-delay="100">
-      <img src="assets/img/boucal.jpeg" class="img-fluid" alt="Ministre Olivier Boucal">
+      <img src="assets/img/boucal.jpeg" class="img-fluid" style="margin-top:10%;" alt="Ministre Olivier Boucal">
       <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
     </div>
 
@@ -279,15 +229,7 @@
             </p>
           </div>
         </li>
-        <li>
-          <i class="bi bi-fullscreen-exit"></i>
-          <div>
-            <h5>Participation de toutes les couches sociales</h5>
-            <p>
-              Tous les citoyens, quels que soient leur âge, leur profession ou leur condition sociale, sont invités à s'exprimer. La concertation vise à inclure l'ensemble des couches sociales pour garantir une représentativité maximale.
-            </p>
-          </div>
-        </li>
+     
         <li>
           <i class="bi bi-broadcast"></i>
           <div>
@@ -304,9 +246,46 @@
 
 </div>
 
-</section><!-- /About Section -->
+</section>
+<section id="stats" class="stats section light-background">
 
-    <!-- Stats Section -->
+<img src="assets/img/stats-bg.jpg" alt="" data-aos="fade-in">
+
+<div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+  
+
+  <div class="row gy-4">
+
+    <div class="col-lg-4 col-md-6">
+      <div class="stats-item text-center w-100 h-100">
+        <span data-purecounter-start="0" data-purecounter-end="1974" data-purecounter-duration="1" class="purecounter"></span>
+        <p>Avis recueillis</p>
+      </div>
+    </div><!-- End Stats Item -->
+
+    <div class="col-lg-4 col-md-6">
+      <div class="stats-item text-center w-100 h-100">
+        <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
+        <p>De la diaspora</p>
+      </div>
+    </div><!-- End Stats Item -->
+
+    <div class="col-lg-4 col-md-6">
+      <div class="stats-item text-center w-100 h-100">
+        <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1" class="purecounter"></span>
+        <p>Sénégal</p>
+      </div>
+    </div><!-- End Stats Item -->
+<!-- End Stats Item -->
+
+  </div>
+
+</div>
+
+</section>
+<!-- /About Section -->
+
+    <!-- Stats Section 
     <section id="stats" class="stats section light-background">
 
       <img src="assets/img/stats-bg.jpg" alt="" data-aos="fade-in">
@@ -317,31 +296,25 @@
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Clients</p>
+              <span data-purecounter-start="0" data-purecounter-end="1974" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Avis recueillis</p>
             </div>
-          </div><!-- End Stats Item -->
+          </div>
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
               <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Projects</p>
+              <p>De la diaspora</p>
             </div>
-          </div><!-- End Stats Item -->
+          </div>
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
               <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hours Of Support</p>
+              <p>Sénégal</p>
             </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Workers</p>
-            </div>
-          </div><!-- End Stats Item -->
+          </div><
+><!-- End Stats Item -->
 
         </div>
 
@@ -685,20 +658,20 @@
 
  
   
-    <!-- Contact Section -->
+    <!-- Contact Section 
     <section id="contact" class="contact section">
 
-      <!-- Section Title -->
+     
       <div class="container section-title" data-aos="fade-up">
         <h2>Contact</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
+      </div>
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="mb-4" data-aos="fade-up" data-aos-delay="200">
           <iframe style="border:0; width: 100%; height: 270px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div><!-- End Google Maps -->
+        </div>
 
         <div class="row gy-4">
 
@@ -709,7 +682,7 @@
                 <h3>Address</h3>
                 <p>A108 Adam Street, New York, NY 535022</p>
               </div>
-            </div><!-- End Info Item -->
+            </div
 
             <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
               <i class="bi bi-telephone flex-shrink-0"></i>
@@ -717,7 +690,7 @@
                 <h3>Call Us</h3>
                 <p>+1 5589 55488 55</p>
               </div>
-            </div><!-- End Info Item -->
+            </div>
 
             <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
               <i class="bi bi-envelope flex-shrink-0"></i>
@@ -725,7 +698,7 @@
                 <h3>Email Us</h3>
                 <p>info@example.com</p>
               </div>
-            </div><!-- End Info Item -->
+            </div>
 
           </div>
 
@@ -759,7 +732,7 @@
 
               </div>
             </form>
-          </div><!-- End Contact Form -->
+          </div>
 
         </div>
 

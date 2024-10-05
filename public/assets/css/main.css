@@ -16,13 +16,269 @@
   --heading-font: "Jost",  sans-serif;
   --nav-font: "Jost",  sans-serif;
 }
+/* General Styles */
+.hero {
+  background-color: #f4f4f4; /* Light background */
+  padding: 80px 0;
+}
+
+.hero-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333; /* Dark text color for contrast */
+  margin-bottom: 10px;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #555; /* Slightly lighter color for the subtitle */
+}
+
+.cta-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  text-decoration: none;
+}
+
+/* Hero Image */
+.hero-img img {
+  max-width: 100%;
+  border-radius: 15px; /* Rounded corners for the image */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Add a soft shadow */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .cta-btn {
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero {
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .cta-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+.services {
+  padding: 80px 0;
+  background-color: #f8f9fa;
+}
+
+.section-title h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.section-title p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.service-item {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.service-item .icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.service-item h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.service-item p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.service-item ul {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.service-item ul li {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.service-item:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+.service-item:hover .icon {
+  color: #007bff; /* Change icon color on hover */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .section-title h2 {
+    font-size: 2rem;
+  }
+
+  .service-item {
+    padding: 20px;
+  }
+
+  .service-item h3 {
+    font-size: 1.3rem;
+  }
+}
+/* Section Styles */
+.services {
+  padding: 80px 0;
+  background-color: #f9f9f9;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.title-highlight {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #333;
+}
+
+.section-description {
+  font-size: 1.1em;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Reforme Item */
+.reforme-item {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.reforme-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+.icon-wrapper {
+  margin-bottom: 20px;
+}
+
+.icon-blue {
+  color: #0dcaf0;
+  font-size: 3rem;
+}
+
+.icon-orange {
+  color: #fd7e14;
+  font-size: 3rem;
+}
+
+.icon-green {
+  color: #28a745;
+  font-size: 3rem;
+}
+
+/* Titles and Texts */
+.item-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.item-description {
+  font-size: 1.1em;
+  color: #666;
+}
+
+.item-list {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.item-list li {
+  margin-bottom: 10px;
+}
+
+/* Card Shadow */
+.card-shadow {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 25px;
+  transition: 0.3s;
+}
+
+.card-shadow:hover {
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .reforme-item {
+    margin-bottom: 30px;
+  }
+  
+  .icon-wrapper {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .title-highlight {
+    font-size: 2em;
+  }
+
+  .section-description {
+    font-size: 1em;
+  }
+}
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
   --default-color: #444444; /* Default color used for the majority of the text content across the entire website */
   --heading-color: #0f394c; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #49b5e7; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --accent-color: green; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
@@ -30,19 +286,19 @@
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
   --nav-color: #444444;  /* The default color of the main navmenu links */
-  --nav-hover-color: #49b5e7; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-hover-color: green; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: #444444; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #49b5e7; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-dropdown-hover-color: green; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
 
-.light-background {
-  --background-color: #f5fbff;
+/* .light-background {
+  --background-color: #f5fbff; fond bleu 
   --surface-color: #ffffff;
-}
+} */
 
 .dark-background {
   --background-color: #060606;
@@ -512,10 +768,14 @@ h6 {
 
 .footer .footer-about .logo span {
   color: var(--heading-color);
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 1px;
   font-family: var(--heading-font);
+}
+.footer .footer-about .logo  .rs{
+  font-weight: 700; 
+  font-size: 15px;
 }
 
 .footer .footer-about p {
@@ -811,6 +1071,7 @@ section,
   align-items: center;
   justify-content: center;
 }
+
 
 .hero .cta-btn:hover {
   background: var(--accent-color);
