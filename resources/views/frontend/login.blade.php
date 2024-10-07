@@ -150,35 +150,38 @@
     </style>
 </head>
 <body>
-    <form method="POST" action="{{ route('login') }}">
-        @csrf <!-- Protection CSRF -->
-        <header>
-            
-            <img src="assets/img/logg.png" alt="">
-            <h2 class="h2">Connectez-vous</h2>
-            
-        </header>
+<form method="POST" action="{{ route('login.submit') }}">
+    @csrf <!-- Protection CSRF -->
+    <header>
+        <img src="assets/img/logg.png" alt="">
+        <h2 class="h2">Connectez-vous</h2>
+    </header>
 
-        <div class="field-set">
-            <div class="input-item">
-                <i class="fa fa-user-circle" aria-hidden="true"></i>
-                <input type="text" name="email" placeholder="Email" required>
-            </div>
-
-            <div class="input-item">
-                <i class="fa fa-key" aria-hidden="true"></i>
-                <input type="password" id="password" name="password" placeholder="Mot de passe" required>
-                <i class="fas fa-eye eye-icon" id="togglePassword" aria-hidden="true"></i>
-                <i class="fas fa-cat animal-icon" id="animal" aria-hidden="true"></i>
-            </div>
-            
-            <button type="submit" class="log-in">Se Connecter</button>
+    <div class="field-set">
+        <div class="input-item">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+            <input type="text" name="username" placeholder="Nom d'utilisateur" required> <!-- Changer email en username -->
         </div>
 
-        <div class="other">
-            <!-- Optionnel : Ajoutez des liens pour mot de passe oublié ou inscription -->
+        <div class="input-item">
+            <i class="fa fa-key" aria-hidden="true"></i>
+            <input type="password" id="password" name="password" placeholder="Mot de passe" required>
+            <i class="fas fa-eye eye-icon" id="togglePassword" aria-hidden="true"></i>
         </div>
-    </form>
+        
+        <button type="submit" class="log-in">Se Connecter</button>
+    </div>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+</form>
 
     <script>
         const togglePassword = document.getElementById('togglePassword');

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,15 +10,19 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    // Spécifiez le nom de la table
+    protected $table = 'utilisateurs'; // Changer ici le nom de la table
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',  // Ajoutez username
         'email',
         'password',
+        // Ajoutez d'autres champs si nécessaire
     ];
 
     /**
@@ -27,10 +30,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+  
 
     /**
      * Get the attributes that should be cast.
@@ -43,5 +43,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Si vous utilisez 'username' pour l'authentification
+    public function getAuthIdentifierName()
+    {
+        return 'username'; // Spécifiez que le champ d'authentification est 'username'
     }
 }

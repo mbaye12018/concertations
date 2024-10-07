@@ -14,7 +14,7 @@ class ParticipationController extends Controller
             'message' => 'required|string',
         ]);
 
-        // Logique pour traiter les données (enregistrer dans la base de données, envoyer un email, etc.)
+      
 
         return redirect()->route('participation.form')->with('success', 'Merci pour votre participation !');
     }

@@ -16,6 +16,7 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -141,64 +142,62 @@
 
 <section id="objectifs">
   <div class="container section-title" data-aos="fade-up">
-    <h1>Thèmes Phares des Concerattions</h1>
+    <h1>Thèmes Phares des Concertations</h1>
   </div><!-- End Section Title -->
 
   <div class="container">
     <div class="row gy-4 text-center">
-      <!-- Renforcer la Transparence -->
+      <!-- Qualité du service public -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
         <div class="icon" style="font-size: 50px;">
-        <img src="assets/img/Qualité.webp" style="height: 150px;width:50%;margin-left:%;border-radius:10px" alt="">
-
+          <i class="fas fa-star" style="font-size: 50px; color: #004080;"></i>
         </div>
-        </br>
-        <h5>Qualité du service public</h5>
+        <h5 style="margin-top: 10px;">Qualité du service public</h5>
       </div>
 
-      <!-- Améliorer l'Efficacité des Services -->
+      <!-- Transparence, Équité et Redevabilité -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
         <div class="icon" style="font-size: 50px;">
-        <img src="assets/img/transparence.webp" style="height: 150px;width:50%;margin-left:%;border-radius:10px" alt="">
+          <i class="fas fa-balance-scale" style="font-size: 50px; color: #004080;"></i>
         </div>
-       
-        <h5>Transparence,Equité et redevabilité</h5>
+        <h5 style="margin-top: 10px;">Transparence, Équité et Redevabilité</h5>
       </div>
 
-      <!-- Favoriser l'Inclusion Sociale -->
+      <!-- Transformation digitale de l'Administration -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
         <div class="icon" style="font-size: 50px;">
-        <img src="assets/img/digit.webp" style="height: 150px;width:50%;margin-left:%;border-radius:10px" alt="">
+          <i class="fas fa-desktop" style="font-size: 50px; color: #004080;"></i>
         </div>
-        <h5>Transformation digitale de l'Administration</h5>
+        <h5 style="margin-top: 10px;">Transformation digitale de l'Administration</h5>
       </div>
 
-      <!-- Encourager la Participation Citoyenne -->
+      <!-- Cadre de gestion des ressources humaines -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
         <div class="icon" style="font-size: 50px;">
-        <img src="assets/img/grh.png" style="height: 150px;width:50%;margin-left:%;border-radius:10px" alt="">
+          <i class="fas fa-users" style="font-size: 50px; color: #004080;"></i>
         </div>
-        <h5>Cadre de gestion des ressources humaines</h5>
+        <h5 style="margin-top: 10px;">Cadre de gestion des ressources humaines</h5>
       </div>
 
-      <!-- Renforcer la Responsabilité des Institutions -->
+      <!-- Cadre organisationnel des services publics -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
         <div class="icon" style="font-size: 50px;">
-        <img src="assets/img/organisation.png" style="height: 150px;width:50%;margin-left:%;border-radius:10px" alt="">
+          <i class="fas fa-building" style="font-size: 50px; color: #004080;"></i>
         </div>
-        <h5>Cadre organisationnel des services publics</h5>
+        <h5 style="margin-top: 10px;">Cadre organisationnel des services publics</h5>
       </div>
 
-      <!-- Promouvoir l'Innovation dans les Services Publics -->
+      <!-- Autres -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
         <div class="icon" style="font-size: 50px;">
-        <img src="assets/img/autre.png" style="height: 150px;width:50%;margin-left:%;border-radius:10px" alt="">
+          <i class="fas fa-ellipsis-h" style="font-size: 50px; color: #004080;"></i>
         </div>
-        <h5>Autres</h5>
+        <h5 style="margin-top: 10px;">Autres</h5>
       </div>
     </div>
   </div>
 </section>
+
 
     <!-- About Section -->
 <section id="about" class="about section">

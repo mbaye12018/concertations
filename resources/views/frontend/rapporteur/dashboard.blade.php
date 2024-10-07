@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -9,8 +10,8 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/logoconcertation.PNG" rel="icon">
-  <link href="assets/img/logoconcertation.PNG" rel="apple-touch-icon">
+  <link href="../assets/img/logoconcertation.PNG" rel="icon">
+  <link href="../assets/img/logoconcertation.PNG" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -18,14 +19,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Jost:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="../assets/css/main.css" rel="stylesheet">
   <style>
     body {
       font-family: 'Roboto', sans-serif;
@@ -136,7 +137,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
       <a href="#" class="logo d-flex align-items-center">
-        <img src="assets/img/logg.png" alt="Logo">
+        <img src="../assets/img/logg.png" alt="Logo">
       </a>
 
       <nav id="navmenu" class="navmenu">
@@ -145,39 +146,53 @@
           <li><a href="#services">Thèmes</a></li>
           <li><a href="{{ route('participation.form') }}">Donnez-nous votre avis</a></li>
           <li><a href="{{ route('login') }}">Connexion</a></li>
+          
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
     </div>
   </header>
-  <form id="registrationForm" method="POST" action="{{ route('enquete.store') }}">
+  <h6 style="padding:2px;color:black">Bienvenue, {{ Auth::user()->prenom }} {{ Auth::user()->nom }} !</h6>
+ 
+ 
+
+<form id="registrationForm" method="POST" action="{{ route('enquete.store') }}">
     @csrf <!-- Protection CSRF -->
     <div id="formContainer">
         <div id="section1" class="section active">
             <h2>Identification</h2>
             <div class="question">
-                <label>Je suis de <span class="required">(*)</span> :</label><br>
-                <label><input type="radio" id="senegal" name="location" value="Senegal" required> Sénégal</label>
-                <label><input type="radio" id="diaspora" name="location" value="Diaspora" required> Diaspora</label>
-            </div>
-
-            <div id="diasporaCountries" class="question" style="display: none;">
-                <label for="country">Sélectionnez votre pays :</label>
-                <select id="country" name="country" required>
-                    <option value="">Choisir un pays</option>
-                    <option value="France">France</option>
-                    <option value="États-Unis">États-Unis</option>
-                    <option value="Canada">Canada</option>
-                    <option value="Royaume-Uni">Royaume-Uni</option>
+                <label for="region">Région <span class="required">(*)</span> :</label>
+                <select id="regions" name="regions" required>
+                    <option value="">Choisir une région</option>
+                    @foreach($regions as $region)
+                        <option value="{{ $region->id }}">{{ $region->name }}</option>
+                    @endforeach
                 </select>
             </div>
 
             <div class="question">
-                <label for="firstname">Prénom <span class="required">(*)</span> :</label>
+                <label for="department">Département <span class="required">(*)</span> :</label>
+                <select id="department" name="department" required>
+                    <option value="">Choisir un département</option>
+                    <!-- Les départements seront chargés par JavaScript en fonction de la région sélectionnée -->
+                </select>
+            </div>
+
+            <div class="question">
+                <label for="representative">Représentant <span class="required">(*)</span> :</label>
+                <select id="representative" name="representative" required>
+                    <option value="">Choisir un représentant</option>
+                    <!-- Les représentants seront chargés par JavaScript en fonction du département sélectionné -->
+                </select>
+            </div>
+
+            <div class="question">
+                <label for="firstname">Prénom  représentant <span class="required">(*)</span> :</label>
                 <input type="text" id="firstname" name="firstname" required>
             </div>
             <div class="question">
-                <label for="lastname">Nom <span class="required">(*)</span> :</label>
+                <label for="lastname">Nom représentant  <span class="required">(*)</span> :</label>
                 <input type="text" id="lastname" name="lastname" required>
             </div>
             <div class="question">
@@ -260,22 +275,46 @@
     </div>
 </form>
 
-
-<input type="hidden" name="service_quality" id="service_quality" value="0">
-
-<input type="hidden" name="service_quality" id="service_quality" value="">
-
 <script>
-  document.addEventListener('DOMContentLoaded', () => {  
-    // Gestion de l'affichage des pays pour la Diaspora
-    document.getElementById('senegal').addEventListener('change', () => {
-      document.getElementById('diasporaCountries').style.display = 'none';
-      document.getElementById('country').removeAttribute('required'); // Supprimer required si Sénégal est sélectionné
+document.addEventListener('DOMContentLoaded', () => {
+    // Récupérer les départements en fonction de la région sélectionnée
+    document.getElementById('region').addEventListener('change', function() {
+        const regionId = this.value;
+        const departmentSelect = document.getElementById('department');
+        departmentSelect.innerHTML = '<option value="">Choisir un département</option>'; // Reset options
+
+        if (regionId) {
+            fetch(`/departements/${regionId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(department => {
+                        const option = document.createElement('option');
+                        option.value = department.id;
+                        option.textContent = department.name;
+                        departmentSelect.appendChild(option);
+                    });
+                });
+        }
     });
 
-    document.getElementById('diaspora').addEventListener('change', () => {
-      document.getElementById('diasporaCountries').style.display = 'block';
-      document.getElementById('country').setAttribute('required', 'required'); // Ajouter required si Diaspora est sélectionné
+    // Récupérer les représentants en fonction du département sélectionné
+    document.getElementById('department').addEventListener('change', function() {
+        const departmentId = this.value;
+        const representativeSelect = document.getElementById('representative');
+        representativeSelect.innerHTML = '<option value="">Choisir un représentant</option>'; // Reset options
+
+        if (departmentId) {
+            fetch(`/representants/${departmentId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(representative => {
+                        const option = document.createElement('option');
+                        option.value = representative.id;
+                        option.textContent = representative.name;
+                        representativeSelect.appendChild(option);
+                    });
+                });
+        }
     });
 
     // Gestion des sections du formulaire
@@ -283,120 +322,81 @@
     let currentSection = 0;
 
     function showSection(index) {
-      sections.forEach((section, i) => {
-        section.classList.toggle('active', i === index);
-      });
+        sections.forEach((section, i) => {
+            section.classList.toggle('active', i === index);
+        });
     }
 
     // Fonction de validation des champs obligatoires (uniquement pour les champs visibles)
     function checkRequiredFields(section) {
-      const inputs = section.querySelectorAll('input[required]:not([style*="display: none"]), select[required]:not([style*="display: none"]), textarea[required]:not([style*="display: none"])');
-      let allFilled = true;
+        const inputs = section.querySelectorAll('input[required]:not([style*="display: none"]), select[required]:not([style*="display: none"]), textarea[required]:not([style*="display: none"])');
+        let allFilled = true;
 
-      inputs.forEach(input => {
-        if (input.type === 'radio') {
-          const radioGroup = section.querySelectorAll(`input[name="${input.name}"]`);
-          const isChecked = Array.from(radioGroup).some(radio => radio.checked);
-          if (!isChecked) {
-            allFilled = false;
-          }
-        } else if (input.tagName === 'SELECT' && input.value === "") {
-          allFilled = false;
-        } else if (!input.value) {
-          allFilled = false;
+        inputs.forEach(input => {
+            if (input.type === 'radio') {
+                const radioGroup = section.querySelectorAll(`input[name="${input.name}"]`);
+                const isChecked = Array.from(radioGroup).some(radio => radio.checked);
+                if (!isChecked) {
+                    allFilled = false;
+                }
+            } else if (input.tagName === 'SELECT' && input.value === "") {
+                allFilled = false;
+            } else if (!input.value) {
+                allFilled = false;
+            }
+        });
+
+        if (!allFilled) {
+            alert("Veuillez remplir tous les champs obligatoires.");
+            return false;
         }
-      });
 
-      if (!allFilled) {
-        alert("Veuillez remplir tous les champs obligatoires.");
-        return false;
-      }
-
-      return true;
+        return true;
     }
 
     // Navigation avec validation des sections
     document.getElementById('next1').addEventListener('click', () => {
-      if (checkRequiredFields(sections[currentSection])) {
-        const location = document.querySelector('input[name="location"]:checked');
-        if (location && location.value === 'Senegal') {
-          document.getElementById('country').value = 'Sénégal'; // Si Sénégal est sélectionné, remplir le pays
+        if (checkRequiredFields(sections[currentSection])) {
+            currentSection++;
+            showSection(currentSection);
         }
-        currentSection++;
-        showSection(currentSection);
-      }
     });
 
     document.getElementById('next2').addEventListener('click', () => {
-      if (checkRequiredFields(sections[currentSection])) {
-        currentSection++;
-        showSection(currentSection);
-      }
+        if (checkRequiredFields(sections[currentSection])) {
+            currentSection++;
+            showSection(currentSection);
+        }
     });
 
     document.getElementById('next3').addEventListener('click', () => {
-      if (checkRequiredFields(sections[currentSection])) {
-        currentSection++;
-        showSection(currentSection);
-      }
+        if (checkRequiredFields(sections[currentSection])) {
+            currentSection++;
+            showSection(currentSection);
+        }
     });
 
-    document.getElementById('next4').addEventListener('click', () => {
-      if (checkRequiredFields(sections[currentSection])) {
-        currentSection++;
-        showSection(currentSection);
-      }
-    });
-
-    // Navigation précédente
     document.getElementById('prev1').addEventListener('click', () => {
-      currentSection--;
-      showSection(currentSection);
+        currentSection--;
+        showSection(currentSection);
     });
 
     document.getElementById('prev2').addEventListener('click', () => {
-      currentSection--;
-      showSection(currentSection);
+        currentSection--;
+        showSection(currentSection);
     });
 
     document.getElementById('prev3').addEventListener('click', () => {
-      currentSection--;
-      showSection(currentSection);
+        currentSection--;
+        showSection(currentSection);
     });
 
     document.getElementById('prev4').addEventListener('click', () => {
-      currentSection--;
-      showSection(currentSection);
+        currentSection--;
+        showSection(currentSection);
     });
-
-    // Gestion du système de notation par étoiles
-    const stars1 = document.querySelectorAll('.star-rating[data-question="1"] .star');
-    const ratingsText = {
-      1: 'Médiocre',
-      2: 'Pas satisfaisant',
-      3: 'Moyen',
-      4: 'Satisfaisant',
-      5: 'Très satisfait'
-    };
-
-    stars1.forEach(star => {
-      star.addEventListener('click', function () {
-        const value = this.getAttribute('data-value');
-        stars1.forEach(s => {
-          s.classList.toggle('selected', s.getAttribute('data-value') <= value);
-        });
-
-        // Update comment text based on the selected rating
-        const ratingDescription = ratingsText[value];
-        document.getElementById('comment1').innerText = ratingDescription;
-
-        // Update service quality to store descriptive rating in the hidden input
-        document.getElementById('service_quality').value = ratingDescription; // Store the description in the hidden input
-      });
-    });
-  });
+});
 </script>
-
 
 
 <!-- Add this somewhere in your HTML to display the quality text -->
@@ -472,10 +472,10 @@
 
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
