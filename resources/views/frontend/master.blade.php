@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Plateforme de concertation nationale</title>
+  <title>Plateforme des concertations nationales</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -51,7 +51,7 @@
       <nav id="navmenu" class="navmenu">
         <ul>
         <li><a href="#">Accueil</a></li>
-        <li><a href="#services">Thémes</a></li>
+        <li><a href="{{ route('contexte') }}">Contexte</a></li>
     
           <li><a href="{{ route('participation.form') }}">Donnez-nous votre avis</a></li>
 
@@ -109,7 +109,7 @@
   <br>
   <section id="reforme" class="services section light-background">
   <div class="container section-title" data-aos="fade-up">
-    <h1 class="title-highlight">La Réforme du Service Public</h1>
+    <h1 class="title-highlight">La Réforme du Service public</h1>
   </div><!-- End Section Title -->
 
   <div class="container">
@@ -129,7 +129,7 @@
         <div class="reforme-item card-shadow position-relative d-flex flex-column justify-content-between" style="height: 100%;">
         <img src="assets/img/image.png" style="height: 150px;width:50%;margin-left:25%;border-radius:10px" alt="">
         <br>
-          <h3 class="item-title">Termes Clés à Connaître</h3>
+          <h3 class="item-title" >Termes Clés à Connaître</h3>
           <ul class="item-list">
             <li><strong>Concertation :</strong> Processus de consultation des citoyens pour recueillir leur avis.</li>
             <li><strong>Service public :</strong> Services offerts par l’État pour répondre aux besoins des citoyens (santé, éducation, etc.).</li>
@@ -140,64 +140,99 @@
   </div>
 </section><!-- /Réforme Section -->
 
-<section id="objectifs">
-  <div class="container section-title" data-aos="fade-up">
-    <h1>Thèmes Phares des Concertations</h1>
-  </div><!-- End Section Title -->
 
+
+<section id="themes">
+  <div class="container section-title" data-aos="fade-up">
+    <h1 style="color: black;font-weight:bold ">Thèmes phares des concertations</h1>
+  </div><!-- End Section Title -->
   <div class="container">
     <div class="row gy-4 text-center">
       <!-- Qualité du service public -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="icon" style="font-size: 50px;">
-          <i class="fas fa-star" style="font-size: 50px; color: #004080;"></i>
+        <div class="icon" style="font-size: 50px;" onclick="showPopup('Qualité du service public', 'Assurer une prestation de services publics de haute qualité, répondant aux attentes des citoyens.')">
+        <i class="fas fa-star" style="font-size: 50px; color: #0059b3;"></i>
         </div>
-        <h5 style="margin-top: 10px;">Qualité du service public</h5>
+        <h5 style="color: #0059b3;">Qualité du service public</h5>
       </div>
-
-      <!-- Transparence, Équité et Redevabilité -->
+      <!-- Transparence, Équité et redevabilité -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-        <div class="icon" style="font-size: 50px;">
-          <i class="fas fa-balance-scale" style="font-size: 50px; color: #004080;"></i>
+        <div class="icon" style="font-size: 50px;" onclick="showPopup('Transparence, Équité et redevabilité', 'Promouvoir la transparence et la responsabilité dans les actions des institutions publiques.')">
+        <i class="fas fa-balance-scale" style="font-size: 50px; color: #00b33c;"></i>
         </div>
-        <h5 style="margin-top: 10px;">Transparence, Équité et Redevabilité</h5>
+        <h5 style="color: #00b33c;">Transparence, Équité et redevabilité</h5>
       </div>
-
       <!-- Transformation digitale de l'Administration -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-        <div class="icon" style="font-size: 50px;">
-          <i class="fas fa-desktop" style="font-size: 50px; color: #004080;"></i>
+        <div class="icon" style="font-size: 50px;" onclick="showPopup('Transformation digitale de l\'Administration', 'Faciliter l\'accès aux services publics par des solutions numériques innovantes.')">
+        <i class="fas fa-desktop" style="font-size: 50px; color: #3399ff;"></i>
         </div>
-        <h5 style="margin-top: 10px;">Transformation digitale de l'Administration</h5>
+        <h5 style="color: #3399ff;">Transformation digitale de l'Administration</h5>
       </div>
-
       <!-- Cadre de gestion des ressources humaines -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-        <div class="icon" style="font-size: 50px;">
-          <i class="fas fa-users" style="font-size: 50px; color: #004080;"></i>
+        <div class="icon" style="font-size: 50px;" onclick="showPopup('Cadre de gestion des ressources humaines', 'Mettre en place des pratiques de gestion des ressources humaines équitables et efficaces.')">
+        <i class="fas fa-users" style="font-size: 50px; color: #800080;"></i>
         </div>
-        <h5 style="margin-top: 10px;">Cadre de gestion des ressources humaines</h5>
+        <h5 style="color: #800080;">Cadre de gestion des ressources humaines</h5>
       </div>
-
       <!-- Cadre organisationnel des services publics -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-        <div class="icon" style="font-size: 50px;">
-          <i class="fas fa-building" style="font-size: 50px; color: #004080;"></i>
+        <div class="icon" style="font-size: 50px;" onclick="showPopup('Cadre organisationnel des services publics', 'Renforcer l\'efficacité et la cohérence des structures administratives.')">
+        <i class="fas fa-building" style="font-size: 50px; color: #ff6600;"></i>
         </div>
-        <h5 style="margin-top: 10px;">Cadre organisationnel des services publics</h5>
+        <h5 style="color: #ff6600;">Cadre organisationnel des services publics</h5>
       </div>
-
       <!-- Autres -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
-        <div class="icon" style="font-size: 50px;">
-          <i class="fas fa-ellipsis-h" style="font-size: 50px; color: #004080;"></i>
+        <div class="icon" style="font-size: 50px;" onclick="showPopup('Autres', 'Explorer d\'autres thématiques pertinentes pour l\'amélioration des services publics.')">
+        <i class="fas fa-ellipsis-h" style="font-size: 50px; color: #999999;"></i>
         </div>
-        <h5 style="margin-top: 10px;">Autres</h5>
+        <h5 style="color: #999999;">Autres</h5>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="themes">
+  <div class="container" data-aos="fade-up">
+    <div class="row align-items-center justify-content-center text-center text-lg-start">
+      <!-- Image section -->
+      <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+        <div class="ministere-img">
+          <img src="assets/img/mfp.png" alt="MFP Logo" class="img-fluid" style="max-width: 50%; height: auto;">
+        </div>
+      </div>
+      <!-- Text section -->
+      <div class="col-lg-8 col-md-6 col-12">
+        <div class="ministere-content">
+          <h4 class="mb-3">Ministère de la Fonction publique et de la Réforme du Service public</h4>
+          <p style="text-align:justify">
+            Le Ministère en charge de la Réforme du service public œuvre à donner corps à cette vision, en ayant comme objectif d’être la force d’impulsion de la transformation qualitative de notre Administration, qui doit être le miroir des attentes du public, une Administration à l’écoute des citoyens, une Administration qui réinvente sa relation avec chaque demandeur du service public.
+          </p>
+          <p style="text-align:justify">
+            La concertation nationale permettra à chaque citoyen, dans toutes les régions, de participer activement au dialogue visant à réformer les services publics.
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
+  
+</section>
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <h3 id="popup-title"></h3>
+    <p id="popup-text"></p>
+  </div>
+</div>
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <p id="popup-text"></p>
+  </div>
+</div>
 
     <!-- About Section -->
 <section id="about" class="about section">
@@ -208,47 +243,50 @@
 
     <!-- Image section -->
     <div class="col-lg-6 position-relative" data-aos="fade-up" data-aos-delay="100">
-      <img src="assets/img/boucal.jpeg" class="img-fluid" style="margin-top:10%;" alt="Ministre Olivier Boucal">
-      <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
+    <img src="assets/img/boucal.jpeg" class="img-fluid" style="margin-top:10%; border-radius: 2%;" alt="Ministre Olivier Boucal">
+
+     
     </div>
 
     <!-- Content section -->
-    <div class="col-lg-6 ps-lg-4 content d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
-      <h3>Principes de la Concertation Nationale</h3>
+    <div class="col-lg-6 ps-lg-4 content d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200" style="margin-top:150px">
+    <h3>Principes de la Concertation Nationale</h3>
       <p>
-        La concertation nationale permettra à chaque citoyen, dans toutes les régions, de participer activement au dialogue visant à réformer les services publics.
-      </p>
+     
+      <p>
+              Des conertations seront organisées dans chaque région du Sénégal, permettant aux différentes communautés locales de partager leurs besoins spécifiques et de faire entendre leurs voix.
+        </p>
+        <p>
+              En recueillant les avis des citoyens, la concertation permettra de mieux comprendre les défis et les priorités de chaque région, afin de formuler des réformes qui répondent véritablement aux besoins exprimés par la population.
+</br>
+
+        </p>
+         
       <ul>
         <li>
-          <i class="bi bi-diagram-3"></i>
-          <div>
-            <h5>Concertations régionales</h5>
-            <p>
-              Des consultations seront organisées dans chaque région du Sénégal, permettant aux différentes communautés locales de partager leurs besoins spécifiques et de faire entendre leurs voix.
-            </p>
-          </div>
+     
         </li>
      
         <li>
-          <i class="bi bi-broadcast"></i>
+       
           <div>
-            <h5>Réponses aux besoins réels</h5>
-            <p>
-              En recueillant les avis des citoyens, la concertation permettra de mieux comprendre les défis et les priorités de chaque région, afin de formuler des réformes qui répondent véritablement aux besoins exprimés par la population.
-            </p>
-          </div>
+          
         </li>
       </ul>
+      
     </div>
+  
 
   </div>
 
 </div>
 
 </section>
+
+
 <section id="stats" class="stats section light-background">
 
-<img src="assets/img/stats-bg.jpg" alt="" data-aos="fade-in">
+<img src="assets/img/statss.webp" alt="" data-aos="fade-in">
 
 <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
   
@@ -258,21 +296,21 @@
     <div class="col-lg-4 col-md-6">
       <div class="stats-item text-center w-100 h-100">
         <span data-purecounter-start="0" data-purecounter-end="1974" data-purecounter-duration="1" class="purecounter"></span>
-        <p>Avis recueillis</p>
+        <h4>Avis recueillis</h4>
       </div>
     </div><!-- End Stats Item -->
 
     <div class="col-lg-4 col-md-6">
       <div class="stats-item text-center w-100 h-100">
         <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-        <p>De la diaspora</p>
+        <h4>De la diaspora</h4>
       </div>
     </div><!-- End Stats Item -->
 
     <div class="col-lg-4 col-md-6">
       <div class="stats-item text-center w-100 h-100">
         <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1" class="purecounter"></span>
-        <p>Sénégal</p>
+        <h4>Sénégal</h>
       </div>
     </div><!-- End Stats Item -->
 <!-- End Stats Item -->
@@ -760,6 +798,20 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+  function showPopup(title, content) {
+  document.getElementById('popup-title').innerText = title;
+  document.getElementById('popup-text').innerText = content;
+  document.getElementById('popup').style.display = 'flex';
+}
+function closePopup() {
+  document.getElementById('popup').style.display = 'none';
+}
+</script>
+
+
+
+
 
 </body>
 

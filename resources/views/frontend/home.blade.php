@@ -15,7 +15,7 @@
     <div class="row gy-4">
         <div class="col-lg-5 col-md-12 footer-about">
           <a href="#" class="logo d-flex align-items-center">
-            <span class="sitename">Plateforme de concertation nationale pour la Réforme du service public</span>
+            <span class="sitename">Plateforme des concertations nationales pour la Réforme du service public</span>
           </a>
           <div class="col-lg-8 col-md-12 footer-about">
          <a href="#" class="logo d-flex align-items-center">
@@ -45,7 +45,7 @@
         <div class="col-lg-2 col-6 footer-links">
           <h4>liens utiles</h4>
           <ul>
-            <li><a href="https://www.fonctionpublique.gouv.sn/Attestation-de-non-appartenance-a-la-Fonction-publique-39">Gov'athon 2024</a></li>
+            <li><a href="https://govathon2024.fpubliquesn.com/">Gov'athon 2024</a></li>
             <li><a href="https://www.fonctionpublique.gouv.sn/">Ministère de la Fonction publique</a></li>
             <li><a href="https://primature.sn/">Gouvernement du Sénégal</a></li>
           <!--  <li><a href="#">Marketing</a></li>

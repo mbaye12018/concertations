@@ -27,12 +27,7 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f9f9f9;
-      margin: 0;
-      padding: 0;
-    }
+   
 
     #formContainer {
       background-color: white;
@@ -127,6 +122,46 @@
 .required {
   color: red;
 }
+#encouragementMessage {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 20px auto; /* Centrage horizontal et espace au-dessus et au-dessous */
+    max-width: 80%; /* Limite la largeur à 80% de la page */
+    color: black;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInMove 2s ease-in-out forwards;
+  }
+
+  @keyframes fadeInMove {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    50% {
+      opacity: 0.5;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Ajouter un léger effet clignotant pour l'emoji 💪 */
+  #encouragementMessage span {
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+  }
 
   </style>
 </head>
@@ -141,8 +176,10 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#">Accueil</a></li>
-          <li><a href="#services">Thèmes</a></li>
+        <li><a href="{{ route('home') }}">Accueil</a></li>
+
+        <li><a href="{{ route('contexte') }}">Contexte</a></li>
+    
           <li><a href="{{ route('participation.form') }}">Donnez-nous votre avis</a></li>
           <li><a href="{{ route('login') }}">Connexion</a></li>
         </ul>
@@ -150,9 +187,18 @@
       </nav>
     </div>
   </header>
+</br>
+<h1></h1>
+
+
+<div id="encouragementMessage">
+  "Votre voix compte ! En remplissant ce formulaire, vous contribuez à améliorer nos services et à bâtir un avenir meilleur pour tous. <span>💪</span>"
+</div>
+
   <form id="registrationForm" method="POST" action="{{ route('enquete.store') }}">
     @csrf <!-- Protection CSRF -->
     <div id="formContainer">
+      
         <div id="section1" class="section active">
             <h2>Identification</h2>
             <div class="question">
@@ -167,7 +213,7 @@
                     <option value="">Choisir un pays</option>
                     <option value="France">France</option>
                     <option value="États-Unis">États-Unis</option>
-                    <option value="Canada">Canada</option>
+                  
                     <option value="Royaume-Uni">Royaume-Uni</option>
                 </select>
             </div>
@@ -198,9 +244,9 @@
         </div>
 
         <div id="section2" class="section">
-            <h2>Section 1 : Perception du Service Public Actuel</h2>
+            <h4 style="text-align:center">Parlons de votre  perception du Service Public Actuel:</h4>
             <div class="question">
-                <label>Qualité des services <span class="required">(*)</span> :</label>
+                <label>comment noteriez vous la qualité des services ?<span class="required">(*)</span> :</label>
                 <div class="star-rating" data-question="1">
                     <span class="star" data-value="1">★</span>
                     <span class="star" data-value="2">★</span>
@@ -213,7 +259,7 @@
                 <input type="hidden" name="service_quality" id="service_quality" value="0"> <!-- Ajouter ce champ pour le rating -->
             </div>
             <div class="question">
-                <label for="serviceFeedback">Points forts et faiblesses des services :</label>
+                <label for="serviceFeedback">Quels sont les points forts et faiblesses des services ?:</label>
                 <textarea id="serviceFeedback" name="service_feedback"></textarea>
             </div>
             <div class="buttons">
@@ -223,7 +269,7 @@
         </div>
 
         <div id="section3" class="section">
-            <h2>Section 2 : Attentes et Priorités pour la Réforme</h2>
+            <h4 style="text-align:center"> Attentes et Priorités pour la Réforme</h4>
             <div class="question">
                 <label>Quelles sont les trois principales réformes à mettre en œuvre ?</label>
                 <textarea id="reforms" name="reforms" required></textarea>
@@ -235,7 +281,7 @@
         </div>
 
         <div id="section4" class="section">
-            <h2>Section 3 : Implication des Citoyens</h2>
+            <h4 style="text-align:center"> Implication des Citoyens</h4>
             <div class="question">
                 <label>Comment les citoyens pourraient-ils être davantage associés aux décisions ?</label>
                 <textarea id="citizenInvolvement" name="citizen_involvement"></textarea>
@@ -247,7 +293,7 @@
         </div>
 
         <div id="section5" class="section">
-            <h2>Section 4 : Autres Commentaires</h2>
+            <h4 style="text-align:center"> Autres Commentaires</h4>
             <div class="question">
                 <label>Commentaires supplémentaires :</label>
                 <textarea id="additionalComments" name="additional_comments"></textarea>
@@ -427,22 +473,24 @@
   }
 </style>
 <!-- Pop-up de validation -->
-<div id="success-popup" class="popup" style="display: none;">
+<div id="success-popup" class="popups" style="display: none;">
     <span class="close-btn">&times;</span>
     <p>✔ Merci ! Vos réponses ont été enregistrées. Votre avis contribuera à améliorer les services publics.</p>
 
 </div>
 <style>
-  .popup {
+  .popups {
     position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: skyblue; /* Couleur verte */
-    color: white;
+    background-color: white; /* Couleur de fond blanche */
+    color: black; /* Couleur du texte noir */
     padding: 20px;
     border-radius: 5px;
-    z-index: 1000; /* S'assurer qu'il est au-dessus des autres éléments */
+    border: 1px solid #ccc; /* Bordure grise */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Ombre pour un léger effet de profondeur */
+    z-index: 1000; /* Assure que le popup est au-dessus des autres éléments */
     display: none; /* Masquer par défaut */
 }
 
@@ -451,6 +499,16 @@
     float: right;
     font-size: 20px;
     font-weight: bold;
+    color: black; /* Couleur du bouton de fermeture */
+}
+
+.close-btn:hover {
+    color: red; /* Couleur au survol pour un effet */
+}
+
+.popups p {
+    margin: 10px 0 0; /* Ajuster la marge du texte */
+    text-align: center; /* Centrer le texte */
 }
 
 </style>
@@ -458,12 +516,12 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Vérifiez si le pop-up doit s'afficher
         @if(session('success'))
-            const popup = document.getElementById('success-popup');
-            popup.style.display = 'block'; // Afficher le pop-up
+            const popups = document.getElementById('success-popup');
+            popups.style.display = 'block'; // Afficher le pop-up
 
             // Fermer le pop-up après 3 secondes
             setTimeout(() => {
-                popup.style.display = 'none'; // Masquer le pop-up
+                popups.style.display = 'none'; // Masquer le pop-up
             }, 3000);
         @endif
     });

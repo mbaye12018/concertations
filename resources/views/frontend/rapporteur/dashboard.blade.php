@@ -30,7 +30,7 @@
   <style>
     body {
       font-family: 'Roboto', sans-serif;
-      background-color: #f9f9f9;
+    
       margin: 0;
       padding: 0;
     }
@@ -128,6 +128,47 @@
 .required {
   color: red;
 }
+#encouragementMessage {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 20px auto; /* Centrage horizontal et espace au-dessus et au-dessous */
+    max-width: 80%; /* Limite la largeur à 80% de la page */
+    color: black;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInMove 2s ease-in-out forwards;
+  }
+
+  @keyframes fadeInMove {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    50% {
+      opacity: 0.5;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Ajouter un léger effet clignotant pour l'emoji 💪 */
+  #encouragementMessage span {
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+  }
+
 
   </style>
 </head>
@@ -152,70 +193,79 @@
       </nav>
     </div>
   </header>
-  <h6 style="padding:2px;color:black">Bienvenue, {{ Auth::user()->prenom }} {{ Auth::user()->nom }} !</h6>
+<!--  <h6 style="padding:2px;color:black">Bienvenue, {{ Auth::user()->prenom }} {{ Auth::user()->nom }} !</h6>-->
  
- 
+  <div id="encouragementMessage">
+  "Votre rôle est crucial ! En remplissant ce formulaire pour recueillir les avis des citoyens, vous contribuez à améliorer nos services et à bâtir un avenir meilleur pour tous. <span>💪</span>"
+</div>
 
-<form id="registrationForm" method="POST" action="{{ route('enquete.store') }}">
+ 
+<form id="registrationForm" method="POST" action="{{ route('enquetes.store') }}">
+
     @csrf <!-- Protection CSRF -->
     <div id="formContainer">
         <div id="section1" class="section active">
             <h2>Identification</h2>
             <div class="question">
                 <label for="region">Région <span class="required">(*)</span> :</label>
-                <select id="regions" name="regions" required>
+                <select id="regions" name="region_id" required>
                     <option value="">Choisir une région</option>
                     @foreach($regions as $region)
-                        <option value="{{ $region->id }}">{{ $region->name }}</option>
+                        <option value="{{ $region->id }}">{{ $region->nom }}</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="question">
-                <label for="department">Département <span class="required">(*)</span> :</label>
-                <select id="department" name="department" required>
+                <label for="departement">Département <span class="required">(*)</span> :</label>
+                <select id="departement" name="departement_id" required>
                     <option value="">Choisir un département</option>
                     <!-- Les départements seront chargés par JavaScript en fonction de la région sélectionnée -->
                 </select>
             </div>
 
             <div class="question">
-                <label for="representative">Représentant <span class="required">(*)</span> :</label>
-                <select id="representative" name="representative" required>
-                    <option value="">Choisir un représentant</option>
-                    <!-- Les représentants seront chargés par JavaScript en fonction du département sélectionné -->
+                <label for="secteur">Secteur <span class="required">(*)</span> :</label>
+                <select id="secteur" name="secteur_id" required>
+                    <option value="">Choisir un secteur</option>
+                    <!-- Les secteurs seront chargés par JavaScript en fonction du département sélectionné -->
                 </select>
             </div>
 
             <div class="question">
-                <label for="firstname">Prénom  représentant <span class="required">(*)</span> :</label>
+                <label for="firstname">Prénom représentant <span class="required">(*)</span> :</label>
                 <input type="text" id="firstname" name="firstname" required>
             </div>
+
             <div class="question">
-                <label for="lastname">Nom représentant  <span class="required">(*)</span> :</label>
+                <label for="lastname">Nom représentant <span class="required">(*)</span> :</label>
                 <input type="text" id="lastname" name="lastname" required>
             </div>
+
             <div class="question">
                 <label for="phone">Numéro de téléphone <span class="required">(*)</span> :</label>
                 <input type="tel" id="phone" name="phone" required>
             </div>
+
             <div class="question">
                 <label for="email">Email <span class="required">(*)</span> :</label>
                 <input type="email" id="email" name="email" required>
             </div>
+
             <div class="question">
                 <label for="position">Fonction :</label>
                 <input type="text" id="position" name="position">
             </div>
+
             <div class="buttons">
                 <button type="button" id="next1">Suivant</button>
             </div>
         </div>
 
         <div id="section2" class="section">
-            <h2>Section 1 : Perception du Service Public Actuel</h2>
+            <h4 style="text-align:center">Parlons de votre perception du Service Public Actuel:</h4>
             <div class="question">
-                <label>Qualité des services <span class="required">(*)</span> :</label>
+                <label>Comment noteriez-vous la qualité des services ?<span class="required">(*)</span> :</label>
                 <div class="star-rating" data-question="1">
                     <span class="star" data-value="1">★</span>
                     <span class="star" data-value="2">★</span>
@@ -223,12 +273,11 @@
                     <span class="star" data-value="4">★</span>
                     <span class="star" data-value="5">★</span>
                 </div>
-                <div id="comment1">Satisfaction</div>
-                <div class="emoji" id="emoji1">😐</div>
+                <div id="comment1">Satisfaction: <span id="satisfactionMessage">😐</span></div>
                 <input type="hidden" name="service_quality" id="service_quality" value="0"> <!-- Ajouter ce champ pour le rating -->
             </div>
             <div class="question">
-                <label for="serviceFeedback">Points forts et faiblesses des services :</label>
+                <label for="serviceFeedback">Quels sont les points forts et faiblesses des services ?:</label>
                 <textarea id="serviceFeedback" name="service_feedback"></textarea>
             </div>
             <div class="buttons">
@@ -238,7 +287,7 @@
         </div>
 
         <div id="section3" class="section">
-            <h2>Section 2 : Attentes et Priorités pour la Réforme</h2>
+            <h4 style="text-align:center">Attentes et Priorités pour la Réforme</h4>
             <div class="question">
                 <label>Quelles sont les trois principales réformes à mettre en œuvre ?</label>
                 <textarea id="reforms" name="reforms" required></textarea>
@@ -250,7 +299,7 @@
         </div>
 
         <div id="section4" class="section">
-            <h2>Section 3 : Implication des Citoyens</h2>
+            <h4 style="text-align:center">Implication des Citoyens</h4>
             <div class="question">
                 <label>Comment les citoyens pourraient-ils être davantage associés aux décisions ?</label>
                 <textarea id="citizenInvolvement" name="citizen_involvement"></textarea>
@@ -262,7 +311,7 @@
         </div>
 
         <div id="section5" class="section">
-            <h2>Section 4 : Autres Commentaires</h2>
+            <h4 style="text-align:center">Autres Commentaires</h4>
             <div class="question">
                 <label>Commentaires supplémentaires :</label>
                 <textarea id="additionalComments" name="additional_comments"></textarea>
@@ -276,127 +325,183 @@
 </form>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Récupérer les départements en fonction de la région sélectionnée
-    document.getElementById('region').addEventListener('change', function() {
-        const regionId = this.value;
-        const departmentSelect = document.getElementById('department');
-        departmentSelect.innerHTML = '<option value="">Choisir un département</option>'; // Reset options
-
-        if (regionId) {
-            fetch(`/departements/${regionId}`)
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(department => {
-                        const option = document.createElement('option');
-                        option.value = department.id;
-                        option.textContent = department.name;
-                        departmentSelect.appendChild(option);
-                    });
+    document.addEventListener('DOMContentLoaded', () => {
+        // Récupérer les régions dès le chargement de la page
+        fetch('/regions') // Remplacez par votre route d'API
+            .then(response => response.json())
+            .then(data => {
+                const regionSelect = document.getElementById('regions');
+                regionSelect.innerHTML = '<option value="">Choisir une région</option>'; // Réinitialiser les options
+                data.forEach(region => {
+                    const option = document.createElement('option');
+                    option.value = region.id; // Utilisez l'identifiant de la région
+                    option.textContent = region.nom; // Utilisez le nom de la région
+                    regionSelect.appendChild(option);
                 });
-        }
-    });
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération des régions:', error);
+            });
 
-    // Récupérer les représentants en fonction du département sélectionné
-    document.getElementById('department').addEventListener('change', function() {
-        const departmentId = this.value;
-        const representativeSelect = document.getElementById('representative');
-        representativeSelect.innerHTML = '<option value="">Choisir un représentant</option>'; // Reset options
+        // Récupérer les départements en fonction de la région sélectionnée
+        document.getElementById('regions').addEventListener('change', function() {
+            const regionId = this.value;
+            const departementSelect = document.getElementById('departement');
+            departementSelect.innerHTML = '<option value="">Choisir un département</option>'; // Reset options
 
-        if (departmentId) {
-            fetch(`/representants/${departmentId}`)
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(representative => {
-                        const option = document.createElement('option');
-                        option.value = representative.id;
-                        option.textContent = representative.name;
-                        representativeSelect.appendChild(option);
+            if (regionId) {
+                fetch(`/departements/${regionId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(departement => {
+                            const option = document.createElement('option');
+                            option.value = departement.id;
+                            option.textContent = departement.nom;
+                            departementSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des départements:', error);
                     });
-                });
-        }
-    });
-
-    // Gestion des sections du formulaire
-    const sections = document.querySelectorAll('.section');
-    let currentSection = 0;
-
-    function showSection(index) {
-        sections.forEach((section, i) => {
-            section.classList.toggle('active', i === index);
-        });
-    }
-
-    // Fonction de validation des champs obligatoires (uniquement pour les champs visibles)
-    function checkRequiredFields(section) {
-        const inputs = section.querySelectorAll('input[required]:not([style*="display: none"]), select[required]:not([style*="display: none"]), textarea[required]:not([style*="display: none"])');
-        let allFilled = true;
-
-        inputs.forEach(input => {
-            if (input.type === 'radio') {
-                const radioGroup = section.querySelectorAll(`input[name="${input.name}"]`);
-                const isChecked = Array.from(radioGroup).some(radio => radio.checked);
-                if (!isChecked) {
-                    allFilled = false;
-                }
-            } else if (input.tagName === 'SELECT' && input.value === "") {
-                allFilled = false;
-            } else if (!input.value) {
-                allFilled = false;
             }
         });
 
-        if (!allFilled) {
-            alert("Veuillez remplir tous les champs obligatoires.");
-            return false;
+        // Récupérer les secteurs en fonction du département sélectionné
+        document.getElementById('departement').addEventListener('change', function() {
+            const departementId = this.value;
+            const secteurSelect = document.getElementById('secteur');
+            secteurSelect.innerHTML = '<option value="">Choisir un secteur</option>'; // Reset options
+
+            if (departementId) {
+                fetch(`/secteurs/${departementId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(secteur => {
+                            const option = document.createElement('option');
+                            option.value = secteur.id;
+                            option.textContent = secteur.nom_secteur; // Utilisez le nom du secteur
+                            secteurSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des secteurs:', error);
+                    });
+            }
+        });
+
+        // Gestion des sections du formulaire
+        const sections = document.querySelectorAll('.section');
+        let currentSection = 0;
+
+        function showSection(index) {
+            sections.forEach((section, i) => {
+                section.classList.toggle('active', i === index);
+            });
         }
 
-        return true;
-    }
+        // Fonction de validation des champs obligatoires (uniquement pour les champs visibles)
+        function checkRequiredFields(section) {
+            const inputs = section.querySelectorAll('input[required], select[required], textarea[required]');
+            return Array.from(inputs).every(input => input.value.trim() !== '');
+        }
 
-    // Navigation avec validation des sections
-    document.getElementById('next1').addEventListener('click', () => {
-        if (checkRequiredFields(sections[currentSection])) {
-            currentSection++;
+        document.getElementById('next1').addEventListener('click', () => {
+            if (checkRequiredFields(sections[currentSection])) {
+                currentSection++;
+                showSection(currentSection);
+            } else {
+                alert('Veuillez remplir tous les champs obligatoires.');
+            }
+        });
+
+        document.getElementById('prev1').addEventListener('click', () => {
+            currentSection--;
             showSection(currentSection);
-        }
-    });
+        });
 
-    document.getElementById('next2').addEventListener('click', () => {
-        if (checkRequiredFields(sections[currentSection])) {
-            currentSection++;
+        document.getElementById('next2').addEventListener('click', () => {
+            if (checkRequiredFields(sections[currentSection])) {
+                currentSection++;
+                showSection(currentSection);
+            } else {
+                alert('Veuillez remplir tous les champs obligatoires.');
+            }
+        });
+
+        document.getElementById('prev2').addEventListener('click', () => {
+            currentSection--;
             showSection(currentSection);
-        }
-    });
+        });
 
-    document.getElementById('next3').addEventListener('click', () => {
-        if (checkRequiredFields(sections[currentSection])) {
-            currentSection++;
+        document.getElementById('next3').addEventListener('click', () => {
+            if (checkRequiredFields(sections[currentSection])) {
+                currentSection++;
+                showSection(currentSection);
+            } else {
+                alert('Veuillez remplir tous les champs obligatoires.');
+            }
+        });
+
+        document.getElementById('prev3').addEventListener('click', () => {
+            currentSection--;
             showSection(currentSection);
-        }
-    });
+        });
 
-    document.getElementById('prev1').addEventListener('click', () => {
-        currentSection--;
+        document.getElementById('next4').addEventListener('click', () => {
+            if (checkRequiredFields(sections[currentSection])) {
+                currentSection++;
+                showSection(currentSection);
+            } else {
+                alert('Veuillez remplir tous les champs obligatoires.');
+            }
+        });
+
+        document.getElementById('prev4').addEventListener('click', () => {
+            currentSection--;
+            showSection(currentSection);
+        });
+
+        // Gestion de l'évaluation par étoiles
+        const stars = document.querySelectorAll('.star-rating[data-question="1"] .star');
+        const satisfactionMessage = document.getElementById('satisfactionMessage');
+        const serviceQualityInput = document.getElementById('service_quality');
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const rating = star.getAttribute('data-value');
+                serviceQualityInput.value = rating; // Sauvegarder la note dans le champ caché
+
+                // Changer le message en fonction de la note
+                switch (rating) {
+                    case '1':
+                        satisfactionMessage.textContent = '😡 Mauvaise';
+                        break;
+                    case '2':
+                        satisfactionMessage.textContent = '😟 Insatisfaisant';
+                        break;
+                    case '3':
+                        satisfactionMessage.textContent = '😐 Moyenne';
+                        break;
+                    case '4':
+                        satisfactionMessage.textContent = '😊 Satisfaisant';
+                        break;
+                    case '5':
+                        satisfactionMessage.textContent = '😁 Excellent';
+                        break;
+                }
+
+                // Mettre à jour l'affichage des étoiles
+                stars.forEach(s => {
+                    s.classList.toggle('active', s.getAttribute('data-value') <= rating);
+                });
+            });
+        });
+
+        // Afficher la première section par défaut
         showSection(currentSection);
     });
-
-    document.getElementById('prev2').addEventListener('click', () => {
-        currentSection--;
-        showSection(currentSection);
-    });
-
-    document.getElementById('prev3').addEventListener('click', () => {
-        currentSection--;
-        showSection(currentSection);
-    });
-
-    document.getElementById('prev4').addEventListener('click', () => {
-        currentSection--;
-        showSection(currentSection);
-    });
-});
 </script>
+
 
 
 <!-- Add this somewhere in your HTML to display the quality text -->
@@ -427,22 +532,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 </style>
 <!-- Pop-up de validation -->
-<div id="success-popup" class="popup" style="display: none;">
+<div id="success-popup" class="popups" style="display: none;">
     <span class="close-btn">&times;</span>
-    <p>✔ Merci ! Vos réponses ont été enregistrées. Votre avis contribuera à améliorer les services publics.</p>
+    <p>✔ Merci ! Vos réponses ont été enregistrées aves succès.</p>
 
 </div>
 <style>
-  .popup {
+  .popups {
     position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: skyblue; /* Couleur verte */
-    color: white;
+    background-color: white; /* Couleur de fond blanche */
+    color: black; /* Couleur du texte noir */
     padding: 20px;
     border-radius: 5px;
-    z-index: 1000; /* S'assurer qu'il est au-dessus des autres éléments */
+    border: 1px solid #ccc; /* Bordure grise */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Ombre pour un léger effet de profondeur */
+    z-index: 1000; /* Assure que le popup est au-dessus des autres éléments */
     display: none; /* Masquer par défaut */
 }
 
@@ -451,6 +558,16 @@ document.addEventListener('DOMContentLoaded', () => {
     float: right;
     font-size: 20px;
     font-weight: bold;
+    color: black; /* Couleur du bouton de fermeture */
+}
+
+.close-btn:hover {
+    color: red; /* Couleur au survol pour un effet */
+}
+
+.popups p {
+    margin: 10px 0 0; /* Ajuster la marge du texte */
+    text-align: center; /* Centrer le texte */
 }
 
 </style>
@@ -458,12 +575,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('DOMContentLoaded', function () {
         // Vérifiez si le pop-up doit s'afficher
         @if(session('success'))
-            const popup = document.getElementById('success-popup');
-            popup.style.display = 'block'; // Afficher le pop-up
+            const popups = document.getElementById('success-popup');
+            popups.style.display = 'block'; // Afficher le pop-up
 
             // Fermer le pop-up après 3 secondes
             setTimeout(() => {
-                popup.style.display = 'none'; // Masquer le pop-up
+                popups.style.display = 'none'; // Masquer le pop-up
             }, 3000);
         @endif
     });
@@ -478,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="../assets/js/main.js"></script>
 
 
 </body>
