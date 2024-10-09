@@ -35,6 +35,57 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+    .icon {
+  position: relative; /* Pour positionner le message */
+  cursor: pointer; /* Change le curseur en main */
+  transition: transform 0.4s ease; /* Animation de transformation */
+}
+
+.icon:hover {
+  transform: scale(1.2); /* Agrandit l'icône au survol */
+}
+
+h5 {
+  transition: color 0.4s ease; /* Animation de changement de couleur */
+}
+
+.icon:hover + h5 {
+  color: #ff5733; /* Couleur au survol */
+}
+
+.icon:hover i {
+  color: #ff5733; /* Couleur de l'icône au survol */
+}
+
+/* Styles pour le message d'invite */
+.tooltip {
+  visibility: hidden; /* Masqué par défaut */
+  background-color: #333; /* Couleur de fond */
+  color: #fff; /* Couleur du texte */
+  text-align: center;
+  border-radius: 5px;
+  padding: 2px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Positionné au-dessus de l'icône */
+  left: 50%;
+  transform: translateX(-50%); /* Centre le tooltip */
+  opacity: 0; /* Masqué par défaut */
+  transition: opacity 0.3s; /* Animation de l'opacité */
+}
+
+.icon:hover .tooltip {
+  visibility: visible; /* Affiche le message au survol */
+  opacity: 1; /* Rend visible */
+}
+.navmenu a.active {
+    background-color: #F4F4F4; /* Choisissez la couleur de fond souhaitée */
+    color: black; /* Couleur du texte pour le contraste */
+}
+
+
+  </style>
 </head>
 
 <body class="index-page">
@@ -42,53 +93,43 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-      <a href="#" class="logo d-flex align-items-center">
+      <a href="{{ route('home') }}" class="logo d-flex align-items-center">
         <img src="assets/img/logg.png" alt="">
         <!-- Uncomment the line below if you also wish to use text logo -->
         <!-- <h1 class="sitename">Butterfly</h1>  -->
       </a>
 
       <nav id="navmenu" class="navmenu">
-        <ul>
-        <li><a href="#">Accueil</a></li>
-        <li><a href="{{ route('contexte') }}">Contexte</a></li>
-    
-          <li><a href="{{ route('participation.form') }}">Donnez-nous votre avis</a></li>
+    <ul>
+        <li>
+            <a href="{{ route('home') }}" class="{{ request()->is('/') ? 'active' : '' }}">Accueil</a>
+        </li>
+        <li>
+            <a href="{{ route('contexte') }}">Contexte</a>
+        </li>
+        <li>
+            <a href="{{ route('objectif') }}">objectif</a>
+        </li>
+        <li>
+            <a href="{{ route('participation.form') }}">Donnez-nous votre avis</a>
+        </li>
+        <li>
+            <a href="{{ route('login') }}">Connexion</a>
+        </li>
+    </ul>
+    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+</nav>
 
-       
-          <!--  <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#team">Team</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>-->
-          <li><a href="{{ route('login') }}">Connexion</a></li>
-
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
 
     </div>
   </header>
 
   <main class="main">
-
+  
     <!-- Hero Section -->
-<section id="hero" class="hero section light-background">
+<section id="hero" class="hero section light-background" style="background-color:#F4F4F4">
   <div class="container">
+    
     <div class="row gy-4 align-items-center">
       <!-- Text Section -->
       <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-md-start" data-aos="fade-up">
@@ -100,7 +141,7 @@
       </div>
       <!-- Image Section -->
       <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
-        <img src="assets/img/bigdioms.jpg" class="img-fluid animated rounded-4 shadow-lg" alt="Hero Image">
+        <img src="assets/img/dioms.avif" class="img-fluid animated rounded-4 shadow-lg" alt="Hero Image">
       </div>
     </div>
   </div>
@@ -109,7 +150,7 @@
   <br>
   <section id="reforme" class="services section light-background">
   <div class="container section-title" data-aos="fade-up">
-    <h1 class="title-highlight">La Réforme du Service public</h1>
+    <h1 class="title-highlight">La réforme des services publics</h1>
   </div><!-- End Section Title -->
 
   <div class="container">
@@ -118,8 +159,10 @@
       <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
         <div class="reforme-item card-shadow position-relative d-flex flex-column justify-content-between" style="height: 100%;">
          
-          <img src="assets/img/reforme.webp" style="height: 150px;width:50%;margin-left:25%;border-radius:10px" alt="">
+          <img src="assets/img/reforme.webp" style="height: 40%;width:40%;margin-left:30%;border-radius:10px" alt="">
+          <h5></h5>
           <h3 class="item-title">Qu'est-ce qu'une Réforme ?</h3>
+          
           <p class="item-description">Une réforme est un changement significatif apporté aux politiques ou aux systèmes en place afin d'améliorer leur fonctionnement ou de répondre à de nouveaux besoins.</p>
         </div>
       </div><!-- End Reforme Item -->
@@ -127,9 +170,9 @@
       <!-- Bloc 2 : Termes Clés à Connaître -->
       <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
         <div class="reforme-item card-shadow position-relative d-flex flex-column justify-content-between" style="height: 100%;">
-        <img src="assets/img/image.png" style="height: 150px;width:50%;margin-left:25%;border-radius:10px" alt="">
-        <br>
-          <h3 class="item-title" >Termes Clés à Connaître</h3>
+        <img src="assets/img/image.png" style="height: 40%;width:40%;margin-left:30%;border-radius:10px" alt="">
+        <h1></h1>
+          <h3 class="item-title"  style=''>Termes Clés à Connaître</h3>
           <ul class="item-list">
             <li><strong>Concertation :</strong> Processus de consultation des citoyens pour recueillir leur avis.</li>
             <li><strong>Service public :</strong> Services offerts par l’État pour répondre aux besoins des citoyens (santé, éducation, etc.).</li>
@@ -139,77 +182,116 @@
     </div>
   </div>
 </section><!-- /Réforme Section -->
+    <!-- About Section -->
+
+
+
+    <section id="about" class="about section" style="background-color: #f8f9fa;">
+  <div class="container section-title" data-aos="fade-up">
+    <h1 class="title-highlight">Principes de la Concertation Nationale</h1>
+  </div>
+
+  <div class="container">
+
+    <div class="row gy-4">
+
+      <!-- Image section -->
+      <div class="col-lg-6 position-relative" data-aos="fade-up" data-aos-delay="100">
+        <img src="assets/img/olivier.PNG" class="img-fluid" style="border-radius: 2%; height: 85%; width: 85%;" alt="Ministre Olivier Boucal">
+      </div>
+
+      <div class="col-lg-6 ps-lg-4 content d-flex flex-column justify-content-start" data-aos="fade-up" data-aos-delay="200" style="margin-top: 60px;">
+        <p style="text-align: justify;">
+          Des concertations seront organisées dans chaque région du Sénégal, offrant ainsi aux communautés locales une précieuse opportunité de partager leurs besoins spécifiques et d'exprimer leurs préoccupations. Ces échanges, qui favorisent le dialogue entre les citoyens et les acteurs locaux, visent à recueillir des avis diversifiés, afin de mieux cerner les défis et les priorités uniques de chaque région.
+        </p>
+        <p style="text-align: justify;">
+          En intégrant activement les contributions citoyennes et régionales, ces concertations permettront aux différentes organisations et parties prenantes d'élaborer et de proposer des mesures de réforme significatives et adaptées. L'objectif principal est de renforcer la synergie des actions engagées et d'accroître l'impact positif sur les bénéficiaires. De plus, les travaux préparatoires du comité technique ad hoc ont déjà permis d'identifier plusieurs thèmes clés, qui seront au cœur des discussions lors de ces concertations thématiques, garantissant ainsi que les préoccupations des citoyens soient véritablement prises en compte.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
 
 
 
 <section id="themes">
   <div class="container section-title" data-aos="fade-up">
-    <h1 style="color: black;font-weight:bold ">Thèmes phares des concertations</h1>
+    <h1 style="color: black; font-weight: bold;">Thèmes phares des concertations</h1>
+    
   </div><!-- End Section Title -->
+  
   <div class="container">
     <div class="row gy-4 text-center">
       <!-- Qualité du service public -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
         <div class="icon" style="font-size: 50px;" onclick="showPopup('Qualité du service public', 'Assurer une prestation de services publics de haute qualité, répondant aux attentes des citoyens.')">
-        <i class="fas fa-star" style="font-size: 50px; color: #0059b3;"></i>
+          <i class="fas fa-star" style="font-size: 50px; color: #ffcc00;"></i>
+          <span class="tooltip">Cliquez pour voir les détails</span>
         </div>
-        <h5 style="color: #0059b3;">Qualité du service public</h5>
+        <h5 style="color: #ffcc00;">Qualité du service public</h5>
       </div>
+      
       <!-- Transparence, Équité et redevabilité -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
         <div class="icon" style="font-size: 50px;" onclick="showPopup('Transparence, Équité et redevabilité', 'Promouvoir la transparence et la responsabilité dans les actions des institutions publiques.')">
-        <i class="fas fa-balance-scale" style="font-size: 50px; color: #00b33c;"></i>
+          <i class="fas fa-balance-scale" style="font-size: 50px; color: #28a745;"></i>
+          <span class="tooltip">Cliquez pour voir les détails</span>
         </div>
-        <h5 style="color: #00b33c;">Transparence, Équité et redevabilité</h5>
+        <h5 style="color: #28a745;">Transparence, Équité et redevabilité</h5>
       </div>
+      
       <!-- Transformation digitale de l'Administration -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
         <div class="icon" style="font-size: 50px;" onclick="showPopup('Transformation digitale de l\'Administration', 'Faciliter l\'accès aux services publics par des solutions numériques innovantes.')">
-        <i class="fas fa-desktop" style="font-size: 50px; color: #3399ff;"></i>
+          <i class="fas fa-desktop" style="font-size: 50px; color: #007bff;"></i>
+          <span class="tooltip">Cliquez pour voir les détails</span>
         </div>
-        <h5 style="color: #3399ff;">Transformation digitale de l'Administration</h5>
+        <h5 style="color: #007bff;">Transformation digitale de l'Administration</h5>
       </div>
+      
       <!-- Cadre de gestion des ressources humaines -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
         <div class="icon" style="font-size: 50px;" onclick="showPopup('Cadre de gestion des ressources humaines', 'Mettre en place des pratiques de gestion des ressources humaines équitables et efficaces.')">
-        <i class="fas fa-users" style="font-size: 50px; color: #800080;"></i>
+          <i class="fas fa-users" style="font-size: 50px; color: #6f42c1;"></i>
+          <span class="tooltip">Cliquez pour voir les détails</span>
         </div>
-        <h5 style="color: #800080;">Cadre de gestion des ressources humaines</h5>
+        <h5 style="color: #6f42c1;">Cadre de gestion des ressources humaines</h5>
       </div>
+      
       <!-- Cadre organisationnel des services publics -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
         <div class="icon" style="font-size: 50px;" onclick="showPopup('Cadre organisationnel des services publics', 'Renforcer l\'efficacité et la cohérence des structures administratives.')">
-        <i class="fas fa-building" style="font-size: 50px; color: #ff6600;"></i>
+          <i class="fas fa-building" style="font-size: 50px; color: #fd7e14;"></i>
+          <span class="tooltip">Cliquez pour voir les détails</span>
         </div>
-        <h5 style="color: #ff6600;">Cadre organisationnel des services publics</h5>
+        <h5 style="color: #fd7e14;">Cadre organisationnel des services publics</h5>
       </div>
+      
       <!-- Autres -->
       <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
         <div class="icon" style="font-size: 50px;" onclick="showPopup('Autres', 'Explorer d\'autres thématiques pertinentes pour l\'amélioration des services publics.')">
-        <i class="fas fa-ellipsis-h" style="font-size: 50px; color: #999999;"></i>
+          <i class="fas fa-ellipsis-h" style="font-size: 50px; color: #6c757d;"></i>
+          <span class="tooltip">Cliquez pour voir les détails</span>
         </div>
-        <h5 style="color: #999999;">Autres</h5>
+        <h5 style="color: #6c757d;">Autres</h5>
       </div>
     </div>
   </div>
 </section>
-<section id="themes">
+
+<section id="themes" style="background-color: #f8f9fa; padding: 50px 0;">
   <div class="container" data-aos="fade-up">
-    <div class="row align-items-center justify-content-center text-center text-lg-start">
-      <!-- Image section -->
-      <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
-        <div class="ministere-img">
-          <img src="assets/img/mfp.png" alt="MFP Logo" class="img-fluid" style="max-width: 50%; height: auto;">
-        </div>
-      </div>
-      <!-- Text section -->
-      <div class="col-lg-8 col-md-6 col-12">
-        <div class="ministere-content">
-          <h4 class="mb-3">Ministère de la Fonction publique et de la Réforme du Service public</h4>
-          <p style="text-align:justify">
-            Le Ministère en charge de la Réforme du service public œuvre à donner corps à cette vision, en ayant comme objectif d’être la force d’impulsion de la transformation qualitative de notre Administration, qui doit être le miroir des attentes du public, une Administration à l’écoute des citoyens, une Administration qui réinvente sa relation avec chaque demandeur du service public.
+    <div class="row align-items-center justify-content-center text-center">
+      <div class="col-12">
+        <div class="ministere-content" style="max-width: 800px; margin: auto;">
+          <h4 class="mb-4" style="font-size: 2rem; font-weight: bold; color: #333333;">Ministère de la Fonction publique et de la Réforme du Service public</h4>
+          <p style="text-align: justify; line-height: 1.6;">
+            Le Ministère en charge de la Réforme du service public œuvre à donner corps à cette vision, avec pour objectif d’être la force d’impulsion de la transformation qualitative de notre Administration. Celle-ci doit être le miroir des attentes du public, une Administration à l’écoute des citoyens, une Administration qui réinvente sa relation avec chaque demandeur de service public.
           </p>
-          <p style="text-align:justify">
+          <p style="text-align: justify; line-height: 1.6;">
             La concertation nationale permettra à chaque citoyen, dans toutes les régions, de participer activement au dialogue visant à réformer les services publics.
           </p>
         </div>
@@ -217,6 +299,7 @@
     </div>
   </div>
 </section>
+
 
   
 </section>
@@ -234,54 +317,7 @@
   </div>
 </div>
 
-    <!-- About Section -->
-<section id="about" class="about section">
 
-<div class="container">
-
-  <div class="row gy-4">
-
-    <!-- Image section -->
-    <div class="col-lg-6 position-relative" data-aos="fade-up" data-aos-delay="100">
-    <img src="assets/img/boucal.jpeg" class="img-fluid" style="margin-top:10%; border-radius: 2%;" alt="Ministre Olivier Boucal">
-
-     
-    </div>
-
-    <!-- Content section -->
-    <div class="col-lg-6 ps-lg-4 content d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200" style="margin-top:150px">
-    <h3>Principes de la Concertation Nationale</h3>
-      <p>
-     
-      <p>
-              Des conertations seront organisées dans chaque région du Sénégal, permettant aux différentes communautés locales de partager leurs besoins spécifiques et de faire entendre leurs voix.
-        </p>
-        <p>
-              En recueillant les avis des citoyens, la concertation permettra de mieux comprendre les défis et les priorités de chaque région, afin de formuler des réformes qui répondent véritablement aux besoins exprimés par la population.
-</br>
-
-        </p>
-         
-      <ul>
-        <li>
-     
-        </li>
-     
-        <li>
-       
-          <div>
-          
-        </li>
-      </ul>
-      
-    </div>
-  
-
-  </div>
-
-</div>
-
-</section>
 
 
 <section id="stats" class="stats section light-background">
@@ -320,464 +356,7 @@
 </div>
 
 </section>
-<!-- /About Section -->
-
-    <!-- Stats Section 
-    <section id="stats" class="stats section light-background">
-
-      <img src="assets/img/stats-bg.jpg" alt="" data-aos="fade-in">
-
-      <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="1974" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Avis recueillis</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-              <p>De la diaspora</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Sénégal</p>
-            </div>
-          </div><
-><!-- End Stats Item -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Stats Section -->
-
-    <!-- Clients Section -->
-    <!-- <section id="clients" class="clients section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row g-0 clients-wrap">
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="assets/img/clients/client-1.png" class="img-fluid" alt="">
-          </div> 
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="assets/img/clients/client-2.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="assets/img/clients/client-3.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="assets/img/clients/client-4.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="assets/img/clients/client-5.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="assets/img/clients/client-6.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="assets/img/clients/client-7.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="assets/img/clients/client-8.png" class="img-fluid" alt="">
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>< /Clients Section -->
-
-   
-    <!-- Portfolio Section -->
-   <!--  <section id="portfolio" class="portfolio section">
-
-     
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Portfolio</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div>
-
-      <div class="container">
-
-        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-            <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-app">App</li>
-            <li data-filter=".filter-product">Product</li>
-            <li data-filter=".filter-branding">Branding</li>
-            <li data-filter=".filter-books">Books</li>
-          </ul>
-
-          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/app-1.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>App 1</h4>
-                  <p>Lorem ipsum, dolor sit amet consectetur</p>
-                  <a href="assets/img/portfolio/app-1.jpg" title="App 1" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/product-1.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>Product 1</h4>
-                  <p>Lorem ipsum, dolor sit amet consectetur</p>
-                  <a href="assets/img/portfolio/product-1.jpg" title="Product 1" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/branding-1.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>Branding 1</h4>
-                  <p>Lorem ipsum, dolor sit amet consectetur</p>
-                  <a href="assets/img/portfolio/branding-1.jpg" title="Branding 1" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/books-1.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>Books 1</h4>
-                  <p>Lorem ipsum, dolor sit amet consectetur</p>
-                  <a href="assets/img/portfolio/books-1.jpg" title="Branding 1" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/app-2.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>App 2</h4>
-                  <p>Lorem ipsum, dolor sit amet consectetur</p>
-                  <a href="assets/img/portfolio/app-2.jpg" title="App 2" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/product-2.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>Product 2</h4>
-                  <p>Lorem ipsum, dolor sit amet consectetur</p>
-                  <a href="assets/img/portfolio/product-2.jpg" title="Product 2" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/branding-2.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>Branding 2</h4>
-                  <p>Lorem ipsum, dolor sit amet consectetur</p>
-                  <a href="assets/img/portfolio/branding-2.jpg" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/books-2.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>Books 2</h4>
-                  <p>Lorem ipsum, dolor sit amet consectetur</p>
-                  <a href="assets/img/portfolio/books-2.jpg" title="Branding 2" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/app-3.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>App 3</h4>
-                  <p>Lorem ipsum, dolor sit amet consectetur</p>
-                  <a href="assets/img/portfolio/app-3.jpg" title="App 3" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/product-3.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>Product 3</h4>
-                  <p>Lorem ipsum, dolor sit amet consectetur</p>
-                  <a href="assets/img/portfolio/product-3.jpg" title="Product 3" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/branding-3.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>Branding 3</h4>
-                  <p>Lorem ipsum, dolor sit amet consectetur</p>
-                  <a href="assets/img/portfolio/branding-3.jpg" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/books-3.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>Books 3</h4>
-                  <p>Lorem ipsum, dolor sit amet consectetur</p>
-                  <a href="assets/img/portfolio/books-3.jpg" title="Branding 3" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>-->
-
-    <!-- Testimonials Section
-    <section id="testimonials" class="testimonials section dark-background">
-
-      <img src="assets/img/testimonials-bg.jpg" class="testimonials-bg" alt="">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="swiper init-swiper">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": "auto",
-              "pagination": {
-                "el": ".swiper-pagination",
-                "type": "bullets",
-                "clickable": true
-              }
-            }
-          </script>
-          <div class="swiper-wrapper">
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                <h3>Saul Goodman</h3>
-                <h4>Ceo &amp; Founder</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div> -->
-
-  <!--         <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                <h3>Sara Wilsson</h3>
-                <h4>Designer</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div> 
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                <h3>Jena Karlis</h3>
-                <h4>Store Owner</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                <h3>Matt Brandon</h3>
-                <h4>Freelancer</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                <h3>John Larson</h3>
-                <h4>Entrepreneur</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-
-      </div>
-
-    </section>-->
-
- 
-  
-    <!-- Contact Section 
-    <section id="contact" class="contact section">
-
-     
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Contact</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div>
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="mb-4" data-aos="fade-up" data-aos-delay="200">
-          <iframe style="border:0; width: 100%; height: 270px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-
-        <div class="row gy-4">
-
-          <div class="col-lg-4">
-            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-              <i class="bi bi-geo-alt flex-shrink-0"></i>
-              <div>
-                <h3>Address</h3>
-                <p>A108 Adam Street, New York, NY 535022</p>
-              </div>
-            </div
-
-            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-              <i class="bi bi-telephone flex-shrink-0"></i>
-              <div>
-                <h3>Call Us</h3>
-                <p>+1 5589 55488 55</p>
-              </div>
-            </div>
-
-            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
-              <i class="bi bi-envelope flex-shrink-0"></i>
-              <div>
-                <h3>Email Us</h3>
-                <p>info@example.com</p>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-              <div class="row gy-4">
-
-                <div class="col-md-6">
-                  <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
-                </div>
-
-                <div class="col-md-6 ">
-                  <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                  <button type="submit">Send Message</button>
-                </div>
-
-              </div>
-            </form>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section><!-- /Contact Section -->
-
-  </main>
+</main>
 
  @yield('footer')
   <!-- Scroll Top -->

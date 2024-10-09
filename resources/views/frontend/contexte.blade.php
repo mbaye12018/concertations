@@ -40,19 +40,26 @@
         <img src="assets/img/logg.png" alt="">
       
       </a>
-
       <nav id="navmenu" class="navmenu">
-        <ul>
-        <li><a href="{{ route('home') }}">Accueil</a></li>
-
-        <li><a href="{{ route('contexte') }}">Contexte</a></li>
-    
-          <li><a href="{{ route('participation.form') }}">Donnez-nous votre avis</a></li>
- <li><a href="{{ route('login') }}">Connexion</a></li>
-
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+    <ul>
+        <li>
+            <a href="{{ route('home') }}" class="{{ request()->is('/') ? 'active' : '' }}">Accueil</a>
+        </li>
+        <li>
+            <a href="{{ route('contexte') }}">Contexte</a>
+        </li>
+        <li>
+            <a href="{{ route('objectif') }}">objectif</a>
+        </li>
+        <li>
+            <a href="{{ route('participation.form') }}">Donnez-nous votre avis</a>
+        </li>
+        <li>
+            <a href="{{ route('login') }}">Connexion</a>
+        </li>
+    </ul>
+    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+</nav>
 
     </div>
   </header>

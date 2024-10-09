@@ -34,30 +34,7 @@
       margin: 0;
       padding: 0;
     }
-    .star {
-    font-size: 30px;
-    cursor: pointer;
-    color: gray; /* Couleur par défaut */
-}
 
-
-
-.star.selected.low {
-    color: red; /* Couleur pour les notes basses */
-}
-
-.star.selected.medium {
-    color: orange; /* Couleur pour la note moyenne */
-}
-.star.selected.mediume {
-    color: gold; /* Couleur pour la note moyenne */
-}
-.star.selected.high {
-    color: green; /* Couleur pour les bonnes notes */
-}
-.star.selected.highe {
-    color: lightgreen; /* Couleur pour les bonnes notes */
-}
     #formContainer {
       background-color: white;
       border-radius: 8px;
@@ -205,25 +182,20 @@
       </a>
 
       <nav id="navmenu" class="navmenu">
-    <ul>
-        <li>
-            <a href="{{ route('home') }}" class="{{ request()->is('/') ? 'active' : '' }}">Accueil</a>
-        </li>
-        <li>
-            <a href="{{ route('contexte') }}">Contexte</a>
-        </li>
-        <li>
-            <a href="{{ route('objectif') }}">objectif</a>
-        </li>
-        <li>
-            <a href="{{ route('participation.form') }}">Donnez-nous votre avis</a>
-        </li>
-        <li>
-            <a href="{{ route('login') }}">Connexion</a>
-        </li>
-    </ul>
-    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-</nav>
+        <ul>
+      <li><a href="{{ route('home') }}">Accueil</a></li>
+
+        <li><a href="{{ route('contexte') }}">Contexte</a></li>
+    
+          <li><a href="{{ route('participation.form') }}">Donnez-nous votre avis</a></li>
+
+       
+         
+          <li><a href="{{ route('login') }}">Connexion</a></li>
+
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
     </div>
   </header>
 <!--  <h6 style="padding:2px;color:black">Bienvenue, {{ Auth::user()->prenom }} {{ Auth::user()->nom }} !</h6>-->
@@ -267,19 +239,19 @@
 
             <div class="question">
                 <label for="firstname">Prénom et nom représentant <span class="required">(*)</span> :</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="firstname" name="firstname" required>
             </div>
 
 
             <div class="question">
-                <label for="contact">Contact<span class="required"></span> :</label>
-                <input type="tel" id="contact" name="contact" placeholder="Email ou téléphone" >
+                <label for="phone">Contact<span class="required">(*)</span> :</label>
+                <input type="tel" id="phone" name="phone" placeholder="Email ou téléphone" required>
             </div>
 
 
             <div class="question">
-                <label for="fonction">Fonction :</label>
-                <input type="text" id="fonction" name="fonction">
+                <label for="position">Fonction :</label>
+                <input type="text" id="position" name="position">
             </div>
 
             <div class="buttons">
@@ -302,6 +274,27 @@
   </div>
 
 
+
+  <script>
+    const stars = document.querySelectorAll('.star');
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            // Retirer les classes de sélection de toutes les étoiles
+            stars.forEach(s => {
+                s.classList.remove('selected-1', 'selected-2', 'selected-3', 'selected-4', 'selected-5');
+            });
+            // Récupérer la valeur de l'étoile cliquée
+            let value = star.getAttribute('data-value');
+            // Ajouter la classe de couleur appropriée pour l'étoile sélectionnée et les précédentes
+            for (let i = 0; i < stars.length; i++) {
+                if (i < value) {
+                    stars[i].classList.add(`selected-${value}`);
+                }
+            }
+        });
+    });
+   </script>
+
     <div id="comment1">Satisfaction: <span id="satisfactionMessage" class="satisfaction-medium">😐</span></div>
     <input type="hidden" name="service_quality" id="service_quality" value="0"> <!-- Ajouter ce champ pour le rating -->
    </div>
@@ -321,16 +314,16 @@
     </div>
     <div class="question">
                 <label for="serviceFeedback">Quels sont les principaux obstacles à l'accès aux services publics ?</label>
-                <textarea id="obstacle" name="obstacle"></textarea>
+                <textarea id="obstable" name="obstable"></textarea>
             </div>
 
     <div class="question">
     <label>Les procédures administratives sont-elles trop longues et complexes ?</label><br>
     <label>
-        <input type="radio" id="yes" name="service_long" value="oui" required> Oui
+        <input type="radio" id="yes" name="service_longue" value="oui" required> Oui
     </label>
     <label>
-        <input type="radio" id="no" name="service_long" value="non" required> Non
+        <input type="radio" id="no" name="service_longue" value="non" required> Non
     </label>
   </div>
 
@@ -358,7 +351,7 @@
                 <label for="serviceFeedback">Quels outils numériques ou technologiques pourraient améliorer les services publics ?
 
                 </label>
-                <textarea id="serviceFeedback" name="service_outils"required></textarea>
+                <textarea id="serviceFeedback" name="service_feedback"required></textarea>
             </div>
 
             <div class="buttons">
@@ -380,7 +373,7 @@
 
       <div class="question">
           <label>Quelles mesures concrètes faudrait-il mettre en place pour améliorer la qualité des services publics ?</label><br>
-          <textarea name="ameliorer_services" rows="3"required ></textarea>
+          <textarea name="qualite_services" rows="3"required ></textarea>
       </div>
 
       <div class="question">
@@ -451,7 +444,43 @@
         </div>
     </div>
 </form>
-    
+        <div id="section3" class="section">
+            <h4 style="text-align:center">Attentes et Priorités pour la Réforme</h4>
+            <div class="question">
+                <label>Quelles sont les trois principales réformes à mettre en œuvre ?</label>
+                <textarea id="reforms" name="reforms" required></textarea>
+            </div>
+            <div class="buttons">
+                <button type="button" id="prev2">Précédent</button>
+                <button type="button" id="next3">Suivant</button>
+            </div>
+        </div>
+
+        <div id="section4" class="section">
+            <h4 style="text-align:center">Implication des Citoyens</h4>
+            <div class="question">
+                <label>Comment les citoyens pourraient-ils être davantage associés aux décisions ?</label>
+                <textarea id="citizenInvolvement" name="citizen_involvement"></textarea>
+            </div>
+            <div class="buttons">
+                <button type="button" id="prev3">Précédent</button>
+                <button type="button" id="next4">Suivant</button>
+            </div>
+        </div>
+
+        <div id="section5" class="section">
+            <h4 style="text-align:center">Autres Commentaires</h4>
+            <div class="question">
+                <label>Commentaires supplémentaires :</label>
+                <textarea id="additionalComments" name="additional_comments"></textarea>
+            </div>
+            <div class="buttons">
+                <button type="button" id="prev4">Précédent</button>
+                <button type="submit" id="submit">Soumettre</button>
+            </div>
+        </div>
+    </div>
+</form>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -590,59 +619,41 @@
             showSection(currentSection);
         });
 
-         // Gestion de l'évaluation par étoiles
-     const stars = document.querySelectorAll('.star');
-const satisfactionMessage = document.getElementById('satisfactionMessage');
-const serviceQualityInput = document.getElementById('service_quality');
+        // Gestion de l'évaluation par étoiles
+        const stars = document.querySelectorAll('.star-rating[data-question="1"] .star');
+        const satisfactionMessage = document.getElementById('satisfactionMessage');
+        const serviceQualityInput = document.getElementById('service_quality');
 
-stars.forEach(star => {
-    star.addEventListener('click', () => {
-        const rating = star.getAttribute('data-value');
-        serviceQualityInput.value = rating; // Mettre à jour la valeur cachée
-
-        // Mettre à jour le message de satisfaction
-        switch (rating) {
-            case '1':
-                satisfactionMessage.textContent = '😡 Mauvaise';
-                break;
-            case '2':
-                satisfactionMessage.textContent = '😟 Insatisfaisant';
-                break;
-            case '3':
-                satisfactionMessage.textContent = '😐 Moyenne';
-                break;
-            case '4':
-                satisfactionMessage.textContent = '😊 Satisfaisant';
-                break;
-            case '5':
-                satisfactionMessage.textContent = '😁 Excellent';
-                break;
-        }
-
-        // Mettre à jour les couleurs des étoiles
         stars.forEach(star => {
-            star.classList.remove('selected', 'low', 'medium', 'mediume','highe','high'); // Réinitialiser les classes
-            if (star.getAttribute('data-value') <= rating) {
-                star.classList.add('selected'); // Couleur pour les étoiles sélectionnées
-            }
-        });
+            star.addEventListener('click', () => {
+                const rating = star.getAttribute('data-value');
+                serviceQualityInput.value = rating; // Sauvegarder la note dans le champ caché
 
-        // Changer la couleur des étoiles selon la note
-        if (rating <= 1) {
-            stars.forEach(star => star.classList.add('low'));
-        } else if (rating == 2) {
-            stars.forEach(star => star.classList.add('medium'));
-        }   else if (rating == 3) {
-            stars.forEach(star => star.classList.add('mediume'));
-        } 
-        else if (rating == 4) {
-            stars.forEach(star => star.classList.add('highe'));
-        } 
-        else {
-            stars.forEach(star => star.classList.add('high'));
-        }
-    });
-});
+                // Changer le message en fonction de la note
+                switch (rating) {
+                    case '1':
+                        satisfactionMessage.textContent = '😡 Mauvaise';
+                        break;
+                    case '2':
+                        satisfactionMessage.textContent = '😟 Insatisfaisant';
+                        break;
+                    case '3':
+                        satisfactionMessage.textContent = '😐 Moyenne';
+                        break;
+                    case '4':
+                        satisfactionMessage.textContent = '😊 Satisfaisant';
+                        break;
+                    case '5':
+                        satisfactionMessage.textContent = '😁 Excellent';
+                        break;
+                }
+
+                // Mettre à jour l'affichage des étoiles
+                stars.forEach(s => {
+                    s.classList.toggle('active', s.getAttribute('data-value') <= rating);
+                });
+            });
+        });
 
         // Afficher la première section par défaut
         showSection(currentSection);
@@ -733,27 +744,6 @@ stars.forEach(star => {
     });
 </script>
 
-
-
-<script>
-    const stars = document.querySelectorAll('.star');
-    stars.forEach(star => {
-        star.addEventListener('click', () => {
-            // Retirer les classes de sélection de toutes les étoiles
-            stars.forEach(s => {
-                s.classList.remove('selected-1', 'selected-2', 'selected-3', 'selected-4', 'selected-5');
-            });
-            // Récupérer la valeur de l'étoile cliquée
-            let value = star.getAttribute('data-value');
-            // Ajouter la classe de couleur appropriée pour l'étoile sélectionnée et les précédentes
-            for (let i = 0; i < stars.length; i++) {
-                if (i < value) {
-                    stars[i].classList.add(`selected-${value}`);
-                }
-            }
-        });
-    });
-   </script>
 
 
   <!-- Vendor JS Files -->

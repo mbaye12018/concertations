@@ -8,20 +8,31 @@ use Illuminate\Database\Eloquent\Model;
 class EnqueteRapporteur extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'region_id',
         'departement_id',
         'secteur_id',
-        'firstname',
-        'lastname',
-        'phone',
-        'email',
-        'position',
+        'name',
+        'contact',
+        'fonction',
         'service_quality',
-        'service_feedback',
-        'reforms',
-        'citizen_involvement',
+        'service_point',
+        'accessible',
+        'obstacle',
+        'service_long',
+        'service_efficace',
+        'service_modernise',
+        'service_outils',
+        'reformes',
+        'ameliorer_services',
+        'transparence_responsabilite',
+        'accessibilite_services',
+        'simplification_procedures',
+        'coordination_services',
+        'technologies_numeriques',
+        'formation_agents',
+        'association_citoyens',
+        'outils_participation',
         'additional_comments',
     ];
 

@@ -335,7 +335,42 @@
   --background-color: #f5fbff; fond bleu 
   --surface-color: #ffffff;
 } */
+/*BOUTON SUIVANT PREMIER*/
 
+
+.btn-green {
+  text-align: right; /* Aligne le bouton à droite */
+  margin-top: 20px; 
+  background-color: green; /* Couleur de fond verte */
+  color: white; /* Couleur du texte en blanc */
+  border: none; /* Enlève le contour par défaut */
+  padding: 10px 20px; /* Ajoute de l'espace à l'intérieur du bouton */
+  border-radius: 5px; /* Arrondit les coins du bouton */
+  cursor: pointer; /* Change le curseur au survol */
+  transition: background-color 0.3s; /* Ajoute une transition douce pour le changement de couleur */
+}
+
+
+
+.btn-green:hover {
+  background-color: #FCC207; /* Couleur de fond au survol */
+}
+
+.btn-grey {
+  text-align: right; /* Aligne le bouton à droite */
+  margin-top: 20px; 
+  background-color: grey; /* Couleur de fond verte */
+  color: white; /* Couleur du texte en blanc */
+  border: none; /* Enlève le contour par défaut */
+  padding: 10px 20px; /* Ajoute de l'espace à l'intérieur du bouton */
+  border-radius: 5px; /* Arrondit les coins du bouton */
+  cursor: pointer; /* Change le curseur au survol */
+  transition: background-color 0.3s; /* Ajoute une transition douce pour le changement de couleur */
+}
+
+.btn-grey:hover {
+  background-color: darkgrey; /* Couleur au survol */
+}
 .dark-background {
   --background-color: #060606;
   --default-color: #ffffff;
@@ -1917,3 +1952,4 @@ section,
 .starter-section {
   /* Add your styles here */
 }
+
