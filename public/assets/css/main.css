@@ -227,8 +227,9 @@
 }
 
 .item-description {
-  font-size: 1.1em;
-  color: #666;
+  font-size: 1em;
+  color: #444444;
+  text-align: justify;
 }
 
 .item-list {
@@ -562,7 +563,7 @@ h6 {
 }
 
 .header .logo img {
-  max-height: 80px;
+  max-height: 150px;
   margin-right: 8px;
 }
 
@@ -1131,8 +1132,8 @@ section,
   color: var(--contrast-color);
   background: green;
   font-family: var(--heading-font);
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 20px;
   letter-spacing: 1px;
   padding: 8px 35px;
   border-radius: 3px;

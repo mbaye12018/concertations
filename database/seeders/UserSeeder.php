@@ -17,5 +17,12 @@ class UserSeeder extends Seeder
             'nom' => 'Dieng',    // Ajoutez le nom ici
             'role' => 'rapporteur', // Ou tout autre rôle que vous souhaitez attribuer
         ]);
+        User::create([
+            'username' => 'aicha.sy',
+            'password' => Hash::make('passer1234'), // Hachage du mot de passe
+            'prenom' => 'Aicha', // Ajoutez le prénom ici
+            'nom' => 'Sy',    // Ajoutez le nom ici
+            'role' => 'admin', // Ou tout autre rôle que vous souhaitez attribuer
+        ]);
     }
 }
