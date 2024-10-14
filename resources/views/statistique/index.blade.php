@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Concertation nationale</title>
+    <title>Concertation natioanle</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -14,6 +14,7 @@
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+   
     <!-- Fonts and icons -->
     <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
     
@@ -26,7 +27,6 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="../assets/css/demo.css" />
   </head>
-
   <body>
     <div class="wrapper">
       <!-- Sidebar -->
@@ -52,14 +52,13 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-              <li class="nav-item active">
+             
+            <li class="nav-item active">
               <a href="{{ route('admin.dashboard') }}" class="collapsed" aria-expanded="false">
-    <i class="fas fa-home"></i>
-    <p>Accueil</p>
-</a>
-          
-              
-                
+                <i class="fas fa-home"></i>
+                <p>Accueil</p>
+              </a>
+                              
               </li>
               <li class="nav-item">
                 <a href="{{ route('utilisateur.create') }}">
@@ -69,15 +68,13 @@
                
               </li>
               
+             
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#">
+                <a class="nav-link" href="{{ route('statistique.statistique') }}">
                   <i class="far fa-chart-bar"></i>
                   <p>Statistique</p>
-                   </a>
-               
-              </li>
-
-             
+                </a>
+            </li>
             </ul>
           </div>
         </div>
@@ -111,31 +108,12 @@
             </div>
             <!-- End Logo Header -->
           </div>
-          
           <!-- Navbar Header -->
-          <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
-            <div class="container-fluid">
-               
-
-              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-               
-               
-                        
-                <div class="dropdown">
-                  <button class="btn  dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-user"></i>
-                  
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li><button class="dropdown-item" type="button"><a href="{{ route('login') }}">Deconnexion</button></li> 
-                  </ul>
-                </div>
-                          
-              </ul>
-           
-          </nav>
+        
+        
+             
           <!-- End Navbar -->
-      
+        </div>
 
         <div class="container">
           <div class="page-inner">
@@ -145,327 +123,223 @@
              
             </div>
             <div class="row">
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round" style="pointer-events: none;">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-primary bubble-shadow-small"
-                        >
-                          <i class="fas fa-users"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Avis recueillis</p>
-                          <h4 class="card-title">1974</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-info bubble-shadow-small"
-                        >
-                          <i class="fas fa-users"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Sénégal</p>
-                          <h4 class="card-title">1453</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-success bubble-shadow-small"
-                        >
-                          <i class="fas fa-users"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Diaspora</p>
-                          <h4 class="card-title">521</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-             
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card card-round">
-                  <div class="card-header">
-                    <div class="card-head-row">
-                      <div class="card-title">Statistique</div>
-                      <div class="card-tools">
-                        <a
-                          href="#"
-                          class="btn btn-label-success btn-round btn-sm me-2"
-                        >
-                          <span class="btn-label">
-                            <i class="fa fa-pencil"></i>
-                          </span>
-                          Exporter
-                        </a>
-                        <a href="#" class="btn btn-label-info btn-round btn-sm">
-                          <span class="btn-label">
-                            <i class="fa fa-print"></i>
-                          </span>
-                          Imprimer
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="chart-container" style="min-height: 375px">
-                      <canvas id="statisticsChart"></canvas>
-                    </div>
-                    <div id="myChartLegend"></div>
-                  </div>
-                </div>
-              </div>             
-            </div>
+  <div class="col-md-12">
+    <div class="form-group" style="display: flex; align-items: center;">
+      <label for="location-select" style="margin-right: 10px;">Choisissez votre emplacement :</label>
+      <select id="location-select" class="form-select" onchange="showAdditionalSelects()" style="margin-right: 10px;">
+        <option value="">-- Sélectionnez une option --</option>
+        <option value="senegal">Sénégal</option>
+        <option value="diaspora">Diaspora</option>
+      </select>
+
+      <!-- Sélection des régions du Sénégal -->
+      <div id="senegal-selects" style="display: none; margin-right: 10px;">
+        <select id="region-select" class="form-select" onchange="showDepartments()" style="margin-right: 10px;">
+          <option value="">-- Sélectionnez une région --</option>
+          <option value="dakar">Dakar</option>
+          <option value="thies">Thiès</option>
+          <option value="saint-louis">Saint-Louis</option>
+        </select>
+
+        <!-- Sélection des départements pour la région sélectionnée -->
+        <div id="department-selects" style="display: none;">
+          <select id="department-select" class="form-select" onchange="updateChart()">
+            <option value="">-- Sélectionnez un département --</option>
+            <option value="dakar">Dakar</option>
+            <option value="pikine">Pikine</option>
+            <option value="guediawaye">Guédiawaye</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Sélection des pays pour la Diaspora -->
+      <div id="diaspora-select" style="display: none; margin-right: 10px;">
+        <select id="country-select" class="form-select" onchange="updateChart()">
+          <option value="">-- Sélectionnez un pays --</option>
+          <option value="france">France</option>
+          <option value="usa">États-Unis</option>
+          <option value="italie">Italie</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Conteneur pour le graphique -->
+    <div class="chart-container" style="min-height: 375px;">
+      <canvas id="statisticsChart"></canvas>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
            
-            
           </div>
         </div>
 
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              <ul class="nav">
-               
-              </ul>
-            </nav>
-            <div class="copyright">
-            © 2024 Copyright MFPRSP/D2I 
             
-            </div>
-            <div>
-            </div>
+          <footer class="footer">
+    <div class="container-fluid d-flex justify-content-center">
+        <div class="copyright text-center">
+            © 2024 Copyright MFPRSP
+        </div>
+    </div>
+</footer>
+
+           
           </div>
         </footer>
       </div>
 
       <!-- Custom template | don't include it in your project! -->
-      <div class="custom-template">
-        <div class="title">Settings</div>
-        <div class="custom-content">
-          <div class="switcher">
-            <div class="switch-block">
-              <h4>Logo Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Navbar Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeTopBarColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Sidebar</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="white"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeSideBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark2"
-                ></button>
-              </div>
-            </div>
-          </div>
-        </div>
-      
-      </div>
+     
       <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
     <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="../assets/js/core/popper.min.js"></script>
     <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('statisticsChart').getContext('2d');
+  let myChart;
 
+  // Statistiques par défaut
+  const defaultLabels = ['Sénégal', 'Diaspora'];
+  const defaultData = [1453, 521]; // Valeurs par défaut
+
+  // Fonction pour afficher le graphique avec des statistiques par défaut
+  function displayDefaultChart() {
+    if (myChart) {
+      myChart.destroy();
+    }
+
+    myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: defaultLabels,
+        datasets: [{
+          label: 'Statistiques',
+          data: defaultData,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+  // Afficher les statistiques par défaut au chargement de la page
+  window.onload = function() {
+    displayDefaultChart();
+  };
+
+  function updateChart() {
+    const locationSelect = document.getElementById('location-select');
+    const regionSelect = document.getElementById('region-select');
+    const departmentSelect = document.getElementById('department-select');
+    const countrySelect = document.getElementById('country-select');
+
+    let labels = [];
+    let data = [];
+
+    // Mise à jour des données et des labels en fonction de la sélection
+    if (locationSelect.value === 'senegal') {
+      if (regionSelect.value) {
+        labels = ['Dakar', 'Thiès', 'Saint-Louis'];
+        data = [10, 20, 30]; // Remplacez par les données réelles
+      }
+      if (departmentSelect.value) {
+        labels = ['Dakar', 'Pikine', 'Guédiawaye'];
+        data = [5, 15, 25]; // Remplacez par les données réelles
+      }
+    } else if (locationSelect.value === 'diaspora') {
+      if (countrySelect.value) {
+        labels = ['France', 'États-Unis', 'Italie'];
+        data = [12, 22, 32]; // Remplacez par les données réelles
+      }
+    }
+
+    // Effacer le graphique précédent si nécessaire
+    if (myChart) {
+      myChart.destroy();
+    }
+
+    // Créer le nouveau graphique uniquement si des labels sont disponibles
+    if (labels.length > 0 && data.length > 0) {
+      myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Statistiques',
+            data: data,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+  }
+
+  function showAdditionalSelects() {
+    const locationSelect = document.getElementById('location-select');
+    const senegalSelects = document.getElementById('senegal-selects');
+    const diasporaSelect = document.getElementById('diaspora-select');
+    const departmentSelects = document.getElementById('department-selects');
+
+    // Masquer tous les sélecteurs supplémentaires
+    senegalSelects.style.display = 'none';
+    diasporaSelect.style.display = 'none';
+    departmentSelects.style.display = 'none';
+
+    if (locationSelect.value === 'senegal') {
+      senegalSelects.style.display = 'block';
+      displayDefaultChart(); // Afficher les statistiques par défaut
+    } else if (locationSelect.value === 'diaspora') {
+      diasporaSelect.style.display = 'block';
+      displayDefaultChart(); // Afficher les statistiques par défaut
+    }
+
+    // Mise à jour du graphique après changement de sélection
+    updateChart();
+  }
+
+  function showDepartments() {
+    const regionSelect = document.getElementById('region-select');
+    const departmentSelects = document.getElementById('department-selects');
+
+    // Afficher ou masquer les départements selon la région choisie
+    if (regionSelect.value) {
+      departmentSelects.style.display = 'block';
+    } else {
+      departmentSelects.style.display = 'none';
+    }
+
+    // Mise à jour du graphique après changement de sélection
+    updateChart();
+  }
+</script>
     <!-- jQuery Scrollbar -->
-    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
     <!-- Chart JS -->
     <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
@@ -495,33 +369,6 @@
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="../assets/js/setting-demo.js"></script>
     <script src="../assets/js/demo.js"></script>
-    <script>
-      $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#177dff",
-        fillColor: "rgba(23, 125, 255, 0.14)",
-      });
-
-      $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#f3545d",
-        fillColor: "rgba(243, 84, 93, .14)",
-      });
-
-      $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#ffa534",
-        fillColor: "rgba(255, 165, 52, .14)",
-      });
-    </script>
+    
   </body>
 </html>

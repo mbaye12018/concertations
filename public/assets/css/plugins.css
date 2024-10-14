@@ -389,7 +389,8 @@
   top: -14px; }
 .scrollbar-outer > .scroll-element.scroll-x .scroll-bar {
   min-width: 10px; }
-
+.scrollbar-outer > .scroll-element.scroll-y .scroll-bar {
+  min-height: 10px; }
 
 .scrollbar-macosx > .scroll-element {
   background: 0 0;
