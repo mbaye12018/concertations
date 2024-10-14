@@ -75,5 +75,7 @@ Route::get('/admin/ajoutuser', [AjoutController::class, 'create'])->name('ajoutu
 Route::post('/ajoutuser', [AjoutController::class, 'store'])->name('ajoutuser.store');
 
 //Statistique
-// routes/web.php
 Route::get('/statistique', [StatistiqueController::class, 'index'])->name('statistique.statistique');
+Route::get('/statistique/{id}', [StatistiqueController::class, 'filter'])->name('statistique.filter');
+
+

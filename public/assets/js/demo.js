@@ -362,7 +362,7 @@ var statisticsChart = new Chart(ctx, {
 	}
 });
 
-var myLegendContainer = document.getElementById("myChartLegend");
+var myLegendContainer = document.getElementById("myChartLegends");
 
 // generate HTML legend
 myLegendContainer.innerHTML = statisticsChart.generateLegend();

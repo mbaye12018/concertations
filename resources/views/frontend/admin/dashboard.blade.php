@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Concertation nationale</title>
+    <title>Concertation natioanle</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -14,9 +14,26 @@
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+   
     <!-- Fonts and icons -->
     <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
-    
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
@@ -26,7 +43,6 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="../assets/css/demo.css" />
   </head>
-
   <body>
     <div class="wrapper">
       <!-- Sidebar -->
@@ -52,6 +68,7 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
+             
               <li class="nav-item active">
                 <a
                   data-bs-toggle="collapse"
@@ -80,8 +97,6 @@
                   <p>Statistique</p>
                 </a>
             </li>
-
-             
             </ul>
           </div>
         </div>
@@ -115,8 +130,8 @@
             </div>
             <!-- End Logo Header -->
           </div>
-          
           <!-- Navbar Header -->
+        
           <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
             <div class="container-fluid">
             <span class="op-7">Bienvenue,</span>
@@ -144,8 +159,9 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
           </nav>
+             
           <!-- End Navbar -->
-      
+        </div>
 
         <div class="container">
           <div class="page-inner">
@@ -156,7 +172,7 @@
             </div>
             <div class="row">
               <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round" style="pointer-events: none;">
+                <div class="card card-stats card-round">
                   <div class="card-body">
                     <div class="row align-items-center">
                       <div class="col-icon">
@@ -184,7 +200,7 @@
                         <div
                           class="icon-big text-center icon-info bubble-shadow-small"
                         >
-                          <i class="fas fa-users"></i>
+                        <i class="fas fa-users"></i>
                         </div>
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
@@ -205,7 +221,7 @@
                         <div
                           class="icon-big text-center icon-success bubble-shadow-small"
                         >
-                          <i class="fas fa-users"></i>
+                        <i class="fas fa-users"></i>
                         </div>
                       </div>
                       <div class="col col-stats ms-3 ms-sm-0">
@@ -218,7 +234,7 @@
                   </div>
                 </div>
               </div>
-             
+              
             </div>
             <div class="row">
               <div class="col-md-12">
@@ -234,13 +250,13 @@
                           <span class="btn-label">
                             <i class="fa fa-pencil"></i>
                           </span>
-                          Exporter
+                          Export
                         </a>
                         <a href="#" class="btn btn-label-info btn-round btn-sm">
                           <span class="btn-label">
                             <i class="fa fa-print"></i>
                           </span>
-                          Imprimer
+                          Print
                         </a>
                       </div>
                     </div>
@@ -256,218 +272,27 @@
              
             </div>
            
-            
           </div>
         </div>
 
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              <ul class="nav">
-               
-              </ul>
-            </nav>
-            <div class="copyright">
-            © 2024 Copyright MFPRSP/D2I 
             
-            </div>
-            <div>
-            </div>
+          <footer class="footer">
+    <div class="container-fluid d-flex justify-content-center">
+        <div class="copyright text-center">
+            © 2024 Copyright MFPRSP
+        </div>
+    </div>
+</footer>
+
+           
           </div>
         </footer>
       </div>
 
       <!-- Custom template | don't include it in your project! -->
-      <div class="custom-template">
-        <div class="title">Settings</div>
-        <div class="custom-content">
-          <div class="switcher">
-            <div class="switch-block">
-              <h4>Logo Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Navbar Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeTopBarColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Sidebar</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="white"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeSideBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark2"
-                ></button>
-              </div>
-            </div>
-          </div>
-        </div>
-      
-      </div>
+     
       <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
@@ -476,7 +301,7 @@
     <script src="../assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
     <!-- Chart JS -->
     <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
