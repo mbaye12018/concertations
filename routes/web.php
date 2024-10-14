@@ -13,6 +13,9 @@ use App\Http\Controllers\EnqueteRegionController;
 use App\Http\Controllers\EnqueteRapporteurController;
 use App\Http\Controllers\ObjectifController;
 use App\Http\Controllers\TendanceController;
+use App\Http\Controllers\AjoutController;
+use App\Http\Controllers\UtilisateurController;
+use App\Http\Controllers\StatistiqueController;
 // Route pour la page d'accueil
 Route::get('/', [templateButterfly::class, 'index']);
 
@@ -54,3 +57,25 @@ Route::get('/tendance', [TendanceController::class, 'index'])->name('tendance');
 Route::resource('enquete-region', EnqueteRegionController::class);
 
 Route::resource('enquetes', EnqueteRapporteurController::class);
+
+
+Route::post('/ajoutuser', [AjoutController::class, 'store'])->name('ajoutuser.store');
+
+//Utilisateur
+Route::get('/utilisateur/create', [UtilisateurController::class, 'create'])->name('utilisateur.create');
+Route::delete('/utilisateur/{id}', [UtilisateurController::class, 'destroy'])->name('utilisateur.destroy');
+Route::get('/utilisateur/{id}/edit', [UtilisateurController::class, 'edit'])->name('utilisateur.edit');
+Route::put('/utilisateur/{id}', [UtilisateurController::class, 'update'])->name('utilisateur.update');
+
+
+Route::post('/utilisateur', [UtilisateurController::class, 'store'])->name('utilisateur.store');
+
+
+//Partie Admin
+Route::get('/admin/ajoutuser', [AjoutController::class, 'create'])->name('ajoutuser.create');
+
+Route::post('/ajoutuser', [AjoutController::class, 'store'])->name('ajoutuser.store');
+
+//Statistique
+// routes/web.php
+Route::get('/statistique', [StatistiqueController::class, 'index'])->name('statistique.statistique');
