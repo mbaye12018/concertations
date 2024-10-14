@@ -94,7 +94,7 @@ h5 {
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
       <a href="{{ route('home') }}" class="logo d-flex align-items-center">
-        <img src="assets/img/logg.png" alt="">
+        <img src="assets/img/logg.PNG" alt="">
         <!-- Uncomment the line below if you also wish to use text logo -->
         <!-- <h1 class="sitename">Butterfly</h1>  -->
       </a>
@@ -114,6 +114,9 @@ h5 {
             <a href="{{ route('participation.form') }}">Donnez-nous votre avis</a>
         </li>
         <li>
+            <a href="{{ route('tendance') }}">Tendance</a>
+        </li>
+        <li>
             <a href="{{ route('login') }}">Connexion</a>
         </li>
     </ul>
@@ -128,8 +131,9 @@ h5 {
   
     <!-- Hero Section -->
 <section id="hero" class="hero section light-background" style="background-color:#F4F4F4">
+
   <div class="container">
-    
+  
     <div class="row gy-4 align-items-center">
       <!-- Text Section -->
       <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-md-start" data-aos="fade-up">

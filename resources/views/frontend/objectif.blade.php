@@ -149,6 +149,9 @@
           <li><a href="{{ route('contexte') }}">Contexte</a></li>
           <li><a href="{{ route('objectif') }}">Objectifs</a></li>
           <li><a href="{{ route('participation.form') }}">Donnez-nous votre avis</a></li>
+          <li>
+            <a href="{{ route('tendance') }}">Tendance</a>
+        </li>
           <li><a href="{{ route('login') }}">Connexion</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

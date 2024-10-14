@@ -219,6 +219,9 @@
             <a href="{{ route('participation.form') }}">Donnez-nous votre avis</a>
         </li>
         <li>
+            <a href="{{ route('tendance') }}">Tendance</a>
+        </li>
+        <li>
             <a href="{{ route('login') }}">Connexion</a>
         </li>
     </ul>
@@ -236,6 +239,8 @@
 <form id="registrationForm" method="POST" action="{{ route('enquetes.store') }}">
 
     @csrf <!-- Protection CSRF -->
+    <input type="hidden" name="utilisateurs_id" value="{{ auth()->user()->id }}">
+
     <div id="formContainer">
         <div id="section1" class="section active">
             <h2>Identification</h2>

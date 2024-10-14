@@ -30,13 +30,32 @@
 
  
 </head>
+<style>
+  .navmenu a.active {
+    background-color: #F4F4F4; /* Choisissez la couleur de fond souhaitée */
+    color: black; /* Couleur du texte pour le contraste */
+}
+.navmenu ul li a.highlight {
+    background-color: yellow; /* Couleur de fond jaune */
+    color: black; /* Couleur du texte (ajustez si nécessaire) */
+    padding: 10px; /* Ajoutez du padding pour un meilleur espacement */
+    border-radius: 5px; /* Arrondissez les coins si souhaité */
+    transition: background-color 0.3s; /* Transition pour l'effet de survol */
+}
+
+.navmenu ul li a.highlight:hover {
+    background-color: orange; /* Couleur de fond au survol (ajustez si nécessaire) */
+}
+
+
+</style>
 
 <body class="index-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-      <a href="#" class="logo d-flex align-items-center">
+      <a href="{{ route('home') }}" class="logo d-flex align-items-center">
         <img src="assets/img/logg.png" alt="">
       
       </a>
@@ -55,6 +74,9 @@
             <a href="{{ route('participation.form') }}">Donnez-nous votre avis</a>
         </li>
         <li>
+            <a href="{{ route('tendance') }}">Tendance</a>
+        </li>
+        <li>
             <a href="{{ route('login') }}">Connexion</a>
         </li>
     </ul>
@@ -65,9 +87,13 @@
   </header>
 
   <main class="main">
-
+    
+ 
+    <h1 class="title-highlight" style="text-align:center;margin-top:2%">Contexte des concertations nationales</h1>
+  
     <!-- Hero Section -->
 <section id="hero" class="hero section light-background">
+  
   <div class="container">
     <div class="row gy-4 align-items-center">
       <!-- Text Section -->
@@ -221,7 +247,7 @@ function closePopup() {
 </div>
 
 <div class="container copyright text-center mt-4">
-  <p>© <span>2024 Copyright</span> <strong class="px-1 sitename">MFPRSP/D2I</strong> <span></span></p>
+  <p>© <span>2024 Copyright</span> <strong class="px-1 sitename">MFPRSP/DSI/D2I</strong> <span></span></p>
  
 </div>
 

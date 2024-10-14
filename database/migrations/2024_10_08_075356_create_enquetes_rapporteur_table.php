@@ -17,7 +17,8 @@ class CreateEnquetesRapporteurTable extends Migration
             $table->id();
             $table->unsignedBigInteger('region_id'); // Clef étrangère vers 'regions'
             $table->unsignedBigInteger('departement_id'); // Clef étrangère vers 'departments'
-            $table->unsignedBigInteger('secteur_id'); // Clef étrangère vers 'secteurs'
+            $table->unsignedBigInteger('secteur_id');
+            $table->unsignedBigInteger('utilisateurs_id'); // Clef étrangère vers 'secteurs'
             
             // Vos autres champs
             $table->string('name');
@@ -48,6 +49,7 @@ class CreateEnquetesRapporteurTable extends Migration
             $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
             $table->foreign('departement_id')->references('id')->on('departements')->onDelete('cascade');
             $table->foreign('secteur_id')->references('id')->on('secteurs')->onDelete('cascade');
+            $table->foreign('utilisateurs_id')->references('id')->on('utilisateurs')->onDelete('cascade');
         });
         
     }

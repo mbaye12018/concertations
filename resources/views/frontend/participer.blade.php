@@ -1,730 +1,260 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Plateforme de concertation nationale</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-
-  <!-- Favicons -->
-  <link href="assets/img/logoconcertation.PNG" rel="icon">
-  <link href="assets/img/logoconcertation.PNG" rel="apple-touch-icon">
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Jost:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
-  <style>
-   
-
-    #formContainer {
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      margin: 60px auto; /* Ajout d'une marge pour le header */
-      max-width: 600px;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .section {
-      display: none;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    .question {
-      margin: 15px 0;
-    }
-
-    .question input[type="text"],
-    .question input[type="email"],
-    .question input[type="tel"],
-    .question select {
-      width: calc(100% - 20px);
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .question textarea {
-      width: calc(100% - 20px);
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      resize: vertical;
-      height: 80px;
-    }
-   
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-
-    button {
-      padding: 10px 15px;
-      border: none;
-      border-radius: 4px;
-      background-color: #007BFF;
-      color: white;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      background-color: #ccc;
-    }
-   
-    
-    .question label {
-    display: inline-block;
-    margin-right: 40px;
-}
-.required {
-  color: red;
-}
-#encouragementMessage {
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.5em;
-    margin: 20px auto; /* Centrage horizontal et espace au-dessus et au-dessous */
-    max-width: 80%; /* Limite la largeur à 80% de la page */
-    color: black;
-    opacity: 0;
-    transform: translateY(-20px);
-    animation: fadeInMove 2s ease-in-out forwards;
-  }
-
-  @keyframes fadeInMove {
-    0% {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    50% {
-      opacity: 0.5;
-      transform: translateY(0);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Ajouter un léger effet clignotant pour l'emoji 💪 */
-  #encouragementMessage span {
-    animation: pulse 1.5s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.2);
-    }
-  }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire d'Enquête</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Votre fichier CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        #formContainer {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2, h3 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .question-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+            position: relative;
+        }
+        .question-section i {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 2rem;
+            color: #4CAF50;
+        }
+        .question {
+            margin: 1rem 0;
+        }
+        label {
+            font-weight: bold;
+        }
+        .required {
+            color: red;
+        }
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        .star {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ccc;
+        }
+        .star:hover,
+        .star:hover ~ .star {
+            color: #FFD700;
+        }
+        input[type="text"], select, textarea {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-top: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="checkbox"], input[type="radio"] {
+            margin-right: 10px;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .btn-green {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-green:hover {
+            background-color: #45a049;
+        }
+        .optional-text {
+            display: none; /* Masquer par défaut */
+        }
+    </style>
 </head>
-
-<body class="index-page">
-
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="#" class="logo d-flex align-items-center">
-        <img src="assets/img/logg.png" alt="Logo">
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-    <ul>
-        <li>
-            <a href="{{ route('home') }}" class="{{ request()->is('/') ? 'active' : '' }}">Accueil</a>
-        </li>
-        <li>
-            <a href="{{ route('contexte') }}">Contexte</a>
-        </li>
-        <li>
-            <a href="{{ route('objectif') }}">objectif</a>
-        </li>
-        <li>
-            <a href="{{ route('participation.form') }}">Donnez-nous votre avis</a>
-        </li>
-        <li>
-            <a href="{{ route('login') }}">Connexion</a>
-        </li>
-    </ul>
-    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-</nav>
-    </div>
-  </header>
-</br>
-<h1></h1>
-
-
-<div id="encouragementMessage">
-  "Votre voix compte ! En remplissant ce formulaire, vous contribuez à améliorer nos services et à bâtir un avenir meilleur pour tous. <span>💪</span>"
-</div>
+<body>
 
 <form id="registrationForm" method="POST" action="{{ route('enquete.store') }}">
     @csrf <!-- Protection CSRF -->
     <div id="formContainer">
-      
-    <div id="section1" class="section active">
-    <h2>Identification</h2>
-        <div class="question">
-            <label>Lieu de résidence <span class="required">(*)</span> :</label><br>
-            <label><input type="radio" id="senegal" name="location" value="Senegal" required> Sénégal</label>
-            <label><input type="radio" id="diaspora" name="location" value="Diaspora" required> Diaspora</label>
+
+        <h2>Formulaire d'Enquête sur le Service Public</h2>
+
+        <!-- Section 1: Perception du Service Public Actuel -->
+        <div class="question-section">
+            <i class="fas fa-thumbs-up"></i>
+            <h3>Section 1 : Perception du Service Public Actuel</h3>
+            
+            <div class="question">
+                <label>1. Dans quelle mesure êtes-vous satisfait(e) de la qualité des services publics ? <span class="required">(*)</span></label>
+                <div class="star-rating" data-question="1">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <input type="hidden" name="satisfaction" id="satisfaction" value="0">
+            </div>
+
+            <div class="question">
+                <label>2. Points forts des services publics (choisissez tout ce qui s'applique) :</label>
+                <label><input type="checkbox" name="points_forts[]" value="Accessibilité"> Accessibilité</label><br>
+                <label><input type="checkbox" name="points_forts[]" value="Efficacité"> Efficacité</label><br>
+                <label><input type="checkbox" name="points_forts[]" value="Qualité"> Qualité</label><br>
+                <label><input type="checkbox" name="points_forts[]" value="Rapidité"> Rapidité</label><br>
+                <label><input type="checkbox" name="points_forts[]" value="Service client"> Service client</label>
+            </div>
+
+            <div class="question">
+                <label>3. Points faibles des services publics (choisissez tout ce qui s'applique) :</label>
+                <label><input type="checkbox" name="points_faiblesses[]" value="Longs délais"> Longs délais</label><br>
+                <label><input type="checkbox" name="points_faiblesses[]" value="Complexité"> Complexité</label><br>
+                <label><input type="checkbox" name="points_faiblesses[]" value="Manque d'information"> Manque d'information</label><br>
+                <label><input type="checkbox" name="points_faiblesses[]" value="Inaccessibilité"> Inaccessibilité</label>
+            </div>
+
+            <div class="question">
+                <label>4. Les services publics sont-ils facilement accessibles pour tous ? <span class="required">(*)</span></label>
+                <label><input type="radio" name="accessibilite" value="Oui" required> Oui</label>
+                <label><input type="radio" name="accessibilite" value="Non" required> Non</label>
+            </div>
+
+            <div class="question">
+                <label>5. Quels sont les obstacles à l'accès aux services publics ? (choisissez tout ce qui s'applique)</label>
+                <label><input type="checkbox" name="obstacles[]" value="Frais élevés"> Frais élevés</label><br>
+                <label><input type="checkbox" name="obstacles[]" value="Manque de communication"> Manque de communication</label><br>
+                <label><input type="checkbox" name="obstacles[]" value="Proximité géographique"> Proximité géographique</label>
+            </div>
+
+            <div class="question">
+                <label>6. Les procédures administratives sont-elles trop longues et complexes ? <span class="required">(*)</span></label>
+                <label><input type="radio" name="complexite" value="Oui" required> Oui</label>
+                <label><input type="radio" name="complexite" value="Non" required> Non</label>
+            </div>
+
+            <div class="question">
+                <label>7. À votre avis, les services publics sont-ils suffisamment modernisés pour répondre aux défis actuels ? <span class="required">(*)</span></label>
+                <label><input type="radio" name="modernisation" value="Oui" required> Oui</label>
+                <label><input type="radio" name="modernisation" value="Non" required> Non</label>
+            </div>
+
+            <div class="question">
+                <label>8. Outils numériques ou technologiques pouvant améliorer les services publics (choisissez tout ce qui s'applique) :</label>
+                <label><input type="checkbox" name="outils_numeriques[]" value="Applications mobiles"> Applications mobiles</label><br>
+                <label><input type="checkbox" name="outils_numeriques[]" value="Portails web"> Portails web</label><br>
+                <label><input type="checkbox" name="outils_numeriques[]" value="Services en ligne"> Services en ligne</label><br>
+            </div>
         </div>
 
-        <div id="diasporaCountries" class="question" style="display: none;">
-            <label for="country">Sélectionnez votre pays :</label>
-            <select id="country" name="country" required>
-                <option value="">Choisir un pays</option>
-                <option value="France">France</option>
-                <option value="États-Unis">États-Unis</option>
-                <option value="Royaume-Uni">Royaume-Uni</option>
-            </select>
+        <!-- Section 2: Attentes et Priorités pour la Réforme -->
+        <div class="question-section">
+            <i class="fas fa-tools"></i>
+            <h3>Section 2 : Attentes et Priorités pour la Réforme</h3>
+            
+            <div class="question">
+                <label>1. Quelles sont, selon vous, les principales réformes à mettre en œuvre ?</label>
+                <input type="text" name="reformes" placeholder="Listez les réformes">
+            </div>
+
+            <div class="question">
+                <label>2. Quelles mesures pourraient améliorer la qualité des services publics ?</label>
+                <input type="text" name="ameliorations" placeholder="Listez les mesures">
+            </div>
+
+            <div class="question">
+                <label>3. Comment garantir la transparence des administrations publiques ?</label>
+                <input type="text" name="transparence" placeholder="Proposez des idées">
+            </div>
+
+            <div class="question">
+                <label>4. Priorités pour la réforme des services publics (choisissez tout ce qui s'applique) :</label>
+                <label><input type="checkbox" name="priorites_reformes[]" value="Amélioration de la qualité"> Amélioration de la qualité</label><br>
+                <label><input type="checkbox" name="priorites_reformes[]" value="Réduction des coûts"> Réduction des coûts</label><br>
+                <label><input type="checkbox" name="priorites_reformes[]" value="Digitalisation"> Digitalisation</label>
+            </div>
         </div>
 
-        <div class="question">
-            <label for="firstname">Prénom et nom<span class="required">(*)</span> :</label>
-            <input type="text" id="name" name="name" required>
-        </div>
-       
-        <div class="question">
-        <label for="contact">Contact <span class="required"></span> :</label>
-        <input type="text" id="contact" name="contact" placeholder="Email ou téléphone" >
+        <!-- Section 3: Participation Citoyenne -->
+        <div class="question-section">
+            <i class="fas fa-users"></i>
+            <h3>Section 3 : Participation Citoyenne</h3>
+            
+            <div class="question">
+                <label>1. À quel point pensez-vous que la participation citoyenne est importante ?</label>
+                <div class="star-rating" data-question="2">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <input type="hidden" name="participation_importance" id="participation_importance" value="0">
+            </div>
+
+            <div class="question">
+                <label>2. Quels outils de participation citoyenne pourraient être mis en place ?</label>
+                <label><input type="checkbox" name="outils_participation[]" value="Forums communautaires"> Forums communautaires</label><br>
+                <label><input type="checkbox" name="outils_participation[]" value="Consultations publiques"> Consultations publiques</label><br>
+                <label><input type="checkbox" name="outils_participation[]" value="Sondages en ligne"> Sondages en ligne</label>
+            </div>
         </div>
 
+        <!-- Section 4: Autres Commentaires -->
+        <div class="question-section">
+            <i class="fas fa-comments"></i>
+            <h3>Section 4 : Autres Commentaires</h3>
+            <div class="question">
+                <label>1. Avez-vous d'autres suggestions ou commentaires ?</label>
+                <textarea name="autres_commentaires" rows="4" placeholder="Écrivez vos suggestions ici..."></textarea>
+            </div>
 
-        
-        <div class="question">
-            <label for="position">Fonction :</label>
-            <input type="text" id="fonction" name="fonction">
+            <div class="question">
+                <label>2. Autre (optionnel) :</label>
+                <textarea name="autre_option" rows="2" placeholder="Votre réponse..."></textarea>
+            </div>
         </div>
+
         <div class="buttons">
-        <p></p>
-                
-            <button type="button" id="next1" class="btn-green">Suivant &#8594;</button>
-        </div>
-   
-  </div>
-<div id="section2" class="section">
-        <h4 style="text-align:center">Parlons de votre perception du Service Public Actuel:</h4>
-  <div class="question">
-    <label>Comment noteriez-vous la qualité des services ?<span class="required">(*)</span> :</label>
-    <div class="star-rating" data-question="1">
-    <span class="star" data-value="1">★</span>
-    <span class="star" data-value="2">★</span>
-    <span class="star" data-value="3">★</span>
-    <span class="star" data-value="4">★</span>
-    <span class="star" data-value="5">★</span>
-  </div>
-
-
-    <div id="comment1">Satisfaction: <span id="satisfactionMessage" class="satisfaction-medium">😐</span></div>
-    <input type="hidden" name="service_quality" id="service_quality" value="0"> <!-- Ajouter ce champ pour le rating -->
-   </div>
-
-            <div class="question">
-                <label for="servicePoint">Quels sont les principaux points forts et les principales faiblesses des services publics actuels selon vous ?:</label>
-                <textarea id="servicePoint" name="service_point"></textarea>
-            </div>
-           
-      <div class="question">
-        <label>Les services publics sont-ils facilement accessibles pour tous ? (géographiquement, financièrement, etc.)
-        <span class="required">(*)</span> :</label>
-        
-        <br>
-        <label><input type="radio" id="ouiaccessible" name="accessible" value="Oui" required> Oui</label>
-        <label><input type="radio" id="nonaccessible" name="accessible" value="Non" required> Non</label>
-    </div>
-    <div class="question">
-                <label for="obstacle">Quels sont les principaux obstacles à l'accès aux services publics ?</label>
-                <textarea id="obstacle" name="obstacle"></textarea>
-            </div>
-
-    <div class="question">
-    <label>Les procédures administratives sont-elles trop longues et complexes ?</label><br>
-    <label>
-        <input type="radio" id="yes" name="service_long" value="oui" required> Oui
-    </label>
-    <label>
-        <input type="radio" id="no" name="service_long" value="non" required> Non
-    </label>
-  </div>
-
-  <div class="question">
-      <label>Les services publics répondent-ils à vos besoins de manière efficace ?</label><br>
-      <label>
-          <input type="radio" id="efficace-oui" name="service_efficace" value="oui" required> Oui
-      </label>
-      <label>
-          <input type="radio" id="efficace-non" name="service_efficace" value="non" required> Non
-      </label>
-  </div>
-
-      <div class="question">
-          <label>À votre avis, les services publics sont-ils suffisamment modernisés pour répondre aux défis actuels ?</label><br>
-          <label>
-              <input type="radio" id="modernise-oui" name="service_modernise" value="oui" required> Oui
-          </label>
-          <label>
-              <input type="radio" id="modernise-non" name="service_modernise" value="non" required> Non
-          </label>
-      </div>
-
-            <div class="question">
-                <label for="serviceFeedback">Quels outils numériques ou technologiques pourraient améliorer les services publics ?
-
-                </label>
-                <textarea id="service_outils" name="service_outils"required></textarea>
-            </div>
-
-            <div class="buttons">
-            <button type="button" class="btn-grey" id="prev1">
-            &#8592; Précédent
-          </button>
-          <button type="button" class="btn-green" id="next2">
-         Suivant &#8594;
-  </button>
-   </div>
-        </div>
-
-        <div id="section3" class="section">
-            <h4 style="text-align:center"> Attentes et Priorités pour la Réforme</h4>
-            <div class="question">
-    <label>Quelles sont, selon vous, les trois principales réformes à mettre en œuvre pour améliorer le service public ?</label><br>
-          <textarea name="reformes" rows="3"required ></textarea>
-      </div>
-
-      <div class="question">
-          <label>Quelles mesures concrètes faudrait-il mettre en place pour améliorer la qualité des services publics ?</label><br>
-          <textarea name="ameliorer_services" rows="3"required ></textarea>
-      </div>
-
-      <div class="question">
-          <label>Comment garantir la transparence et la responsabilité des administrations publiques ?</label><br>
-          <textarea name="transparence_responsabilite" rows="3" required></textarea>
-      </div>
-
-      <div class="question">
-          <label>Quelles actions pourraient être entreprises pour rendre les services publics plus accessibles à tous ?</label><br>
-          <textarea name="accessibilite_services" rows="3" required></textarea>
-      </div>
-
-      <div class="question">
-          <label>Comment simplifier les procédures administratives et réduire les délais de traitement ?</label><br>
-          <textarea name="simplification_procedures" rows="3" required></textarea>
-      </div>
-
-      <div class="question">
-          <label>Comment améliorer la coordination entre les différents services publics ?</label><br>
-          <textarea name="coordination_services" rows="3"required ></textarea>
-      </div>
-
-      <div class="question">
-          <label>Comment encourager l'utilisation des technologies numériques dans les services publics ?</label><br>
-          <textarea name="technologies_numeriques" rows="3" required></textarea>
-      </div>
-
-      <div class="question">
-          <label>Comment former les agents publics aux nouveaux outils et méthodes de travail ?</label><br>
-          <textarea name="formation_agents" rows="3" required></textarea>
-      </div>
-
-
-            <div class="buttons">
-                <button type="button" class="btn-grey" id="prev2"> &#8592;Précédent</button>
-                <button type="button" class="btn-green"  id="next3">Suivant &#8594;</button>
-            </div>
-        </div>
-
-        <div id="section4" class="section">
-            <h4 style="text-align:center"> Implication des Citoyens</h4>
-            <div class="question">
-    <label>Comment les citoyens pourraient-ils être davantage associés aux décisions concernant la réforme du service public ?</label><br>
-    <textarea name="association_citoyens" rows="3" required></textarea>
-   </div>
-
-      <div class="question">
-          <label>Quels outils de participation citoyenne pourraient être mis en place ?</label><br>
-          <textarea name="outils_participation" rows="3" required></textarea>
-      </div>
-
-            <div class="buttons">
-                <button type="button" class="btn-grey"  id="prev3"> &#8592; Précédent</button>
-                <button type="button" class="btn-green"  id="next4">Suivant &#8594;</button>
-            </div>
-        </div>
-
-        <div id="section5" class="section">
-            <h4 style="text-align:center"> Autres Commentaires</h4>
-            <div class="question">
-                <label>Commentaires supplémentaires :</label>
-                <textarea id="additionalComments" name="additional_comments"></textarea>
-            </div>
-            <div class="buttons">
-                <button type="button" class="btn-grey" id="prev4"> &#8592; Précédent</button>
-                <button type="submit" class="btn-green" id="submit">Soumettre</button>
-            </div>
+            <button type="submit" class="btn-green">Envoyer vos réponses</button>
         </div>
     </div>
 </form>
 
-
 <script>
-  document.addEventListener('DOMContentLoaded', () => {  
-    // Gestion de l'affichage des pays pour la Diaspora
-    document.getElementById('senegal').addEventListener('change', () => {
-      document.getElementById('diasporaCountries').style.display = 'none';
-      document.getElementById('country').removeAttribute('required'); // Supprimer required si Sénégal est sélectionné
-    });
-
-    document.getElementById('diaspora').addEventListener('change', () => {
-      document.getElementById('diasporaCountries').style.display = 'block';
-      document.getElementById('country').setAttribute('required', 'required'); // Ajouter required si Diaspora est sélectionné
-    });
-
-    // Gestion des sections du formulaire
-    const sections = document.querySelectorAll('.section');
-    let currentSection = 0;
-
-    function showSection(index) {
-      sections.forEach((section, i) => {
-        section.classList.toggle('active', i === index);
-      });
-    }
-
-    // Fonction de validation des champs obligatoires (uniquement pour les champs visibles)
-    function checkRequiredFields(section) {
-      const inputs = section.querySelectorAll('input[required]:not([style*="display: none"]), select[required]:not([style*="display: none"]), textarea[required]:not([style*="display: none"])');
-      let allFilled = true;
-
-      inputs.forEach(input => {
-        if (input.type === 'radio') {
-          const radioGroup = section.querySelectorAll(`input[name="${input.name}"]`);
-          const isChecked = Array.from(radioGroup).some(radio => radio.checked);
-          if (!isChecked) {
-            allFilled = false;
-          }
-        } else if (input.tagName === 'SELECT' && input.value === "") {
-          allFilled = false;
-        } else if (!input.value) {
-          allFilled = false;
-        }
-      });
-
-      if (!allFilled) {
-        alert("Veuillez remplir tous les champs obligatoires.");
-        return false;
-      }
-
-      return true;
-    }
-
-    // Navigation avec validation des sections
-    document.getElementById('next1').addEventListener('click', () => {
-      if (checkRequiredFields(sections[currentSection])) {
-        const location = document.querySelector('input[name="location"]:checked');
-        if (location && location.value === 'Senegal') {
-          document.getElementById('country').value = 'Sénégal'; // Si Sénégal est sélectionné, remplir le pays
-        }
-        currentSection++;
-        showSection(currentSection);
-      }
-    });
-
-    document.getElementById('next2').addEventListener('click', () => {
-      if (checkRequiredFields(sections[currentSection])) {
-        currentSection++;
-        showSection(currentSection);
-      }
-    });
-
-    document.getElementById('next3').addEventListener('click', () => {
-      if (checkRequiredFields(sections[currentSection])) {
-        currentSection++;
-        showSection(currentSection);
-      }
-    });
-
-    document.getElementById('next4').addEventListener('click', () => {
-      if (checkRequiredFields(sections[currentSection])) {
-        currentSection++;
-        showSection(currentSection);
-      }
-    });
-
-    // Navigation précédente
-    document.getElementById('prev1').addEventListener('click', () => {
-      currentSection--;
-      showSection(currentSection);
-    });
-
-    document.getElementById('prev2').addEventListener('click', () => {
-      currentSection--;
-      showSection(currentSection);
-    });
-
-    document.getElementById('prev3').addEventListener('click', () => {
-      currentSection--;
-      showSection(currentSection);
-    });
-
-    document.getElementById('prev4').addEventListener('click', () => {
-      currentSection--;
-      showSection(currentSection);
-    });
-
-     // Gestion de l'évaluation par étoiles
-     const stars = document.querySelectorAll('.star');
-const satisfactionMessage = document.getElementById('satisfactionMessage');
-const serviceQualityInput = document.getElementById('service_quality');
-
-stars.forEach(star => {
-    star.addEventListener('click', () => {
-        const rating = star.getAttribute('data-value');
-        serviceQualityInput.value = rating; // Mettre à jour la valeur cachée
-
-        // Mettre à jour le message de satisfaction
-        switch (rating) {
-            case '1':
-                satisfactionMessage.textContent = '😡 Mauvaise';
-                break;
-            case '2':
-                satisfactionMessage.textContent = '😟 Insatisfaisant';
-                break;
-            case '3':
-                satisfactionMessage.textContent = '😐 Moyenne';
-                break;
-            case '4':
-                satisfactionMessage.textContent = '😊 Satisfaisant';
-                break;
-            case '5':
-                satisfactionMessage.textContent = '😁 Excellent';
-                break;
-        }
-
-        // Mettre à jour les couleurs des étoiles
-        stars.forEach(star => {
-            star.classList.remove('selected', 'low', 'medium', 'mediume','highe','high'); // Réinitialiser les classes
-            if (star.getAttribute('data-value') <= rating) {
-                star.classList.add('selected'); // Couleur pour les étoiles sélectionnées
-            }
-        });
-
-        // Changer la couleur des étoiles selon la note
-        if (rating <= 1) {
-            stars.forEach(star => star.classList.add('low'));
-        } else if (rating == 2) {
-            stars.forEach(star => star.classList.add('medium'));
-        }   else if (rating == 3) {
-            stars.forEach(star => star.classList.add('mediume'));
-        } 
-        else if (rating == 4) {
-            stars.forEach(star => star.classList.add('highe'));
-        } 
-        else {
-            stars.forEach(star => star.classList.add('high'));
-        }
-    });
-});
-
-           
-        // Afficher la première section par défaut
-        showSection(currentSection);
-    });
-</script>
-<script>
- <script>
- const stars = document.querySelectorAll('.star');
-const satisfactionMessage = document.getElementById('satisfactionMessage');
-const serviceQualityInput = document.getElementById('service_quality');
-
-stars.forEach(star => {
-    star.addEventListener('click', () => {
-        const rating = star.getAttribute('data-value');
-        serviceQualityInput.value = rating; // Mettre à jour la valeur cachée
-
-        // Mettre à jour le message de satisfaction
-        switch (rating) {
-            case '1':
-                satisfactionMessage.textContent = '😡 Mauvaise';
-                break;
-            case '2':
-                satisfactionMessage.textContent = '😟 Insatisfaisant';
-                break;
-            case '3':
-                satisfactionMessage.textContent = '😐 Moyenne';
-                break;
-            case '4':
-                satisfactionMessage.textContent = '😊 Satisfaisant';
-                break;
-            case '5':
-                satisfactionMessage.textContent = '😁 Excellent';
-                break;
-        }
-
-        // Réinitialiser les couleurs des étoiles
-        stars.forEach(star => {
-            star.classList.remove('selected', 'rating-1', 'rating-2', 'rating-3', 'rating-4', 'rating-5');
-        });
-
-        // Ajouter la classe correspondante à l'étoile cliquée et aux précédentes
-        for (let i = 0; i < stars.length; i++) {
-            if (i < rating) {
-                stars[i].classList.add(`rating-${rating}`);
-                stars[i].classList.add('selected'); // Ajouter pour souligner la sélection
-            }
-        }
-    });
-});
-
-</script>
-
-
-
-
-<script>
-    const stars = document.querySelectorAll('.star');
-    stars.forEach(star => {
+    document.querySelectorAll('.star').forEach(star => {
         star.addEventListener('click', () => {
-            // Retirer les classes de sélection de toutes les étoiles
-            stars.forEach(s => {
-                s.classList.remove('selected-1', 'selected-2', 'selected-3', 'selected-4', 'selected-5');
-            });
-            // Récupérer la valeur de l'étoile cliquée
-            let value = star.getAttribute('data-value');
-            // Ajouter la classe de couleur appropriée pour l'étoile sélectionnée et les précédentes
-            for (let i = 0; i < stars.length; i++) {
-                if (i < value) {
-                    stars[i].classList.add(`selected-${value}`);
-                }
+            const value = star.getAttribute('data-value');
+            const questionId = star.parentElement.getAttribute('data-question');
+            document.getElementById(questionId === "1" ? 'satisfaction' : 'participation_importance').value = value;
+            document.querySelectorAll(`.star[data-question="${questionId}"]`).forEach(s => s.style.color = '#ccc'); // Reset stars
+            for (let i = 0; i < value; i++) {
+                document.querySelectorAll(`.star[data-question="${questionId}"]`)[i].style.color = '#FFD700'; // Highlight stars
             }
         });
     });
-   </script>
 </script>
-
-
-<!-- Add this somewhere in your HTML to display the quality text -->
-<div id="quality_text"></div>
-
-
-
-<!-- Pop-up de validation -->
-<div id="success-popup" class="popups" style="display: none;">
-    <span class="close-btn">&times;</span>
-    <p>✔ Merci ! Vos réponses ont été enregistrées. Votre avis contribuera à améliorer les services publics.</p>
-
-</div>
-<style>
-  .star {
-    font-size: 30px;
-    cursor: pointer;
-    color: gray; /* Couleur par défaut */
-}
-
-
-
-.star.selected.low {
-    color: red; /* Couleur pour les notes basses */
-}
-
-.star.selected.medium {
-    color: orange; /* Couleur pour la note moyenne */
-}
-.star.selected.mediume {
-    color: gold; /* Couleur pour la note moyenne */
-}
-.star.selected.high {
-    color: green; /* Couleur pour les bonnes notes */
-}
-.star.selected.highe {
-    color: lightgreen; /* Couleur pour les bonnes notes */
-}
-
-  .popups {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white; /* Couleur de fond blanche */
-    color: black; /* Couleur du texte noir */
-    padding: 20px;
-    border-radius: 5px;
-    border: 1px solid #ccc; /* Bordure grise */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Ombre pour un léger effet de profondeur */
-    z-index: 1000; /* Assure que le popup est au-dessus des autres éléments */
-    display: none; /* Masquer par défaut */
-}
-
-.close-btn {
-    cursor: pointer;
-    float: right;
-    font-size: 20px;
-    font-weight: bold;
-    color: black; /* Couleur du bouton de fermeture */
-}
-
-.close-btn:hover {
-    color: red; /* Couleur au survol pour un effet */
-}
-
-.popups p {
-    margin: 10px 0 0; /* Ajuster la marge du texte */
-    text-align: center; /* Centrer le texte */
-}
-
-</style>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Vérifiez si le pop-up doit s'afficher
-        @if(session('success'))
-            const popups = document.getElementById('success-popup');
-            popups.style.display = 'block'; // Afficher le pop-up
-
-            // Fermer le pop-up après 3 secondes
-            setTimeout(() => {
-                popups.style.display = 'none'; // Masquer le pop-up
-            }, 3000);
-        @endif
-    });
-</script>
-
-
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-
 
 </body>
-
 </html>

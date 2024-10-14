@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Region; // Modèle Region
 use App\Models\Departement; // Modèle Departement
 use App\Models\Secteur; // Modèle Secteur
+use App\Models\Utilisateur; // Modèle Secteur
 use Illuminate\Http\Request;
 
 class RapporteurController extends Controller
@@ -34,7 +35,16 @@ class RapporteurController extends Controller
       
         return response()->json($departements);
     }
+    
 
+    public function getUtilisateurs($utilisateursId)
+    {
+       
+        $utilisateurs = Utilisateurs::where('utilisateurs_id', $utilisateursId)->get();
+        
+      
+        return response()->json($utilisateurs);
+    }
  
     public function getSecteurs($departementId)
     {

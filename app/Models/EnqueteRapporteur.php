@@ -12,6 +12,7 @@ class EnqueteRapporteur extends Model
         'region_id',
         'departement_id',
         'secteur_id',
+        'utilisateurs_id',
         'name',
         'contact',
         'fonction',
@@ -49,5 +50,9 @@ class EnqueteRapporteur extends Model
     public function secteur()
     {
         return $this->belongsTo(Secteur::class);
+    }
+    public function utilisateurs()
+    {
+        return $this->belongsTo(utilisateurs::class);
     }
 }

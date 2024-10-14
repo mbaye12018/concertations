@@ -27,6 +27,7 @@ class EnqueteRapporteurController extends Controller
             'region_id' => 'required|exists:regions,id',
             'departement_id' => 'required|exists:departements,id', // Correction ici : 'department_id' -> 'departement_id'
             'secteur_id' => 'required|exists:secteurs,id',
+            'utilisateurs_id' => 'required|exists:utilisateurs,id',
             'name' => 'required|string|max:100',
             'contact' => 'required|string|max:100',
             'fonction' => 'required|string|max:15', 

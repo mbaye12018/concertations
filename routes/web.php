@@ -12,6 +12,7 @@ use App\Http\Controllers\RapporteurController;
 use App\Http\Controllers\EnqueteRegionController;
 use App\Http\Controllers\EnqueteRapporteurController;
 use App\Http\Controllers\ObjectifController;
+use App\Http\Controllers\TendanceController;
 // Route pour la page d'accueil
 Route::get('/', [templateButterfly::class, 'index']);
 
@@ -48,6 +49,7 @@ Route::get('/secteurs/{departementId}', [RapporteurController::class, 'getSecteu
 //Contexte page
 Route::get('/contexte', [ContexteController::class, 'index'])->name('contexte');
 Route::get('/objectif', [ObjectifController::class, 'index'])->name('objectif');
+Route::get('/tendance', [TendanceController::class, 'index'])->name('tendance');
 
 Route::resource('enquete-region', EnqueteRegionController::class);
 
