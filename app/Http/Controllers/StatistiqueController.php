@@ -7,54 +7,53 @@ use App\Models\EnqueteGenerale;  // Le modèle pour les enquêtes
 use App\Models\Region;  // Le modèle pour les régions
 use App\Models\Department;  // Modèle pour les départements, si applicable
 
+
 class StatistiqueController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $location = $request->input('location');
-        $region = $request->input('region');
-        $department = $request->input('department');
+        // Récupérer les données pour le Sénégal et la Diaspora
+        $totalSenegal = EnqueteGenerale::where('location', 'Senegal')->count();
+        $totalDiaspora = EnqueteGenerale::where('location', 'Diaspora')->count();
 
-        // Initialiser les labels et les données
-        $labels = [];
-        $data = [];
+        // Récupérer les données par région pour le Sénégal
+        $regions = Region::all(); // Exemple, ajustez selon votre structure
 
-        // Si une localisation (Sénégal ou Diaspora) est sélectionnée
-        if ($location === 'Senegal') {
-            // Filtrer par région si spécifié
-            if ($region) {
-                $labels = Region::where('name', $region)->pluck('name')->toArray();  // Récupérer les noms des régions
-                $data = EnqueteGenerale::where('location', 'Senegal')
-                                       ->where('region', $region)
-                                       ->count();  // Nombre d'enquêtes pour cette région
-            } elseif ($department) {
-                // Filtrer par département si spécifié
-                $labels = Department::where('name', $department)->pluck('name')->toArray();
-                $data = EnqueteGenerale::where('location', 'Senegal')
-                                       ->where('department', $department)
-                                       ->count();  // Nombre d'enquêtes pour ce département
-            } else {
-                // Sinon, récupérer les statistiques globales pour le Sénégal
-                $labels = ['Sénégal'];
-                $data = [EnqueteGenerale::where('location', 'Senegal')->count()];
-            }
-        } elseif ($location === 'Diaspora') {
-            // Si une localisation "Diaspora" est sélectionnée
-            $labels = ['Diaspora'];
-            $data = [EnqueteGenerale::where('location', 'Diaspora')->count()];
-        } else {
-            // Afficher les statistiques globales (Sénégal et Diaspora)
-            $labels = ['Sénégal', 'Diaspora'];
-            $data = [
-                EnqueteGenerale::where('location', 'Senegal')->count(),
-                EnqueteGenerale::where('location', 'Diaspora')->count()
-            ];
-        }
-
-        // Renvoyer les labels et données à la vue
-        return view('statistique.index', compact('labels', 'data', 'location', 'region', 'department'));
+        // Passer les données à la vue
+        return view('statistique.index', compact('totalSenegal', 'totalDiaspora', 'regions'));
     }
+
+    // Endpoint pour AJAX (si vous voulez faire du chargement dynamique)
+   // StatistiqueController.php
+public function getStatistics(Request $request)
+{
+    $location = $request->input('location');
+    $region = $request->input('region');
+    
+    if ($location === 'senegal' && $region) {
+        // Récupérer les départements pour le Sénégal
+        $data = EnqueteGenerale::where('location', 'Senegal')
+            ->where('region', $region)
+            ->select('department', \DB::raw('count(*) as total'))
+            ->groupBy('department')
+            ->get();
+    } elseif ($location === 'diaspora') {
+        // Récupérer les pays pour la Diaspora
+        $data = EnqueteGenerale::where('location', 'Diaspora')
+            ->select('country', \DB::raw('count(*) as total'))
+            ->groupBy('country')
+            ->get();
+    } else {
+        return response()->json(['error' => 'Invalid location'], 400);
+    }
+
+    return response()->json($data);
 }
+
+    
+    
+}
+
 
    
     

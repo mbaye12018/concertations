@@ -78,3 +78,4 @@ Route::post('/ajoutuser', [AjoutController::class, 'store'])->name('ajoutuser.st
 
 //Statistique
 Route::get('/statistique', [StatistiqueController::class, 'index'])->name('statistique.statistique');
+Route::get('/get-statistics', [StatistiqueController::class, 'getStatistics']);

@@ -226,6 +226,7 @@
                   <div class="card-header">
                     <div class="card-head-row">
                       <div class="card-title">Statistique</div>
+                     
                       <div class="card-tools">
                         <a
                           href="#"
