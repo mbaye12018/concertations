@@ -28,6 +28,7 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
   <style>
+    body
    
 
     #formContainer {
@@ -287,16 +288,14 @@ Votre avis compte pour bâtir un service public de qualité 💪
 </div>
 
 <form id="registrationForm" method="POST" action="{{ route('enquete.store') }}">
+    
     @csrf <!-- Protection CSRF -->
     <div id="formContainer">
       
-      
     <div id="section1" class="section active">
-    <label for="participation-choice">Choisissez votre type de participation :</label><br>
-<input type="radio" id="senegal" name="participation" value="senegal" onclick="toggleIdentification(false)"> Sénégal
-<input type="radio" id="anonymous" name="participation" value="anonyme" onclick="toggleIdentification(true)"> Anonyme
-
+        
     <h2>Identification <i class="fas fa-user"></i></h2>
+    
         <div class="question">
         <label>
         <i class="fas fa-map-marker-alt"></i> <!-- Icône de localisation -->
@@ -422,11 +421,70 @@ Votre avis compte pour bâtir un service public de qualité 💪
             </label>
         </fieldset>
     </div>
-
+ici je veux que tu ajoutes le bouton qui va play l'audio dans la zone de texte ensuite  tu me mets une fonction qui permettra  de traduire le wolof en francais et si c'est en francais il le redige simplement dans la zone de texte 
     <div>
-        <label for="comments">Autres (facultatif) :</label><br>
-        <textarea id="comments" name="comments" rows="4" cols="50"></textarea>
-    </div>
+    <label for="comments">Autres (facultatif) :</label><br>
+    <textarea id="comments" name="comments" rows="4" cols="50"></textarea><br>
+
+    <!-- Icône pour lire l'audio -->
+    <i id="playAudio" class="fas fa-play-circle" style="font-size: 30px; cursor: pointer;"></i>
+
+    <!-- Icône pour enregistrer la voix -->
+    <i id="recordAudio" class="fas fa-microphone" style="font-size: 30px; cursor: pointer; color:green;margin-left:85%"></i>
+    <i id="stopRecording" class="fas fa-stop-circle" style="font-size: 30px; cursor: pointer; display: none;background-color:yellow"></i>
+
+    <!-- Élément pour afficher le fichier enregistré -->
+    <audio id="recordedAudio" controls style="display: none;"></audio>
+
+    <!-- Élément pour lire l'audio prédéfini -->
+    <audio id="participationAudio" src="../assets/audio/cspas.ogg"></audio>
+</div>
+<script>
+    document.getElementById('playAudio').addEventListener('click', function() {
+    var audio = document.getElementById('participationAudio');
+    audio.play();
+});
+
+// Pour enregistrer un vocal
+let mediaRecorder;
+let audioChunks = [];
+
+document.getElementById('recordAudio').addEventListener('click', async function() {
+    // Demander l'accès au microphone
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.start();
+    
+    // Afficher l'icône stop
+    document.getElementById('stopRecording').style.display = 'inline';
+    document.getElementById('recordAudio').style.display = 'none';
+
+    mediaRecorder.ondataavailable = function(event) {
+        audioChunks.push(event.data);
+    };
+});
+
+document.getElementById('stopRecording').addEventListener('click', function() {
+    mediaRecorder.stop();
+    
+    // Une fois l'enregistrement terminé, créer un fichier audio
+    mediaRecorder.onstop = function() {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const recordedAudio = document.getElementById('recordedAudio');
+
+        recordedAudio.src = audioUrl;
+        recordedAudio.style.display = 'block';
+        audioChunks = []; // Réinitialiser les chunks
+        
+        // Réinitialiser les icônes
+        document.getElementById('stopRecording').style.display = 'none';
+        document.getElementById('recordAudio').style.display = 'inline';
+    };
+});
+
+</script>
 </div>
 
 <style>
@@ -442,240 +500,240 @@ Votre avis compte pour bâtir un service public de qualité 💪
 </style>
 
            
-        <div class="question">
-          
-            <label><strong>Les services publics sont-ils facilement accessibles pour tous ? (géographiquement, financièrement, etc.)
-            <span class="required"></span> </label></strong>
-          
-          <br>
-          <label><input type="radio" id="ouiaccessible" name="accessible" value="Oui" required> Oui  &nbsp;&nbsp;&nbsp;&nbsp; <label><input type="radio" id="nonaccessible" name="accessible" value="Non" required> Non</label></label>
-    
-      </div>
       <div class="question">
-                  <label for="obstacle"> <strong>Quels sont les principaux obstacles à l'accès aux services publics ?</strong></label>
-                  <div class="obstacles">
-      <label><input type="checkbox" name="obstacles" value="Barrières géographiques">&nbsp; Barrières géographiques (éloignement, manque d'infrastructures)</label><br>
-
-      <label><input type="checkbox" name="obstacles" value="Complexité administrative">&nbsp; Complexité administrative (procédures compliquées, documents requis)</label><br>
-      <label><input type="checkbox" name="obstacles" value="Manque d'information"> &nbsp;Manque d'information (méconnaissance des services disponibles)</label><br>
-
-  </div>
-  <label for="comments">Autres (facultatif) :</label><br>
-                  <textarea id="obstacle" name="obstacle"></textarea>
-              </div>
-
-      <div class="question">
-      <label><strong> Les procédures administratives sont-elles trop longues et complexes ?</strong></label><br>
-      <label>
-          <input type="radio" id="yes" name="service_long" value="oui" required> Oui &nbsp;&nbsp;&nbsp;&nbsp;
-          <input type="radio" id="no" name="service_long" value="non" required> Non
-      </label>
-      
+        
+          <label><strong>Les services publics sont-ils facilement accessibles pour tous ? (géographiquement, financièrement, etc.)
+          <span class="required"></span> </label></strong>
+        
+        <br>
+        <label><input type="radio" id="ouiaccessible" name="accessible" value="Oui" required> Oui  &nbsp;&nbsp;&nbsp;&nbsp; <label><input type="radio" id="nonaccessible" name="accessible" value="Non" required> Non</label></label>
+  
     </div>
+    <div class="question">
+                <label for="obstacle"> <strong>Quels sont les principaux obstacles à l'accès aux services publics ?</strong></label>
+                <div class="obstacles">
+    <label><input type="checkbox" name="obstacles" value="Barrières géographiques">&nbsp; Barrières géographiques (éloignement, manque d'infrastructures)</label><br>
+
+    <label><input type="checkbox" name="obstacles" value="Complexité administrative">&nbsp; Complexité administrative (procédures compliquées, documents requis)</label><br>
+    <label><input type="checkbox" name="obstacles" value="Manque d'information"> &nbsp;Manque d'information (méconnaissance des services disponibles)</label><br>
+
+</div>
+<label for="comments">Autres (facultatif) :</label><br>
+                <textarea id="obstacle" name="obstacle"></textarea>
+            </div>
 
     <div class="question">
-        <label><strong> Les services publics répondent-ils à vos besoins de manière efficace ?</strong></label><br>
-        <label>
-            <input type="radio" id="efficace-oui" name="service_efficace" value="oui" required> Oui &nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="radio" id="efficace-non" name="service_efficace" value="non" required> Non
-        </label>
-        
-    </div>
+    <label><strong> Les procédures administratives sont-elles trop longues et complexes ?</strong></label><br>
+    <label>
+        <input type="radio" id="yes" name="service_long" value="oui" required> Oui &nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" id="no" name="service_long" value="non" required> Non
+    </label>
+    
+  </div>
 
-        <div class="question">
-            <label><strong>À votre avis, les services publics sont-ils suffisamment modernisés pour répondre aux défis actuels ?</strong> </label><br>
-            <label>
-                <input type="radio" id="modernise-oui" name="service_modernise" value="oui" required> Oui &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" id="modernise-non" name="service_modernise" value="non" required> Non
-            </label>
-            
-        </div>
-
-        <div class="question">
-      <label for="serviceFeedback">
-          <strong>Quels outils numériques ou technologiques pourraient améliorer les services publics ?</strong>
+  <div class="question">
+      <label><strong> Les services publics répondent-ils à vos besoins de manière efficace ?</strong></label><br>
+      <label>
+          <input type="radio" id="efficace-oui" name="service_efficace" value="oui" required> Oui &nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="radio" id="efficace-non" name="service_efficace" value="non" required> Non
       </label>
-      <div class="service-tools">
-          <label><input type="checkbox" name="digital_tools" value="Portail en ligne">&nbsp; Portail en ligne pour accéder aux services publics (demandes en ligne, suivi)</label><br>
-          
-          <label><input type="checkbox" name="digital_tools" value="Guichets automatiques"> &nbsp;Guichets automatiques ou bornes interactives pour effectuer des démarches administratives</label><br>
-        
-          <label><input type="checkbox" name="digital_tools" value="Chatbots et assistants virtuels"> &nbsp;Chatbots et assistants virtuels pour répondre aux questions fréquentes</label><br>
       
+  </div>
+
+      <div class="question">
+          <label><strong>À votre avis, les services publics sont-ils suffisamment modernisés pour répondre aux défis actuels ?</strong> </label><br>
+          <label>
+              <input type="radio" id="modernise-oui" name="service_modernise" value="oui" required> Oui &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" id="modernise-non" name="service_modernise" value="non" required> Non
+          </label>
+          
       </div>
 
-      <label for="comments">Autres (facultatif) :</label><br>
-
-                  <textarea id="service_outils" name="service_outils"></textarea>
-              </div>
-
-              <div class="buttons">
-              <button type="button" class="btn-grey" id="prev1">
-              &#8592; Précédent
-            </button>
-            <button type="button" class="btn-green" id="next2">
-          Suivant &#8594;
-    </button>
+      <div class="question">
+    <label for="serviceFeedback">
+        <strong>Quels outils numériques ou technologiques pourraient améliorer les services publics ?</strong>
+    </label>
+    <div class="service-tools">
+        <label><input type="checkbox" name="digital_tools" value="Portail en ligne">&nbsp; Portail en ligne pour accéder aux services publics (demandes en ligne, suivi)</label><br>
+        
+        <label><input type="checkbox" name="digital_tools" value="Guichets automatiques"> &nbsp;Guichets automatiques ou bornes interactives pour effectuer des démarches administratives</label><br>
+      
+        <label><input type="checkbox" name="digital_tools" value="Chatbots et assistants virtuels"> &nbsp;Chatbots et assistants virtuels pour répondre aux questions fréquentes</label><br>
+    
     </div>
-          </div>
 
-          <div id="section3" class="section">
-              <h4 style="text-align:center"> Attentes et Priorités pour la Réforme</h4>
-              <div class="question">
-      <label><strong>Quelles sont, selon vous, les trois principales réformes à mettre en œuvre pour améliorer le service public ? </strong></label><br>
-      <div class="reformes-options">
-          <label><input type="checkbox" name="reformes" value="Digitalisation"> &nbsp;Digitalisation des services </label><br>
-          <label><input type="checkbox" name="reformes" value="Simplification des démarches"> &nbsp;Simplification des démarches administratives </label><br>
-          
-          <label><input type="checkbox" name="reformes" value="Transparence"> &nbsp;Renforcement de la transparence et de la lutte contre la corruption</label><br>
-          <label><input type="checkbox" name="reformes" value="Accès pour tous">&nbsp; Amélioration de l'accessibilité des services publics pour les populations marginalisées</label><br>
-          <label><input type="checkbox" name="reformes" value="Décentralisation"> &nbsp;Décentralisation pour rapprocher les services publics des citoyens</label><br>
+    <label for="comments">Autres (facultatif) :</label><br>
 
-          <label><input type="checkbox" name="reformes" value="Évaluation des services"> &nbsp;Mise en place d'un système d'évaluation et de feedback pour améliorer en continu les services</label><br>
+                <textarea id="service_outils" name="service_outils"></textarea>
+            </div>
+
+            <div class="buttons">
+            <button type="button" class="btn-grey" id="prev1">
+            &#8592; Précédent
+          </button>
+          <button type="button" class="btn-green" id="next2">
+         Suivant &#8594;
+  </button>
+   </div>
+        </div>
+
+        <div id="section3" class="section">
+            <h4 style="text-align:center"> Attentes et Priorités pour la Réforme</h4>
+            <div class="question">
+    <label><strong>Quelles sont, selon vous, les trois principales réformes à mettre en œuvre pour améliorer le service public ? </strong></label><br>
+    <div class="reformes-options">
+        <label><input type="checkbox" name="reformes" value="Digitalisation"> &nbsp;Digitalisation des services </label><br>
+        <label><input type="checkbox" name="reformes" value="Simplification des démarches"> &nbsp;Simplification des démarches administratives </label><br>
+        
+        <label><input type="checkbox" name="reformes" value="Transparence"> &nbsp;Renforcement de la transparence et de la lutte contre la corruption</label><br>
+        <label><input type="checkbox" name="reformes" value="Accès pour tous">&nbsp; Amélioration de l'accessibilité des services publics pour les populations marginalisées</label><br>
+        <label><input type="checkbox" name="reformes" value="Décentralisation"> &nbsp;Décentralisation pour rapprocher les services publics des citoyens</label><br>
+
+        <label><input type="checkbox" name="reformes" value="Évaluation des services"> &nbsp;Mise en place d'un système d'évaluation et de feedback pour améliorer en continu les services</label><br>
+    </div>
+    <label for="comments">Autres (facultatif) :</label><br>
+          <textarea name="reformes" rows="3" ></textarea>
       </div>
-      <label for="comments">Autres (facultatif) :</label><br>
-            <textarea name="reformes" rows="3" ></textarea>
-        </div>
 
-        <div class="question">
-            <label><strong> Quelles mesures concrètes faudrait-il mettre en place pour améliorer la qualité des services publics ?</strong></label><br>
-            <label><input type="checkbox" name="reform_measures" value="Digitalisation complète des services administratifs"> &nbsp;Digitalisation complète des services administratifs</label><br>
-      <label><input type="checkbox" name="reform_measures" value="Formation continue des agents publics">&nbsp; Formation continue des agents publics</label><br>
-      <label><input type="checkbox" name="reform_measures" value="Mise en place de guichets uniques"> &nbsp;Mise en place de guichets uniques</label><br>
-      <label><input type="checkbox" name="reform_measures" value="Évaluation systématique de la satisfaction des usagers">&nbsp; Évaluation systématique de la satisfaction des usagers</label><br>
-      <label><input type="checkbox" name="reform_measures" value="Amélioration des infrastructures et équipements">&nbsp; Amélioration des infrastructures et équipements</label><br>
-      <label><input type="checkbox" name="reform_measures" value="Décentralisation et accessibilité géographique"> &nbsp;Décentralisation et accessibilité géographique</label><br>
+      <div class="question">
+          <label><strong> Quelles mesures concrètes faudrait-il mettre en place pour améliorer la qualité des services publics ?</strong></label><br>
+          <label><input type="checkbox" name="reform_measures" value="Digitalisation complète des services administratifs"> &nbsp;Digitalisation complète des services administratifs</label><br>
+    <label><input type="checkbox" name="reform_measures" value="Formation continue des agents publics">&nbsp; Formation continue des agents publics</label><br>
+    <label><input type="checkbox" name="reform_measures" value="Mise en place de guichets uniques"> &nbsp;Mise en place de guichets uniques</label><br>
+    <label><input type="checkbox" name="reform_measures" value="Évaluation systématique de la satisfaction des usagers">&nbsp; Évaluation systématique de la satisfaction des usagers</label><br>
+    <label><input type="checkbox" name="reform_measures" value="Amélioration des infrastructures et équipements">&nbsp; Amélioration des infrastructures et équipements</label><br>
+    <label><input type="checkbox" name="reform_measures" value="Décentralisation et accessibilité géographique"> &nbsp;Décentralisation et accessibilité géographique</label><br>
 
-      <label><input type="checkbox" name="reform_measures" value="Transparence et lutte contre la corruption"> &nbsp;Transparence et lutte contre la corruption</label><br>
-      <label for="comments">Autres (facultatif) :</label><br>
-            <textarea name="ameliorer_services" rows="3" ></textarea>
-        </div>
+    <label><input type="checkbox" name="reform_measures" value="Transparence et lutte contre la corruption"> &nbsp;Transparence et lutte contre la corruption</label><br>
+    <label for="comments">Autres (facultatif) :</label><br>
+          <textarea name="ameliorer_services" rows="3" ></textarea>
+      </div>
 
-        <div class="question">
-          
-            <label for="transparencyMeasures"><strong>Comment garantir la transparence et la responsabilité des administrations publiques ?</strong></label><br>
-          <label><input type="checkbox" name="transparency_measures" value="Publication régulière des rapports financiers"> Publication régulière des rapports financiers</label><br>
-          <label><input type="checkbox" name="transparency_measures" value="Audits indépendants et publics"> Audits indépendants et publics</label><br>
-          <label><input type="checkbox" name="transparency_measures" value="Accès libre aux informations publiques"> Accès libre aux informations publiques </label><br>
-          <label><input type="checkbox" name="transparency_measures" value="Rendre publiques les décisions administratives importantes"> Rendre publiques les décisions administratives importantes</label><br>
-          <label><input type="checkbox" name="transparency_measures" value="Sanctions claires pour les fautes administratives"> Sanctions claires pour les fautes administratives</label><br>
-          <label><input type="checkbox" name="transparency_measures" value="Suivi des performances des fonctionnaires"> Suivi des performances des fonctionnaires</label><br>
-          <label><input type="checkbox" name="transparency_measures" value="Organiser des consultations publiques"> Organiser des concertations publiques pour impliquer les citoyens dans les décisions</label><br>
-                <textarea name="transparence_responsabilite" rows="3" required></textarea>
-        </div>
+      <div class="question">
+         
+          <label for="transparencyMeasures"><strong>Comment garantir la transparence et la responsabilité des administrations publiques ?</strong></label><br>
+        <label><input type="checkbox" name="transparency_measures" value="Publication régulière des rapports financiers"> Publication régulière des rapports financiers</label><br>
+        <label><input type="checkbox" name="transparency_measures" value="Audits indépendants et publics"> Audits indépendants et publics</label><br>
+        <label><input type="checkbox" name="transparency_measures" value="Accès libre aux informations publiques"> Accès libre aux informations publiques </label><br>
+        <label><input type="checkbox" name="transparency_measures" value="Rendre publiques les décisions administratives importantes"> Rendre publiques les décisions administratives importantes</label><br>
+        <label><input type="checkbox" name="transparency_measures" value="Sanctions claires pour les fautes administratives"> Sanctions claires pour les fautes administratives</label><br>
+        <label><input type="checkbox" name="transparency_measures" value="Suivi des performances des fonctionnaires"> Suivi des performances des fonctionnaires</label><br>
+        <label><input type="checkbox" name="transparency_measures" value="Organiser des consultations publiques"> Organiser des concertations publiques pour impliquer les citoyens dans les décisions</label><br>
+              <textarea name="transparence_responsabilite" rows="3" required></textarea>
+      </div>
 
-        <div class="question">
-          
-            <label for="accessibilityActions"><strong>Quelles actions pourraient être entreprises pour rendre les services publics plus accessibles à tous ?</strong></label><br>
-      <label><input type="checkbox" name="accessibility_actions" value="Décentralisation des services publics"> &nbsp;Décentralisation des services publics pour une meilleure couverture géographique</label><br>
-      <label><input type="checkbox" name="accessibility_actions" value="Simplification des démarches administratives">&nbsp; Simplification des démarches administratives</label><br>
+      <div class="question">
+       
+          <label for="accessibilityActions"><strong>Quelles actions pourraient être entreprises pour rendre les services publics plus accessibles à tous ?</strong></label><br>
+    <label><input type="checkbox" name="accessibility_actions" value="Décentralisation des services publics"> &nbsp;Décentralisation des services publics pour une meilleure couverture géographique</label><br>
+    <label><input type="checkbox" name="accessibility_actions" value="Simplification des démarches administratives">&nbsp; Simplification des démarches administratives</label><br>
 
-      <label><input type="checkbox" name="accessibility_actions" value="Amélioration de l'accessibilité pour les personnes handicapées">&nbsp; Amélioration de l'accessibilité pour les personnes handicapées</label><br>
-      <label><input type="checkbox" name="accessibility_actions" value="Disponibilité d'informations multilingues">&nbsp; Disponibilité d'informations multilingues pour mieux servir les populations diverses</label><br>
-            <textarea name="accessibilite_services" rows="3" required></textarea>
-        </div>
+    <label><input type="checkbox" name="accessibility_actions" value="Amélioration de l'accessibilité pour les personnes handicapées">&nbsp; Amélioration de l'accessibilité pour les personnes handicapées</label><br>
+    <label><input type="checkbox" name="accessibility_actions" value="Disponibilité d'informations multilingues">&nbsp; Disponibilité d'informations multilingues pour mieux servir les populations diverses</label><br>
+          <textarea name="accessibilite_services" rows="3" required></textarea>
+      </div>
 
-        <div class="question">
-            <label><strong> Comment simplifier les procédures administratives et réduire les délais de traitement ?</strong></label><br>
-            <label><input type="checkbox" name="simplification_actions" value="Automatisation des processus">&nbsp; Automatisation des processus administratifs</label><br>
-            <label><input type="checkbox" name="simplification_actions" value="Numérisation des documents">&nbsp; Numérisation des documents pour éviter les démarches papier</label><br>
-            <label><input type="checkbox" name="simplification_actions" value="Guichet unique"> &nbsp;Mise en place d'un guichet unique pour centraliser les démarches</label><br>
+      <div class="question">
+          <label><strong> Comment simplifier les procédures administratives et réduire les délais de traitement ?</strong></label><br>
+          <label><input type="checkbox" name="simplification_actions" value="Automatisation des processus">&nbsp; Automatisation des processus administratifs</label><br>
+          <label><input type="checkbox" name="simplification_actions" value="Numérisation des documents">&nbsp; Numérisation des documents pour éviter les démarches papier</label><br>
+          <label><input type="checkbox" name="simplification_actions" value="Guichet unique"> &nbsp;Mise en place d'un guichet unique pour centraliser les démarches</label><br>
 
-            <label><input type="checkbox" name="simplification_actions" value="Suivi en temps réel des demandes"> &nbsp;Suivi en temps réel des demandes via des plateformes en ligne</label><br>
-            <label><input type="checkbox" name="simplification_actions" value="Délais fixes et transparents"> &nbsp;Délais de traitement fixes et transparents pour chaque procédure</label><br>
-            <label for="comments">Autres (facultatif) :</label><br>
-            <textarea name="simplification_procedures" rows="3" ></textarea>
-        </div>
-
-        <div class="question">
-            <label><strong> Comment améliorer la coordination entre les différents services publics ?</strong></label><br>
-            <label><input type="checkbox" name="coordination_actions" value="Plateformes partagées de communication"> &nbsp;Mise en place de plateformes partagées pour la communication inter-services</label><br>
-
-            <label><input type="checkbox" name="coordination_actions" value="Outils numériques collaboratifs">&nbsp; Utilisation d'outils numériques collaboratifs pour faciliter la coopération</label><br>
-            <label><input type="checkbox" name="coordination_actions" value="Processus standardisés">&nbsp; Standardisation des processus administratifs pour tous les services</label><br>
-            <label><input type="checkbox" name="coordination_actions" value="Partage d'informations en temps réel"> &nbsp;Partage d'informations en temps réel entre les services via des systèmes interconnectés</label><br>
-            <label><input type="checkbox" name="coordination_actions" value="Formations conjointes"> &nbsp;Organisation de formations conjointes pour les agents des différents services</label><br>
-            <label for="comments">Autres (facultatif) :</label><br>
-                  <textarea name="coordination_services" rows="3" ></textarea>
-        </div>
-
-        <div class="question">
-            <label><strong> Comment encourager l'utilisation des technologies numériques dans les services publics ?</strong></label><br>
-            <label><input type="checkbox" name="digital_encouragement" value="Formation du personnel">&nbsp; Offrir des formations aux employés pour les initier aux nouvelles technologies</label><br>
-
-            <label><input type="checkbox" name="digital_encouragement" value="Campagnes de sensibilisation"> &nbsp;Lancer des campagnes de sensibilisation pour encourager les citoyens à utiliser les services en ligne</label><br>
-            <label><input type="checkbox" name="digital_encouragement" value="Modernisation des infrastructures">&nbsp; Moderniser les infrastructures technologiques dans les administrations</label><br>
-
-            <label><input type="checkbox" name="digital_encouragement" value="Récompenses pour les innovations"> &nbsp;Créer des récompenses ou des concours pour les innovations numériques au sein des administrations publiques</label><br>
-            <label for="comments">Autres (facultatif) :</label><br>
-                  <textarea name="technologies_numeriques" rows="3" ></textarea>
-        </div>
-
-        <div class="question">
-            <label>Comment former les agents publics aux nouveaux outils et méthodes de travail ?</label><br>
-            <label><input type="checkbox" name="training_methods" value="Formations en présentiel">&nbsp; Organiser des formations  avec des experts du domaine</label><br>
-
-            <label><input type="checkbox" name="training_methods" value="Modules e-learning">&nbsp; Mettre en place des modules de e-learning accessibles à tout moment</label><br>
-
-            <label><input type="checkbox" name="training_methods" value="Ateliers pratiques">&nbsp; Organiser des ateliers pratiques pour une approche hands-on des outils</label><br>
-            <label><input type="checkbox" name="training_methods" value="Matériel de formation">&nbsp; Fournir du matériel de formation (guides, vidéos) pour une auto-formation</label><br>
-            <label for="comments">Autres (facultatif) :</label><br>
-                  <textarea name="formation_agents" rows="3" ></textarea>
-        </div>
-
-
-              <div class="buttons">
-                  <button type="button" class="btn-grey" id="prev2"> &#8592;Précédent</button>
-                  <button type="button" class="btn-green"  id="next3">Suivant &#8594;</button>
-              </div>
-          </div>
-
-          <div id="section4" class="section">
-              <h4 style="text-align:center"> Implication des Citoyens</h4>
-              <div class="question">
-          <label> <strong>Comment les citoyens pourraient-ils être davantage associés aux décisions concernant la réforme du service public ?</strong></label><br>
-          <label><input type="checkbox" name="citizen_participation" value="Consultations publiques">&nbsp; Organiser des concertations publiques pour recueillir les avis des citoyens</label><br>
-          <label><input type="checkbox" name="citizen_participation" value="Sondages">&nbsp; Mettre en place des sondages pour connaître les opinions et suggestions des citoyens</label><br>
-
-          <label><input type="checkbox" name="citizen_participation" value="Plateformes de feedback">&nbsp; Développer des plateformes en ligne où les citoyens peuvent donner leur avis et proposer des idées</label><br>
-
-          <label><input type="checkbox" name="citizen_participation" value="Partenariats avec des ONG"> &nbsp;Établir des partenariats avec des ONG pour faciliter la participation citoyenne</label><br>
-          <label><input type="checkbox" name="citizen_participation" value="Délibérations citoyennes">&nbsp; Organiser des délibérations citoyennes pour permettre une discussion approfondie sur les réformes</label><br>
+          <label><input type="checkbox" name="simplification_actions" value="Suivi en temps réel des demandes"> &nbsp;Suivi en temps réel des demandes via des plateformes en ligne</label><br>
+          <label><input type="checkbox" name="simplification_actions" value="Délais fixes et transparents"> &nbsp;Délais de traitement fixes et transparents pour chaque procédure</label><br>
           <label for="comments">Autres (facultatif) :</label><br>
-          <textarea name="association_citoyens" rows="3" ></textarea>
-    </div>
+          <textarea name="simplification_procedures" rows="3" ></textarea>
+      </div>
 
-        <div class="question">
-            <label><strong>Quels outils de participation citoyenne pourraient être mis en place ?</strong> </label><br>
-            <label><input type="checkbox" name="participation_tools" value="Plateformes en ligne">&nbsp; Plateformes en ligne pour soumettre des idées et des propositions</label><br>
-            <label><input type="checkbox" name="participation_tools" value="Applications mobiles"> &nbsp;Applications mobiles dédiées à la participation citoyenne</label><br>
+      <div class="question">
+          <label><strong> Comment améliorer la coordination entre les différents services publics ?</strong></label><br>
+          <label><input type="checkbox" name="coordination_actions" value="Plateformes partagées de communication"> &nbsp;Mise en place de plateformes partagées pour la communication inter-services</label><br>
 
-            <label><input type="checkbox" name="participation_tools" value="Outils de vote en ligne">&nbsp; Outils de vote en ligne pour des décisions spécifiques</label><br>
-            <label><input type="checkbox" name="participation_tools" value="Forums de discussion"> &nbsp;Forums de discussion pour échanger des idées et des solutions</label><br>
-            <label><input type="checkbox" name="participation_tools" value="Médiation citoyenne"> &nbsp;Outils de médiation pour résoudre des conflits d'intérêts</label><br>
-            <label><input type="checkbox" name="participation_tools" value="Budget participatif"> &nbsp;Initiatives de budget participatif pour impliquer les citoyens dans l'allocation des ressources</label><br>
-            <label for="comments">Autres (facultatif) :</label><br>
-                  <textarea name="outils_participation" rows="3" ></textarea>
+          <label><input type="checkbox" name="coordination_actions" value="Outils numériques collaboratifs">&nbsp; Utilisation d'outils numériques collaboratifs pour faciliter la coopération</label><br>
+          <label><input type="checkbox" name="coordination_actions" value="Processus standardisés">&nbsp; Standardisation des processus administratifs pour tous les services</label><br>
+          <label><input type="checkbox" name="coordination_actions" value="Partage d'informations en temps réel"> &nbsp;Partage d'informations en temps réel entre les services via des systèmes interconnectés</label><br>
+          <label><input type="checkbox" name="coordination_actions" value="Formations conjointes"> &nbsp;Organisation de formations conjointes pour les agents des différents services</label><br>
+          <label for="comments">Autres (facultatif) :</label><br>
+                <textarea name="coordination_services" rows="3" ></textarea>
+      </div>
+
+      <div class="question">
+          <label><strong> Comment encourager l'utilisation des technologies numériques dans les services publics ?</strong></label><br>
+          <label><input type="checkbox" name="digital_encouragement" value="Formation du personnel">&nbsp; Offrir des formations aux employés pour les initier aux nouvelles technologies</label><br>
+
+          <label><input type="checkbox" name="digital_encouragement" value="Campagnes de sensibilisation"> &nbsp;Lancer des campagnes de sensibilisation pour encourager les citoyens à utiliser les services en ligne</label><br>
+          <label><input type="checkbox" name="digital_encouragement" value="Modernisation des infrastructures">&nbsp; Moderniser les infrastructures technologiques dans les administrations</label><br>
+
+          <label><input type="checkbox" name="digital_encouragement" value="Récompenses pour les innovations"> &nbsp;Créer des récompenses ou des concours pour les innovations numériques au sein des administrations publiques</label><br>
+          <label for="comments">Autres (facultatif) :</label><br>
+                <textarea name="technologies_numeriques" rows="3" ></textarea>
+      </div>
+
+      <div class="question">
+          <label>Comment former les agents publics aux nouveaux outils et méthodes de travail ?</label><br>
+          <label><input type="checkbox" name="training_methods" value="Formations en présentiel">&nbsp; Organiser des formations  avec des experts du domaine</label><br>
+
+          <label><input type="checkbox" name="training_methods" value="Modules e-learning">&nbsp; Mettre en place des modules de e-learning accessibles à tout moment</label><br>
+
+          <label><input type="checkbox" name="training_methods" value="Ateliers pratiques">&nbsp; Organiser des ateliers pratiques pour une approche hands-on des outils</label><br>
+          <label><input type="checkbox" name="training_methods" value="Matériel de formation">&nbsp; Fournir du matériel de formation (guides, vidéos) pour une auto-formation</label><br>
+          <label for="comments">Autres (facultatif) :</label><br>
+                <textarea name="formation_agents" rows="3" ></textarea>
+      </div>
+
+
+            <div class="buttons">
+                <button type="button" class="btn-grey" id="prev2"> &#8592;Précédent</button>
+                <button type="button" class="btn-green"  id="next3">Suivant &#8594;</button>
+            </div>
         </div>
 
-              <div class="buttons">
-                  <button type="button" class="btn-grey"  id="prev3"> &#8592; Précédent</button>
-                  <button type="button" class="btn-green"  id="next4">Suivant &#8594;</button>
-              </div>
-          </div>
+        <div id="section4" class="section">
+            <h4 style="text-align:center"> Implication des Citoyens</h4>
+            <div class="question">
+        <label> <strong>Comment les citoyens pourraient-ils être davantage associés aux décisions concernant la réforme du service public ?</strong></label><br>
+        <label><input type="checkbox" name="citizen_participation" value="Consultations publiques">&nbsp; Organiser des concertations publiques pour recueillir les avis des citoyens</label><br>
+        <label><input type="checkbox" name="citizen_participation" value="Sondages">&nbsp; Mettre en place des sondages pour connaître les opinions et suggestions des citoyens</label><br>
 
-          <div id="section5" class="section">
-              <h4 style="text-align:center"> Autres Commentaires</h4>
-              <div class="question">
-                  <label>Commentaires supplémentaires :</label>
-                  <textarea id="additionalComments" name="additional_comments"></textarea>
-              </div>
-              <div class="buttons">
-                  <button type="button" class="btn-grey" id="prev4"> &#8592; Précédent</button>
-                  <button type="submit" class="btn-green" id="submit">Soumettre</button>
-              </div>
-          </div>
+        <label><input type="checkbox" name="citizen_participation" value="Plateformes de feedback">&nbsp; Développer des plateformes en ligne où les citoyens peuvent donner leur avis et proposer des idées</label><br>
+
+        <label><input type="checkbox" name="citizen_participation" value="Partenariats avec des ONG"> &nbsp;Établir des partenariats avec des ONG pour faciliter la participation citoyenne</label><br>
+        <label><input type="checkbox" name="citizen_participation" value="Délibérations citoyennes">&nbsp; Organiser des délibérations citoyennes pour permettre une discussion approfondie sur les réformes</label><br>
+        <label for="comments">Autres (facultatif) :</label><br>
+        <textarea name="association_citoyens" rows="3" ></textarea>
+   </div>
+
+      <div class="question">
+          <label><strong>Quels outils de participation citoyenne pourraient être mis en place ?</strong> </label><br>
+          <label><input type="checkbox" name="participation_tools" value="Plateformes en ligne">&nbsp; Plateformes en ligne pour soumettre des idées et des propositions</label><br>
+          <label><input type="checkbox" name="participation_tools" value="Applications mobiles"> &nbsp;Applications mobiles dédiées à la participation citoyenne</label><br>
+
+          <label><input type="checkbox" name="participation_tools" value="Outils de vote en ligne">&nbsp; Outils de vote en ligne pour des décisions spécifiques</label><br>
+          <label><input type="checkbox" name="participation_tools" value="Forums de discussion"> &nbsp;Forums de discussion pour échanger des idées et des solutions</label><br>
+          <label><input type="checkbox" name="participation_tools" value="Médiation citoyenne"> &nbsp;Outils de médiation pour résoudre des conflits d'intérêts</label><br>
+          <label><input type="checkbox" name="participation_tools" value="Budget participatif"> &nbsp;Initiatives de budget participatif pour impliquer les citoyens dans l'allocation des ressources</label><br>
+          <label for="comments">Autres (facultatif) :</label><br>
+                <textarea name="outils_participation" rows="3" ></textarea>
       </div>
+
+            <div class="buttons">
+                <button type="button" class="btn-grey"  id="prev3"> &#8592; Précédent</button>
+                <button type="button" class="btn-green"  id="next4">Suivant &#8594;</button>
+            </div>
+        </div>
+
+        <div id="section5" class="section">
+            <h4 style="text-align:center"> Autres Commentaires</h4>
+            <div class="question">
+                <label>Commentaires supplémentaires :</label>
+                <textarea id="additionalComments" name="additional_comments"></textarea>
+            </div>
+            <div class="buttons">
+                <button type="button" class="btn-grey" id="prev4"> &#8592; Précédent</button>
+                <button type="submit" class="btn-green" id="submit">Soumettre</button>
+            </div>
+        </div>
+    </div>
 </form>
 
 <script>

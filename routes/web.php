@@ -79,3 +79,26 @@ Route::post('/ajoutuser', [AjoutController::class, 'store'])->name('ajoutuser.st
 //Statistique
 Route::get('/statistique', [StatistiqueController::class, 'index'])->name('statistique.statistique');
 Route::get('/get-statistics', [StatistiqueController::class, 'getStatistics']);
+
+
+
+
+
+
+
+// Route pour participer
+Route::get('/participer1', function () {
+    return view('frontend.participer1');
+})->name('participation.form');
+Route::get('/', [templateButterfly::class, 'index'])->name('home');
+
+// Route pour soumettre une participation
+Route::post('/participer/soumettre', [ParticipationController::class, 'submit'])->name('participation.submit');
+
+
+
+// Route pour participer
+Route::get('/participer2', function () {
+    return view('frontend.participer2');
+})->name('participation.form');
+Route::get('/', [templateButterfly::class, 'index'])->name('home');

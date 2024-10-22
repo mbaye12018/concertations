@@ -114,9 +114,6 @@ h5 {
             <a href="{{ route('participation.form') }}">Donnez-nous votre avis</a>
         </li>
         <li>
-            <a href="{{ route('tendance') }}">Tendance</a>
-        </li>
-        <li>
             <a href="{{ route('login') }}">Connexion</a>
         </li>
     </ul>
@@ -131,9 +128,8 @@ h5 {
   
     <!-- Hero Section -->
 <section id="hero" class="hero section light-background" style="background-color:#F4F4F4">
-
   <div class="container">
-  
+    
     <div class="row gy-4 align-items-center">
       <!-- Text Section -->
       <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-md-start" data-aos="fade-up">
@@ -201,10 +197,10 @@ h5 {
 
       <!-- Image section -->
       <div class="col-lg-6 position-relative" data-aos="fade-up" data-aos-delay="100">
-        <img src="assets/img/logooo.png" class="img-fluid" style="border-radius: 2%; height: 85%; width: 85%;" alt="Ministre Olivier Boucal">
+        <img src="assets/img/logooo.png" class="img-fluid" style="border-radius: 0%; height: 80%; width: 60%;margin-left:7%" alt="Ministre Olivier Boucal">
       </div>
 
-      <div class="col-lg-6 ps-lg-4 content d-flex flex-column justify-content-start" data-aos="fade-up" data-aos-delay="200" style="margin-top: 20px;">
+      <div class="col-lg-6 ps-lg-4 content d-flex flex-column justify-content-start" data-aos="fade-up" data-aos-delay="200" style="margin-top: 40px;">
         <p style="text-align: justify;">
           Des concertations seront organisées dans chaque région du Sénégal, offrant ainsi aux communautés locales une précieuse opportunité de partager leurs besoins spécifiques et d'exprimer leurs préoccupations. Ces échanges, qui favorisent le dialogue entre les citoyens et les acteurs locaux, visent à recueillir des avis diversifiés, afin de mieux cerner les défis et les priorités uniques de chaque région.
         </p>

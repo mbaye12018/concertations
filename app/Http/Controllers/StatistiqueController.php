@@ -23,8 +23,7 @@ class StatistiqueController extends Controller
         return view('statistique.index', compact('totalSenegal', 'totalDiaspora', 'regions'));
     }
 
-    // Endpoint pour AJAX (si vous voulez faire du chargement dynamique)
-   // StatistiqueController.php
+    // StatistiqueController.php
 public function getStatistics(Request $request)
 {
     $location = $request->input('location');
