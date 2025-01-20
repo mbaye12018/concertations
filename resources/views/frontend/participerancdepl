@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plateforme de concertation nationale</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/logoconcertation.PNG" rel="icon">
+  <link href="assets/img/logoconcertation.PNG" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Jost:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+  <link href="/concertations/resources/css/styles.css" rel="stylesheet">
+
+  <!-- ===================================
+       CSS Bootstrap, Animate.css & FontAwesome
+       =================================== -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.net/npm/font-awesome@6/css/fontawesome.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f8fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Container principal du formulaire */
+    #formContainer {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin: 60px auto;
+      max-width: 850px;
+      padding: 30px;
+    }
+
+    /* Titre */
+    h2, h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    /* Style général des questions */
+    .question {
+      margin-bottom: 15px;
+    }
+    .question label {
+      font-weight: 500;
+    }
+
+    /* Boutons */
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+    }
+    button {
+      border: none;
+      border-radius: 5px;
+      padding: 12px 25px;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button.btn-previous {
+      background-color: #6c757d;
+    }
+    button.btn-next {
+      background-color: #007BFF;
+    }
+    button.btn-submit {
+      background-color: #28a745; /* Vert */
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* Masquer les sections non actives */
+    .section {
+      display: none;
+    }
+    .section.active {
+      display: block;
+    }
+
+    /* Animation d’apparition */
+    .animate__animated {
+      /* Classes animate.css déjà incluses */
+    }
+
+    /* Message d'encouragement */
+    #encouragementMessage {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+      color: #111;
+      margin-top:100px;
+    }
+    #encouragementMessage span {
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* Icônes devant les questions (optionnel) */
+    .icon-label {
+      margin-right: 8px;
+      color: #007bff;
+    }
+
+    /* Barre de progression simple */
+    #progressBarContainer {
+      margin-bottom: 25px;
+    }
+    .progress {
+      height: 10px;
+      background-color: #e9ecef;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress .progress-bar {
+      background-color: #007bff; /* Couleur du trait */
+      transition: width 0.4s ease;
+    }
+    #progressLabel {
+      text-align: center;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER (facultatif) -->
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      <a href="{{ route('home') }}" class="logo d-flex align-items-center">
+        <img src="assets/img/logg.PNG" alt="Logo">
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+            <li>
+                <a href="{{ route('home') }}" class="{{ request()->is('/') ? 'active' : '' }}">Accueil</a>
+            </li>
+            <li>
+                <a href="{{ route('contexte') }}">Contexte</a>
+            </li>
+            <li>
+                <a href="{{ route('objectif') }}">objectif</a>
+            </li>
+            <li>
+                <a href="{{ route('participation.form') }}">Donnez-nous votre avis</a>
+            </li>
+            <li>
+                <a href="{{ route('login') }}">Connexion</a>
+            </li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+  <!-- FIN HEADER -->
+
+  <!-- Message d'encouragement -->
+  <div id="encouragementMessage" class="animate__animated animate__fadeInDown">
+    <h1></h1>
+    Votre avis compte pour bâtir un service public de qualité
+    <span>💪</span>
+  </div>
+  <h1></h1>
+
+  <!-- FORMULAIRE -->
+  <form id="mainForm" action="#" method="POST">
+    <div id="formContainer" class="animate__animated animate__fadeInUp">
+
+      <!-- Barre de progression simple -->
+      <div id="progressBarContainer">
+        <div class="progress">
+          <div
+            id="progressFill"
+            class="progress-bar"
+            role="progressbar"
+            style="width: 0%"
+            aria-valuenow="0"
+            aria-valuemin="0"
+            aria-valuemax="100">
+          </div>
+        </div>
+        <div id="progressLabel">Étape 1 sur 11</div>
+      </div>
+      <!-- FIN barre de progression simple -->
+
+      <!-- SECTION 1 : INFORMATIONS GÉNÉRALES -->
+      <div class="section active animate__animated animate__fadeIn" id="section1">
+        <h2><i class="fas fa-user icon-label"></i>Informations Générales</h2>
+
+        <!-- Âge -->
+        <div class="question">
+          <label class="form-label"><i class="fas fa-birthday-cake icon-label"></i>1. Votre âge <span class="text-danger">*</span></label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="age" id="age1" value="moins_18" required>
+            <label for="age1" class="form-check-label">Moins de 18 ans</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="age" id="age2" value="18_30" required>
+            <label for="age2" class="form-check-label">18-30 ans</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="age" id="age3" value="31_45" required>
+            <label for="age3" class="form-check-label">31-45 ans</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="age" id="age4" value="46_60" required>
+            <label for="age4" class="form-check-label">46-60 ans</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="age" id="age5" value="plus_60" required>
+            <label for="age5" class="form-check-label">Plus de 60 ans</label>
+          </div>
+        </div>
+
+        <!-- Sexe -->
+        <div class="question">
+          <label class="form-label"><i class="fas fa-venus-mars icon-label"></i>2. Sexe <span class="text-danger">*</span></label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="sexe" id="sexeM" value="masculin" required>
+            <label class="form-check-label" for="sexeM">Masculin</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="sexe" id="sexeF" value="feminin" required>
+            <label class="form-check-label" for="sexeF">Féminin</label>
+          </div>
+        </div>
+
+        <!-- Lieu de résidence -->
+        <div class="question">
+          <label class="form-label"><i class="fas fa-map-marker-alt icon-label"></i>3. Lieu de résidence <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" name="lieu_residence" required placeholder="Ex : Dakar / Thiès / etc.">
+        </div>
+
+        <!-- Navigation -->
+        <div class="buttons">
+          <div></div>
+          <button type="button" class="btn-next" id="next1">Suivant <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- FIN SECTION 1 -->
+
+      <!-- SECTION 2: ACCES AUX SERVICES PUBLICS -->
+      <div class="section animate__animated" id="section2">
+        <h2><i class="fas fa-door-open icon-label"></i>Accès aux services publics</h2>
+
+        <!-- Services utilisés fréquemment -->
+        <div class="question">
+          <label class="form-label">Quels services publics utilisez-vous le plus fréquemment ?</label>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="services_frequents[]" value="papiers_administratifs" id="check1">
+            <label class="form-check-label" for="check1">Délivrance de papiers administratifs</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="services_frequents[]" value="defense_securite" id="check2">
+            <label class="form-check-label" for="check2">Défense et sécurité</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="services_frequents[]" value="sante_protection" id="check3">
+            <label class="form-check-label" for="check3">Santé et protection sociale</label>
+          </div>
+          <!-- Ajout du reste des cases à cocher -->
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="services_frequents[]" value="education_enseignement" id="check4">
+            <label class="form-check-label" for="check4">Éducation et Enseignement</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="services_frequents[]" value="habitat_cadre_vie" id="check5">
+            <label class="form-check-label" for="check5">Habitat et cadre de vie</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="services_frequents[]" value="transport" id="check6">
+            <label class="form-check-label" for="check6">Transport</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="services_frequents[]" value="environnement" id="check7">
+            <label class="form-check-label" for="check7">Environnement</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="services_frequents[]" value="finances" id="check8">
+            <label class="form-check-label" for="check8">Finances</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="services_frequents[]" value="sport_loisir_culture" id="check9">
+            <label class="form-check-label" for="check9">Sport, Loisirs, culture</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="services_frequents[]" value="industrie" id="check10">
+            <label class="form-check-label" for="check10">Industrie</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="services_frequents[]" value="agriculture_peche_elevage" id="check11">
+            <label class="form-check-label" for="check11">Agriculture, pêche, élevage</label>
+          </div>
+        </div>
+
+        <!-- Accessibilité globale -->
+        <div class="question">
+          <label class="form-label">Comment évaluez-vous l’accessibilité de ces services ?</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="accessibilite_services" value="tres_accessible" id="acc1">
+            <label class="form-check-label" for="acc1">Très accessible</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="accessibilite_services" value="accessible" id="acc2">
+            <label class="form-check-label" for="acc2">Accessible</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="accessibilite_services" value="moyennement_accessible" id="acc3">
+            <label class="form-check-label" for="acc3">Moyennement accessible</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="accessibilite_services" value="difficilement_accessible" id="acc4">
+            <label class="form-check-label" for="acc4">Difficilement accessible</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="accessibilite_services" value="tres_difficilement_accessible" id="acc5">
+            <label class="form-check-label" for="acc5">Très difficilement accessible</label>
+          </div>
+        </div>
+
+        <!-- Pourquoi ? -->
+        <div class="question">
+          <label class="form-label">Pourquoi ?</label>
+          <textarea class="form-control" name="pourquoi_accessibilite" rows="3" placeholder="Expliquez brièvement..."></textarea>
+        </div>
+
+        <!-- Suggestions -->
+        <div class="question">
+          <label class="form-label">
+            Avez-vous des suggestions spécifiques pour améliorer l’accès des services publics ?
+          </label>
+          <textarea class="form-control" name="suggestions_acces" rows="3"></textarea>
+        </div>
+
+        <!-- Répartition équitable ? -->
+        <div class="question">
+          <label class="form-label">
+            Pensez-vous que la répartition des services publics sur le territoire national est équitable ?
+            <span class="text-muted">(optionnel)</span>
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="repartition_equitable" value="oui" id="rep_oui">
+            <label class="form-check-label" for="rep_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="repartition_equitable" value="non" id="rep_non">
+            <label class="form-check-label" for="rep_non">Non</label>
+          </div>
+        </div>
+
+        <!-- Pourquoi ? -->
+        <div class="question">
+          <label class="form-label">
+            Pourquoi ? <span class="text-muted">(optionnel)</span>
+          </label>
+          <textarea class="form-control" name="pourquoi_repartition" rows="3"></textarea>
+        </div>
+
+        <!-- Suggestions -->
+        <div class="question">
+          <label class="form-label">
+            Avez-vous des suggestions ? <span class="text-muted">(optionnel)</span>
+          </label>
+          <textarea class="form-control" name="suggestions_repartition" rows="3"></textarea>
+        </div>
+
+        <!-- Mode d'information -->
+        <div class="question">
+          <label class="form-label">Comment préférez-vous être informé(e) ?</label>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="mode_information[]" value="courrier" id="info1">
+            <label class="form-check-label" for="info1">Courrier</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="mode_information[]" value="medias" id="info2">
+            <label class="form-check-label" for="info2">Médias</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="mode_information[]" value="applications" id="info3">
+            <label class="form-check-label" for="info3">Applications</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="mode_information[]" value="autres" id="info4">
+            <label class="form-check-label" for="info4">Autres</label>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="buttons">
+          <button type="button" class="btn-previous" id="prev1"><i class="fas fa-arrow-left"></i> Précédent</button>
+          <button type="button" class="btn-next" id="next2">Suivant <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- FIN SECTION 2 -->
+
+      <!-- SECTION 3: ACCUEIL ET ORIENTATION -->
+      <div class="section" id="section3">
+        <h2><i class="fas fa-info-circle icon-label"></i>Accueil et Orientation</h2>
+
+        <div class="question">
+          <label class="form-label">
+            Comment évaluez-vous l’accueil et l’orientation dans les services publics ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="evaluation_accueil" value="excellent" id="accueil1">
+            <label class="form-check-label" for="accueil1">Excellent</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="evaluation_accueil" value="bon" id="accueil2">
+            <label class="form-check-label" for="accueil2">Bon</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="evaluation_accueil" value="moyen" id="accueil3">
+            <label class="form-check-label" for="accueil3">Moyen</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="evaluation_accueil" value="mauvais" id="accueil4">
+            <label class="form-check-label" for="accueil4">Mauvais</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="evaluation_accueil" value="tres_mauvais" id="accueil5">
+            <label class="form-check-label" for="accueil5">Très mauvais</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">Pourquoi ?</label>
+          <textarea class="form-control" name="pourquoi_accueil" rows="3"></textarea>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Les indications et signalétiques étaient-elles claires et suffisantes ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="signaletique" value="oui" id="sign_o">
+            <label class="form-check-label" for="sign_o">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="signaletique" value="non" id="sign_n">
+            <label class="form-check-label" for="sign_n">Non</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Avez-vous été guidé(e) vers la personne ou le service approprié ?
+            <span class="text-muted">(optionnel)</span>
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="guide_service" value="oui" id="guide_o">
+            <label class="form-check-label" for="guide_o">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="guide_service" value="non" id="guide_n">
+            <label class="form-check-label" for="guide_n">Non</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Avez-vous des suggestions spécifiques pour améliorer l’accueil et l’orientation dans les services publics ?
+          </label>
+          <textarea class="form-control" name="suggestions_accueil" rows="3"></textarea>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="btn-previous" id="prev2"><i class="fas fa-arrow-left"></i> Précédent</button>
+          <button type="button" class="btn-next" id="next3">Suivant <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- FIN SECTION 3 -->
+
+      <!-- SECTION 4: DILIGENCE DANS LE TRAITEMENT -->
+      <div class="section" id="section4">
+        <h2><i class="fas fa-clock icon-label"></i>Diligence dans le traitement des dossiers</h2>
+
+        <!-- Procédures longues ? -->
+        <div class="question">
+          <label class="form-label">Les procédures administratives sont-elles longues ?</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="procedures_longues" value="oui" id="proclong_oui">
+            <label class="form-check-label" for="proclong_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="procedures_longues" value="non" id="proclong_non">
+            <label class="form-check-label" for="proclong_non">Non</label>
+          </div>
+        </div>
+
+        <!-- Pourquoi ? -->
+        <div class="question">
+          <label class="form-label">Pourquoi ?</label>
+          <textarea class="form-control" name="pourquoi_procedures" rows="2"></textarea>
+        </div>
+
+        <!-- Suggestions -->
+        <div class="question">
+          <label class="form-label">Avez-vous des suggestions ?</label>
+          <textarea class="form-control" name="suggestions_procedures" rows="2"></textarea>
+        </div>
+
+        <!-- Formalités complexes ? -->
+        <div class="question">
+          <label class="form-label">Les formalités sont-elles complexes ?</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="formalites_complexes" value="oui" id="formcomp_oui">
+            <label class="form-check-label" for="formcomp_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="formalites_complexes" value="non" id="formcomp_non">
+            <label class="form-check-label" for="formcomp_non">Non</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">Pourquoi ?</label>
+          <textarea class="form-control" name="pourquoi_formalites" rows="2"></textarea>
+        </div>
+
+        <div class="question">
+          <label class="form-label">Avez-vous des suggestions ?</label>
+          <textarea class="form-control" name="suggestions_formalites" rows="2"></textarea>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="btn-previous" id="prev3"><i class="fas fa-arrow-left"></i> Précédent</button>
+          <button type="button" class="btn-next" id="next4">Suivant <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- FIN SECTION 4 -->
+
+      <!-- SECTION 5: COUT DU SERVICE -->
+      <div class="section" id="section5">
+        <h2><i class="fas fa-money-bill-wave icon-label"></i>Coût du service</h2>
+
+        <!-- Comment évaluez-vous le coût ? -->
+        <div class="question">
+          <label class="form-label">
+            Comment évaluez-vous le coût des prestations des services publics ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="evaluation_cout" value="tres_abordable" id="cout1">
+            <label class="form-check-label" for="cout1">Très abordable</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="evaluation_cout" value="abordable" id="cout2">
+            <label class="form-check-label" for="cout2">Abordable</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="evaluation_cout" value="moyennement_cher" id="cout3">
+            <label class="form-check-label" for="cout3">Moyennement cher</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="evaluation_cout" value="cher" id="cout4">
+            <label class="form-check-label" for="cout4">Cher</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="evaluation_cout" value="tres_cher" id="cout5">
+            <label class="form-check-label" for="cout5">Très cher</label>
+          </div>
+        </div>
+
+        <!-- Coût justifié ? -->
+        <div class="question">
+          <label class="form-label">
+            Pensez-vous que le coût de ces services est justifié par les prestations fournies ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="cout_justifie" value="oui" id="coutjust_oui">
+            <label class="form-check-label" for="coutjust_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="cout_justifie" value="non" id="coutjust_non">
+            <label class="form-check-label" for="coutjust_non">Non</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Si oui, dans quelle mesure cela affecte-t-il votre budget ?
+            <span class="text-muted">(optionnel)</span>
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="impact_budget" value="faiblement" id="impact1">
+            <label class="form-check-label" for="impact1">Faiblement</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="impact_budget" value="moyennement" id="impact2">
+            <label class="form-check-label" for="impact2">Moyennement</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="impact_budget" value="significativement" id="impact3">
+            <label class="form-check-label" for="impact3">Significativement</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="impact_budget" value="tres_significativement" id="impact4">
+            <label class="form-check-label" for="impact4">Très significativement</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Avez-vous des suggestions pour rendre les services publics plus abordables ?
+          </label>
+          <textarea class="form-control" name="suggestions_cout" rows="3"></textarea>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="btn-previous" id="prev4"><i class="fas fa-arrow-left"></i> Précédent</button>
+          <button type="button" class="btn-next" id="next5">Suivant <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- FIN SECTION 5 -->
+
+      <!-- SECTION 6: CORRUPTION -->
+      <div class="section" id="section6">
+        <h2><i class="fas fa-shield-alt icon-label"></i>Corruption</h2>
+
+        <div class="question">
+          <label class="form-label">
+            Pensez-vous que la corruption est une réalité dans les services publics de votre région ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="corruption_reelle" value="oui" id="corr_oui">
+            <label class="form-check-label" for="corr_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="corruption_reelle" value="non" id="corr_non">
+            <label class="form-check-label" for="corr_non">Non</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Si oui, à quel niveau de gravité évaluez-vous ce problème ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gravite_corruption" value="tres_grave" id="grav1">
+            <label class="form-check-label" for="grav1">Très grave</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gravite_corruption" value="grave" id="grav2">
+            <label class="form-check-label" for="grav2">Grave</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gravite_corruption" value="moyennement_grave" id="grav3">
+            <label class="form-check-label" for="grav3">Moyennement grave</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gravite_corruption" value="peu_grave" id="grav4">
+            <label class="form-check-label" for="grav4">Peu grave</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gravite_corruption" value="pas_grave" id="grav5">
+            <label class="form-check-label" for="grav5">Pas du tout grave</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Quel-type de corruption avez-vous observé ou subi ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="type_corruption[]" value="pots_de_vin" id="type1">
+            <label class="form-check-label" for="type1">Pots-de-vin</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="type_corruption[]" value="autres" id="type2">
+            <label class="form-check-label" for="type2">Autres (préciser)</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">Précisez si "Autres":</label>
+          <input type="text" class="form-control" name="autres_corruption" placeholder="Décrivez brièvement">
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            La corruption a-t-elle eu un impact sur votre accès aux services publics ?
+            <span class="text-muted">(optionnel)</span>
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="impact_corruption" value="oui" id="impact_corr_oui">
+            <label class="form-check-label" for="impact_corr_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="impact_corruption" value="non" id="impact_corr_non">
+            <label class="form-check-label" for="impact_corr_non">Non</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Si oui, comment la corruption a-t-elle affecté votre accès aux services publics ?
+            <span class="text-muted">(optionnel)</span>
+          </label>
+          <textarea class="form-control" name="comment_corruption" rows="3"></textarea>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Quelles suggestions auriez-vous pour améliorer la transparence et l’intégrité dans les services publics ?
+          </label>
+          <textarea class="form-control" name="suggestions_corruption" rows="3"></textarea>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="btn-previous" id="prev5"><i class="fas fa-arrow-left"></i> Précédent</button>
+          <button type="button" class="btn-next" id="next6">Suivant <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- FIN SECTION 6 -->
+
+      <!-- SECTION 7: SERVICES DE RÉCLAMATIONS -->
+      <div class="section" id="section7">
+        <h2><i class="fas fa-bullhorn icon-label"></i>Services de réclamations</h2>
+
+        <div class="question">
+          <label class="form-label">
+            Avez-vous déjà déposé une réclamation auprès d’un service public ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="reclamation_deposee" value="oui" id="rec_oui">
+            <label class="form-check-label" for="rec_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="reclamation_deposee" value="non" id="rec_non">
+            <label class="form-check-label" for="rec_non">Non</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Si oui, la réclamation est liée à quel service public ?
+          </label>
+          <!-- Liste des services publics concernés -->
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="service_reclamation[]" value="papiers_admin" id="srec1">
+            <label class="form-check-label" for="srec1">Délivrance de papiers administratifs</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="service_reclamation[]" value="defense_securite" id="srec2">
+            <label class="form-check-label" for="srec2">Défense et sécurité</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="service_reclamation[]" value="sante_protection" id="srec3">
+            <label class="form-check-label" for="srec3">Santé et protection sociale</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="service_reclamation[]" value="education_enseignement" id="srec4">
+            <label class="form-check-label" for="srec4">Éducation et Enseignement</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="service_reclamation[]" value="habitat_cadre_vie" id="srec5">
+            <label class="form-check-label" for="srec5">Habitat et cadre de vie</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="service_reclamation[]" value="transport" id="srec6">
+            <label class="form-check-label" for="srec6">Transport</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="service_reclamation[]" value="environnement" id="srec7">
+            <label class="form-check-label" for="srec7">Environnement</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="service_reclamation[]" value="finances" id="srec8">
+            <label class="form-check-label" for="srec8">Finances</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="service_reclamation[]" value="sport_loisir_culture" id="srec9">
+            <label class="form-check-label" for="srec9">Sport, Loisirs, culture</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="service_reclamation[]" value="industrie" id="srec10">
+            <label class="form-check-label" for="srec10">Industrie</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="service_reclamation[]" value="agriculture_peche_elevage" id="srec11">
+            <label class="form-check-label" for="srec11">Agriculture, pêche, élevage</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">Comment avez-vous déposé votre réclamation ?</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="mode_reclamation" value="en_ligne" id="mode1">
+            <label class="form-check-label" for="mode1">En ligne</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="mode_reclamation" value="telephone" id="mode2">
+            <label class="form-check-label" for="mode2">Par téléphone</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="mode_reclamation" value="courrier_physique" id="mode3">
+            <label class="form-check-label" for="mode3">Courrier physique</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Le processus de réclamation était-il clair et facile à suivre ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="clarte_reclamation" value="tres_clair" id="clair1">
+            <label class="form-check-label" for="clair1">Très clair</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="clarte_reclamation" value="clair" id="clair2">
+            <label class="form-check-label" for="clair2">Clair</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="clarte_reclamation" value="moyennement_clair" id="clair3">
+            <label class="form-check-label" for="clair3">Moyennement clair</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="clarte_reclamation" value="pas_clair" id="clair4">
+            <label class="form-check-label" for="clair4">Pas clair</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="clarte_reclamation" value="tres_peu_clair" id="clair5">
+            <label class="form-check-label" for="clair5">Très peu clair</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Combien de temps a-t-il fallu pour que votre réclamation soit traitée ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="delai_reclamation" value="moins_3_jours" id="delai1">
+            <label class="form-check-label" for="delai1">Moins de trois jours</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="delai_reclamation" value="une_semaine" id="delai2">
+            <label class="form-check-label" for="delai2">Une semaine</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="delai_reclamation" value="plus_une_semaine" id="delai3">
+            <label class="form-check-label" for="delai3">Plus d’une semaine</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Avez-vous des commentaires supplémentaires sur le service de réclamation des services publics ?
+          </label>
+          <textarea class="form-control" name="commentaires_reclamation" rows="3"></textarea>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="btn-previous" id="prev6"><i class="fas fa-arrow-left"></i> Précédent</button>
+          <button type="button" class="btn-next" id="next7">Suivant <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- FIN SECTION 7 -->
+
+      <!-- SECTION 8: TRANSFORMATION DIGITALE -->
+      <div class="section" id="section8">
+        <h2><i class="fas fa-laptop-code icon-label"></i>Transformation digitale</h2>
+
+        <div class="question">
+          <label class="form-label">Utilisez-vous les services publics digitalisés ?</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="services_digitaux" value="oui" id="serdig_oui">
+            <label class="form-check-label" for="serdig_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="services_digitaux" value="non" id="serdig_non">
+            <label class="form-check-label" for="serdig_non">Non</label>
+          </div>
+        </div>
+
+        <!-- Si oui, lesquels ? -->
+        <div class="question">
+          <label class="form-label">Si oui, lesquels utilisez-vous le plus souvent ?</label>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="type_services_digitaux[]" value="plateformes_en_ligne" id="dig1">
+            <label class="form-check-label" for="dig1">Plateformes en ligne</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="type_services_digitaux[]" value="paiement_en_ligne" id="dig2">
+            <label class="form-check-label" for="dig2">Paiement en ligne</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="type_services_digitaux[]" value="autres" id="dig3">
+            <label class="form-check-label" for="dig3">Autres (préciser)</label>
+          </div>
+        </div>
+        <div class="question">
+          <label class="form-label">Précisez si "Autres":</label>
+          <input type="text" class="form-control" name="autres_services_digitaux">
+        </div>
+
+        <div class="question">
+          <label class="form-label">Comment évaluez-vous l’accessibilité des services publics digitalisés ?</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="accessibilite_digitale" value="tres_accessible" id="digacc1">
+            <label class="form-check-label" for="digacc1">Très accessible</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="accessibilite_digitale" value="accessible" id="digacc2">
+            <label class="form-check-label" for="digacc2">Accessible</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="accessibilite_digitale" value="moyennement_accessible" id="digacc3">
+            <label class="form-check-label" for="digacc3">Moyennement accessible</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="accessibilite_digitale" value="difficilement_accessible" id="digacc4">
+            <label class="form-check-label" for="digacc4">Difficilement accessible</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="accessibilite_digitale" value="tres_difficilement_accessible" id="digacc5">
+            <label class="form-check-label" for="digacc5">Très difficilement accessible</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">Avez-vous rencontré des problèmes en utilisant ces services en ligne ?</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="problemes_en_ligne" value="oui" id="prob_oui">
+            <label class="form-check-label" for="prob_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="problemes_en_ligne" value="non" id="prob_non">
+            <label class="form-check-label" for="prob_non">Non</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">Si oui, quels types de problèmes ?</label>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="type_probleme_en_ligne[]" value="connexion" id="pb1">
+            <label class="form-check-label" for="pb1">Connexion</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="type_probleme_en_ligne[]" value="technique" id="pb2">
+            <label class="form-check-label" for="pb2">Problèmes techniques (bugs, lenteur...)</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="type_probleme_en_ligne[]" value="navigation" id="pb3">
+            <label class="form-check-label" for="pb3">Difficultés de navigation</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="type_probleme_en_ligne[]" value="carence_information" id="pb4">
+            <label class="form-check-label" for="pb4">Carence d’information</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="type_probleme_en_ligne[]" value="autres" id="pb5">
+            <label class="form-check-label" for="pb5">Autres (préciser)</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">Précisez si "Autres":</label>
+          <input type="text" class="form-control" name="autres_problemes_digitaux">
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Quels aspects des services publics en ligne appréciez-vous le plus ?
+            <span class="text-muted">(optionnel)</span>
+          </label>
+          <textarea class="form-control" name="aspects_apprecies_digitaux" rows="3"></textarea>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Quelles améliorations aimeriez-vous voir mises en place pour les services publics digitalisées ?
+          </label>
+          <textarea class="form-control" name="ameliorations_digitaux" rows="3"></textarea>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="btn-previous" id="prev7"><i class="fas fa-arrow-left"></i> Précédent</button>
+          <button type="button" class="btn-next" id="next8">Suivant <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- FIN SECTION 8 -->
+
+      <!-- SECTION 9: PARTICIPATION CITOYENNE -->
+      <div class="section" id="section9">
+        <h2><i class="fas fa-users icon-label"></i>Participation citoyenne</h2>
+
+        <div class="question">
+          <label class="form-label">
+            Êtes-vous informé(e) des réformes des services publics dans votre région ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="inform_reformes" value="oui" id="infref_oui">
+            <label class="form-check-label" for="infref_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="inform_reformes" value="non" id="infref_non">
+            <label class="form-check-label" for="infref_non">Non</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Êtes-vous satisfait du niveau de participation citoyenne dans les processus de réforme des services publics ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="satisfaction_participation" value="tres_satisfait" id="part1">
+            <label class="form-check-label" for="part1">Très satisfait</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="satisfaction_participation" value="satisfait" id="part2">
+            <label class="form-check-label" for="part2">Satisfait</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="satisfaction_participation" value="moyennement_satisfait" id="part3">
+            <label class="form-check-label" for="part3">Moyennement satisfait</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="satisfaction_participation" value="insatisfait" id="part4">
+            <label class="form-check-label" for="part4">Insatisfait</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="satisfaction_participation" value="tres_insatisfait" id="part5">
+            <label class="form-check-label" for="part5">Très insatisfait</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Pensez-vous que l’utilisation de plateformes numériques pourrait faciliter la participation citoyenne ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="facilite_numerique" value="oui" id="facil_oui">
+            <label class="form-check-label" for="facil_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="facilite_numerique" value="non" id="facil_non">
+            <label class="form-check-label" for="facil_non">Non</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Quels aspects de l’inclusion citoyenne pourraient être améliorés ?
+            <span class="text-muted">(optionnel)</span>
+          </label>
+          <textarea class="form-control" name="aspects_inclusion" rows="3"></textarea>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Pensez-vous que la participation citoyenne a un impact réel sur les décisions concernant les réformes des services publics ?
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="impact_reel" value="oui" id="impactreel_oui">
+            <label class="form-check-label" for="impactreel_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="impact_reel" value="non" id="impactreel_non">
+            <label class="form-check-label" for="impactreel_non">Non</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Quelles suggestions auriez-vous pour améliorer l’inclusion et la participation des citoyens dans les réformes des services publics ?
+          </label>
+          <textarea class="form-control" name="suggestions_inclusion" rows="3"></textarea>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="btn-previous" id="prev8"><i class="fas fa-arrow-left"></i> Précédent</button>
+          <button type="button" class="btn-next" id="next9">Suivant <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- FIN SECTION 9 -->
+
+      <!-- SECTION 10: RESSOURCES HUMAINES -->
+      <div class="section" id="section10">
+        <h2><i class="fas fa-handshake icon-label"></i>Ressources humaines</h2>
+
+        <div class="question">
+          <label class="form-label">
+            Pensez-vous que les agents publics ont l’esprit collaboratif ?
+            <span class="text-muted">(optionnel)</span>
+          </label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="esprit_collaboratif" value="oui" id="collab_oui">
+            <label class="form-check-label" for="collab_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="esprit_collaboratif" value="non" id="collab_non">
+            <label class="form-check-label" for="collab_non">Non</label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="form-label">
+            Pourquoi ?
+            <span class="text-muted">(optionnel)</span>
+          </label>
+          <textarea class="form-control" name="pourquoi_collaboratif" rows="2"></textarea>
+        </div>
+
+        <!-- Boutons finaux -->
+        <div class="buttons">
+          <button type="button" class="btn-previous" id="prev10"><i class="fas fa-arrow-left"></i> Précédent</button>
+          <button type="submit" class="btn-submit">Envoyer <i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+      <!-- FIN SECTION 10 (dans le code, c'est la 11e section au total) -->
+
+    </div> <!-- FIN formContainer -->
+  </form>
+
+  <!-- JS (Bootstrap + Scripts) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // On récupère toutes les sections
+    const sections = document.querySelectorAll(".section");
+    let currentSectionIndex = 0;
+    const totalSections = sections.length;
+
+    // Sélection de la barre de progression et du label
+    const progressFill = document.getElementById("progressFill");
+    const progressLabel = document.getElementById("progressLabel");
+
+    // Boutons "Suivant" (IDs correspondants à chaque section, sauf la dernière)
+    const nextBtnIds = [
+      "next1","next2","next3","next4","next5",
+      "next6","next7","next8","next9","next10"
+    ];
+    // Boutons "Précédent" (IDs correspondants à chaque section, sauf la première)
+    const prevBtnIds = [
+      "prev1","prev2","prev3","prev4","prev5",
+      "prev6","prev7","prev8","prev9","prev10"
+    ];
+
+    // Gestion du clic "Suivant"
+    nextBtnIds.forEach((btnId) => {
+      const btn = document.getElementById(btnId);
+      if (btn) {
+        btn.addEventListener("click", () => {
+          currentSectionIndex = Math.min(currentSectionIndex + 1, totalSections - 1);
+          updateSections();
+          // Fait remonter la page en haut du formulaire
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    });
+
+    // Gestion du clic "Précédent"
+    prevBtnIds.forEach((btnId) => {
+      const btn = document.getElementById(btnId);
+      if (btn) {
+        btn.addEventListener("click", () => {
+          currentSectionIndex = Math.max(currentSectionIndex - 1, 0);
+          updateSections();
+        });
+      }
+    });
+
+    function updateSections() {
+      // Masquer toutes les sections
+      sections.forEach((section, i) => {
+        section.classList.remove("active", "animate__fadeIn");
+        if (i === currentSectionIndex) {
+          section.classList.add("active", "animate__fadeIn");
+        }
+      });
+
+      // Calcul du pourcentage de progression
+      const progressPercent = ((currentSectionIndex + 1) / totalSections) * 100;
+      progressFill.style.width = progressPercent + "%";
+      progressFill.setAttribute("aria-valuenow", progressPercent);
+
+      // Mettre à jour le label "Étape X sur XX"
+      progressLabel.textContent = `Étape ${currentSectionIndex + 1} sur ${totalSections}`;
+    }
+
+    // Affichage initial de la première section + mise à jour de la barre
+    updateSections();
+
+    // Intercepter la soumission du formulaire pour afficher un message
+    const form = document.getElementById("mainForm");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault(); // Empêche l’envoi réel (si vous souhaitez un envoi AJAX)
+      // Affiche un message (ou redirection)
+      alert("Formulaire soumis avec succès. Merci de votre participation !");
+      // Si vous voulez réellement soumettre le formulaire, retirez event.preventDefault().
+    });
+  </script>
+
+</body>
+</html>

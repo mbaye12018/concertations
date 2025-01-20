@@ -295,7 +295,20 @@ Votre avis compte pour bâtir un service public de qualité 💪
     <div id="section1" class="section active">
         
     <h2>Identification <i class="fas fa-user"></i></h2>
-    
+    <label for="participation-choice">Choisissez votre type de participation :</label><br>
+<input type="radio" id="senegal" name="participation" value="senegal" onclick="toggleIdentification(false)"> Sénégal
+<input type="radio" id="anonymous" name="participation" value="anonyme" onclick="toggleIdentification(true)"> Anonyme
+
+<script>
+    function toggleIdentification(isAnonymous) {
+        const identificationSection = document.getElementById("identification-section");
+        if (isAnonymous) {
+            identificationSection.style.display = "none";
+        } else {
+            identificationSection.style.display = "block";
+        }
+    }
+</script>
         <div class="question">
         <label>
         <i class="fas fa-map-marker-alt"></i> <!-- Icône de localisation -->
