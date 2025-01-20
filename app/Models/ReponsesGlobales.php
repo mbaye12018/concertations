@@ -11,9 +11,15 @@ class ReponsesGlobales extends Model
 
     protected $table = 'reponses_globales';
 
-    protected $fillable = ['data'];
+    protected $primaryKey = 'id_soumission'; // 📌 Définit la clé primaire
+
+    public $incrementing = false; // 📌 Désactive l'auto-incrémentation (car `id_soumission` est un identifiant spécifique)
+
+    protected $fillable = ['id_soumission', 'contenu_json', 'derniere_mise_a_jour'];
 
     protected $casts = [
-        'data' => 'array',
+        'contenu_json' => 'array',
     ];
+
+    public $timestamps = false; // Désactive created_at et updated_at
 }

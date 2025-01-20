@@ -9,22 +9,14 @@ class CreateReponsesGlobalesTable extends Migration
     public function up()
     {
         Schema::create('reponses_globales', function (Blueprint $table) {
-            // On référence directement l'id_soumission comme clé primaire
-            $table->bigInteger('id_soumission')->unsigned()->primary();
+            // `id_soumission` doit être AUTO_INCREMENT et clé primaire
+            $table->bigIncrements('id_soumission');
 
-            // JSON requiert MySQL 5.7+ ou MariaDB 10.2+. Sinon, remplacer par longText('contenu_json').
+            // Changer json en longText si MySQL < 5.7
             $table->json('contenu_json');
 
-            // Date mise à jour
-            $table->timestamp('derniere_mise_a_jour')
-                  ->useCurrent()
-                  ->useCurrentOnUpdate();
-
-            // Clé étrangère
-            $table->foreign('id_soumission')
-                  ->references('id_soumission')
-                  ->on('soumissions')
-                  ->onDelete('cascade');
+            // Date mise à jour automatique
+            $table->timestamp('derniere_mise_a_jour')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

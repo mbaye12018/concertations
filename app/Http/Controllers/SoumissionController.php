@@ -13,129 +13,191 @@ use App\Models\Digitale;
 use App\Models\Participation;
 use App\Models\RessourcesHumaines;
 use App\Models\ReponsesGlobales;
+use Illuminate\Support\Facades\Log;
 
 class SoumissionController extends Controller
 {
+
+
+
+
+
+
     /**
      * Enregistrer les réponses pour l'accès aux services publics.
      */
-    public function storeAccesPublics(Request $request)
-    {
-        $data = $request->all();
+    public function storeInfosGenerales(Request $request)
+{
+    try {
+        // 🔹 Validation des données
+        $validatedData = $request->validate([
+            'age' => 'required|string',
+            'sexe' => 'required|string',
+            'location' => 'required|string',
+            'region' => 'nullable|string',
+            'department' => 'nullable|string',
+            'country' => 'nullable|string',
+        ]);
 
-        // Insérer dans la table spécifique
-        AccesServicesPublics::create($data);
+        // 🔹 Générer un ID unique pour la soumission
+        $idSoumission = uniqid('S_');
 
-        // Mettre à jour la table globale
-        ReponsesGlobales::updateOrCreate(
-            ['id' => 1], // Unique pour ce projet, car c'est une mise à jour continue
-            ['data' => json_encode($data)]
-        );
+        // 🔹 Enregistrement en base
+        $soumission = Soumission::create([
+            'id_soumission' => $idSoumission,
+            'tranche_age' => $validatedData['age'],
+            'sexe' => $validatedData['sexe'],
+            'lieu_residence' => $validatedData['location'],
+            'region_id' => !empty($validatedData['region']) ? $validatedData['region'] : null,
+            'departement_id' => !empty($validatedData['department']) ? $validatedData['department'] : null,
+            'pays_diaspora' => !empty($validatedData['country']) ? $validatedData['country'] : null,
+            'date_soumission' => now(),
+        ]);
 
-        return response()->json(['success' => true, 'message' => 'Réponse enregistrée !']);
+        return response()->json([
+            'success' => true,
+            'id_soumission' => $soumission->id_soumission,
+            'message' => 'Soumission enregistrée avec succès.'
+        ]);
+
+    } catch (\Exception $e) {
+        Log::error("❌ Erreur d'enregistrement : " . $e->getMessage());
+        return response()->json([
+            'success' => false,
+            'message' => 'Erreur lors de l’enregistrement.',
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
+
+
+
 
     /**
-     * Enregistrer les réponses pour l'accueil et l'orientation.
+     * Enregistrer les réponses pour les autres thématiques.
      */
     public function storeAccueilOrientation(Request $request)
     {
-        $data = $request->all();
-        AccueilOrientation::create($data);
-
-        ReponsesGlobales::updateOrCreate(['id' => 1], ['data' => json_encode($data)]);
-
-        return response()->json(['success' => true]);
+        return $this->saveResponse($request, AccueilOrientation::class);
     }
 
-    /**
-     * Enregistrer les réponses pour la diligence.
-     */
     public function storeDiligence(Request $request)
     {
-        $data = $request->all();
-        Diligence::create($data);
-
-        ReponsesGlobales::updateOrCreate(['id' => 1], ['data' => json_encode($data)]);
-
-        return response()->json(['success' => true]);
+        return $this->saveResponse($request, Diligence::class);
     }
 
-    /**
-     * Enregistrer les réponses pour le coût du service.
-     */
     public function storeCoutService(Request $request)
     {
-        $data = $request->all();
-        CoutService::create($data);
-
-        ReponsesGlobales::updateOrCreate(['id' => 1], ['data' => json_encode($data)]);
-
-        return response()->json(['success' => true]);
+        return $this->saveResponse($request, CoutService::class);
     }
 
-    /**
-     * Enregistrer les réponses pour la corruption.
-     */
     public function storeCorruption(Request $request)
     {
-        $data = $request->all();
-        Corruption::create($data);
-
-        ReponsesGlobales::updateOrCreate(['id' => 1], ['data' => json_encode($data)]);
-
-        return response()->json(['success' => true]);
+        return $this->saveResponse($request, Corruption::class, ['type_corruption']);
     }
 
-    /**
-     * Enregistrer les réponses pour les réclamations.
-     */
     public function storeReclamations(Request $request)
     {
-        $data = $request->all();
-        Reclamations::create($data);
-
-        ReponsesGlobales::updateOrCreate(['id' => 1], ['data' => json_encode($data)]);
-
-        return response()->json(['success' => true]);
+        return $this->saveResponse($request, Reclamations::class, ['reclamation_service']);
     }
 
-    /**
-     * Enregistrer les réponses pour la transformation digitale.
-     */
     public function storeDigitale(Request $request)
     {
-        $data = $request->all();
-        Digitale::create($data);
-
-        ReponsesGlobales::updateOrCreate(['id' => 1], ['data' => json_encode($data)]);
-
-        return response()->json(['success' => true]);
+        return $this->saveResponse($request, Digitale::class, ['services_digitaux_utilises', 'problemes_en_ligne']);
     }
 
-    /**
-     * Enregistrer les réponses pour la participation citoyenne.
-     */
     public function storeParticipation(Request $request)
     {
-        $data = $request->all();
-        Participation::create($data);
+        return $this->saveResponse($request, Participation::class);
+    }
 
-        ReponsesGlobales::updateOrCreate(['id' => 1], ['data' => json_encode($data)]);
-
-        return response()->json(['success' => true]);
+    public function storeRessourcesHumaines(Request $request)
+    {
+        return $this->saveResponse($request, RessourcesHumaines::class);
     }
 
     /**
-     * Enregistrer les réponses pour les ressources humaines.
+     * Fonction générique pour enregistrer les réponses et mettre à jour la table globale.
      */
-    public function storeRessourcesHumaines(Request $request)
+    private function saveResponse(Request $request, $model, $jsonFields = [])
     {
-        $data = $request->all();
-        RessourcesHumaines::create($data);
+        try {
+            // Étape 1: Validation des données
+            $validatedData = $this->validateRequest($request, $jsonFields);
 
-        ReponsesGlobales::updateOrCreate(['id' => 1], ['data' => json_encode($data)]);
+            // Étape 2: Traitement des champs JSON (checkboxes multiples)
+            foreach ((array) $jsonFields as $field) {
+                if ($request->has($field)) {
+                    $validatedData[$field] = json_encode($request->input($field));
+                }
+            }
 
-        return response()->json(['success' => true]);
+            // Étape 3: Enregistrement dans la table spécifique
+            $response = $model::create($validatedData);
+
+            // Étape 4: Mise à jour des réponses globales
+            $this->updateReponsesGlobales($validatedData);
+
+            return response()->json([
+                'success' => true,
+                'message' => '✅ Réponse enregistrée avec succès.',
+                'data' => $response
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error("🚨 Erreur lors de l'enregistrement : " . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Erreur lors de l’enregistrement.'], 500);
+        }
     }
+
+    /**
+     * Valider la requête avant enregistrement.
+     */
+    private function validateRequest(Request $request, $jsonFields)
+    {
+        $rules = [];
+
+        foreach ((array) $jsonFields as $field) {
+            $rules[$field] = 'nullable|array';
+            $rules["{$field}.*"] = 'string';
+        }
+
+        return $request->validate($rules);
+    }
+
+    /**
+     * Met à jour la table `ReponsesGlobales` en fusionnant les nouvelles réponses.
+     */
+    private function updateReponsesGlobales($newData)
+    {
+        $idSoumission = $newData['id_soumission'] ?? null;
+
+        if (!$idSoumission) {
+            Log::error("❌ Impossible de mettre à jour `reponses_globales` : `id_soumission` est NULL.");
+            return;
+        }
+
+        // Vérifier s'il existe déjà une entrée pour cette soumission
+        $existingResponse = ReponsesGlobales::where('id_soumission', $idSoumission)->first();
+
+        if ($existingResponse) {
+            // Fusionner les nouvelles données avec les anciennes
+            $existingData = json_decode($existingResponse->contenu_json, true) ?? [];
+            $mergedData = array_merge($existingData, $newData);
+
+            // Mise à jour
+            $existingResponse->update([
+                'contenu_json' => json_encode($mergedData),
+                'derniere_mise_a_jour' => now(),
+            ]);
+        } else {
+            // Créer une nouvelle entrée
+            ReponsesGlobales::create([
+                'id_soumission' => $idSoumission,
+                'contenu_json' => json_encode($newData),
+                'derniere_mise_a_jour' => now(),
+            ]);
+        }
+    }
+
 }

@@ -131,3 +131,6 @@ Route::post('/soumissions/ressources-humaines', [SoumissionController::class, 's
 
 // Si tu gères les infos générales dans la table "soumissions"
 Route::post('/soumissions/infos-generales', [SoumissionController::class, 'storeInfosGenerales'])->name('soumissions.infos_generales');
+
+
+
