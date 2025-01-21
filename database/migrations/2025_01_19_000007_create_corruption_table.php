@@ -14,11 +14,11 @@ class CreateCorruptionTable extends Migration
 
             $table->boolean('corruption_existante');     // 1=Oui, 0=Non
             $table->string('niveau_gravite', 50)->nullable(); // "tres_grave", ...
-            $table->text('types_corruption')->nullable();     // ex: "Pots-de-vin,autres"
+            $table->json('types_corruption')->nullable();     // Stocké sous forme JSON ✅
             $table->text('autres_corruption')->nullable();
             $table->text('suggestions_integrite');
 
-            $table->timestamp('date_insertion')->useCurrent();
+            $table->timestamps(); // ✅ Ajout des colonnes `created_at` et `updated_at`
 
             $table->foreign('id_soumission')
                   ->references('id_soumission')

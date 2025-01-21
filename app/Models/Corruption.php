@@ -9,6 +9,7 @@ class Corruption extends Model
 {
     use HasFactory;
 
+
     protected $table = 'corruption';
 
     protected $fillable = [

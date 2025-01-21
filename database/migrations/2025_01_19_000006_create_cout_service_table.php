@@ -12,12 +12,12 @@ class CreateCoutServiceTable extends Migration
             $table->bigIncrements('id_cout');
             $table->unsignedBigInteger('id_soumission');
 
-            $table->string('evaluation_cout', 50);    // "tres_abordable", ...
-            $table->boolean('cout_justifie');         // 1=Oui, 0=Non
-            $table->string('mecanisme_paiement', 50); // "Espèce", "e-money", ...
+            $table->string('evaluation_cout', 50);
+            $table->boolean('cout_justifie');
+            $table->string('mecanisme_paiement', 50);
             $table->text('suggestions_cout');
 
-            $table->timestamp('date_insertion')->useCurrent();
+            $table->timestamps(); // ✅ Ajoute `created_at` et `updated_at`
 
             $table->foreign('id_soumission')
                   ->references('id_soumission')
@@ -25,6 +25,7 @@ class CreateCoutServiceTable extends Migration
                   ->onDelete('cascade');
         });
     }
+
 
     public function down()
     {

@@ -852,62 +852,210 @@ form {
 
     <!-- 3) Diligence -->
     <div id="formDiligence" class="hidden-section">
-      <button class="btn btn-return" id="btnReturn3">
+    <button class="btn btn-return" id="btnReturn3">
         <i class="fas fa-arrow-left me-1"></i>Retour
-      </button>
-      <h3 class="section-title">
+    </button>
+    <h3 class="section-title">
         <i class="fas fa-clock theme-icon"></i>
         Diligence dans le traitement
-      </h3>
-      <form id="formDiligenceForm" class="needs-validation" novalidate>
-        <!-- ...champs spécifiques diligence... -->
-        <div class="d-grid">
-          <button type="button" id="submitDiligence" class="btn btn-primary">
-            <i class="fas fa-paper-plane me-1"></i>Soumettre
-          </button>
+    </h3>
+    <form id="formDiligenceForm" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label class="form-label">Les procédures administratives sont-elles longues ?</label>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="procedures_longues" id="proc_oui" value="1" required>
+                <label class="form-check-label" for="proc_oui">Oui</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="procedures_longues" id="proc_non" value="0" required>
+                <label class="form-check-label" for="proc_non">Non</label>
+            </div>
         </div>
-      </form>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Pourquoi ?</label>
+            <textarea class="form-control" name="pourquoi_longues" rows="2" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Avez-vous des suggestions ?</label>
+            <textarea class="form-control" name="suggestions_delai" rows="2" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Les formalités administratives sont-elles complexes ?</label>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="formalites_complexes" id="formYes" value="1" required>
+                <label class="form-check-label" for="formYes">Oui</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="formalites_complexes" id="formNo" value="0" required>
+                <label class="form-check-label" for="formNo">Non</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Pourquoi ?</label>
+            <textarea class="form-control" name="pourquoi_complexes" rows="2" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Avez-vous des suggestions ?</label>
+            <textarea class="form-control" name="suggestions_formalites" rows="2" required></textarea>
+        </div>
+
+        <div class="d-grid">
+            <button type="button" id="submitDiligence" class="btn btn-primary">
+                <i class="fas fa-paper-plane me-1"></i>Soumettre
+            </button>
+        </div>
+    </form>
+</div>
+
     <!-- FIN : Diligence -->
 
     <!-- 4) Coût du service -->
     <div id="formCoutService" class="hidden-section">
-      <button class="btn btn-return" id="btnReturn4">
+    <button class="btn btn-return" id="btnReturn4">
         <i class="fas fa-arrow-left me-1"></i>Retour
-      </button>
-      <h3 class="section-title">
+    </button>
+    <h3 class="section-title">
         <i class="fas fa-money-bill-wave theme-icon"></i>
         Coût du service
-      </h3>
-      <form id="formCoutServiceForm" class="needs-validation" novalidate>
-        <!-- ...champs spécifiques coût du service... -->
-        <div class="d-grid">
-          <button type="button" id="submitCoutService" class="btn btn-primary">
-            <i class="fas fa-paper-plane me-1"></i>Soumettre
-          </button>
+    </h3>
+    <form id="formCoutServiceForm" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label class="form-label">
+                Comment évaluez-vous le coût des prestations des services publics ?
+            </label>
+            <select class="form-select" name="evaluation_cout" required>
+                <option value="">-- Sélectionnez --</option>
+                <option value="tres_abordable">Très abordable</option>
+                <option value="abordable">Abordable</option>
+                <option value="moyennement_cher">Moyennement cher</option>
+                <option value="cher">Cher</option>
+                <option value="tres_cher">Très cher</option>
+            </select>
         </div>
-      </form>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">
+                Pensez-vous que le coût de ces services est justifié par les prestations fournies ?
+            </label>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="cout_justifie" id="cout_oui" value="1" required>
+                <label class="form-check-label" for="cout_oui">Oui</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="cout_justifie" id="cout_non" value="0" required>
+                <label class="form-check-label" for="cout_non">Non</label>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">
+                Quel est le mécanisme de paiement que vous avez utilisé ?
+            </label>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="mecanisme_paiement" id="paiementEspece" value="Espece" required>
+                <label class="form-check-label" for="paiementEspece">Espèce</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="mecanisme_paiement" id="paiementEmoney" value="e-money" required>
+                <label class="form-check-label" for="paiementEmoney">e-money</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="mecanisme_paiement" id="paiementVirement" value="Virement bancaire" required>
+                <label class="form-check-label" for="paiementVirement">Virement bancaire</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="mecanisme_paiement" id="paiementAutres" value="Autres" required>
+                <label class="form-check-label" for="paiementAutres">Autres</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">
+                Avez-vous des suggestions pour rendre les services publics plus abordables ?
+            </label>
+            <textarea class="form-control" name="suggestions_cout" rows="2" required></textarea>
+        </div>
+
+        <div class="d-grid">
+            <button type="button" id="submitCoutService" class="btn btn-primary">
+                <i class="fas fa-paper-plane me-1"></i>Soumettre
+            </button>
+        </div>
+    </form>
+</div>
+
     <!-- FIN : Coût du service -->
 
     <!-- 5) Corruption -->
     <div id="formCorruption" class="hidden-section">
-      <button class="btn btn-return" id="btnReturn5">
+    <button class="btn btn-return" id="btnReturn5">
         <i class="fas fa-arrow-left me-1"></i>Retour
-      </button>
-      <h3 class="section-title">
+    </button>
+    <h3 class="section-title">
         <i class="fas fa-shield-alt theme-icon"></i>
         Corruption
-      </h3>
-      <form id="formCorruptionForm" class="needs-validation" novalidate>
-        <!-- ...champs spécifiques corruption... -->
-        <div class="d-grid">
-          <button type="button" id="submitCorruption" class="btn btn-primary">
-            <i class="fas fa-paper-plane me-1"></i>Soumettre
-          </button>
+    </h3>
+    <form id="formCorruptionForm" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label class="form-label">
+                Pensez-vous que la corruption est une réalité dans les services publics de votre région ?
+            </label>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="corruption_existante" id="corr_oui" value="1" required>
+                <label class="form-check-label" for="corr_oui">Oui</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="corruption_existante" id="corr_non" value="0" required>
+                <label class="form-check-label" for="corr_non">Non</label>
+            </div>
         </div>
-      </form>
+
+        <div class="mb-3">
+            <label class="form-label">
+                Si oui, à quel niveau de gravité évaluez-vous ce problème ?
+            </label>
+            <select class="form-select" name="niveau_corruption" required>
+                <option value="">-- Sélectionnez --</option>
+                <option value="tres_grave">Très grave</option>
+                <option value="grave">Grave</option>
+                <option value="moyennement_grave">Moyennement grave</option>
+                <option value="peu_grave">Peu grave</option>
+                <option value="pas_grave">Pas du tout grave</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+    <label class="form-label">
+        Quel type de corruption avez-vous observé ou subi ?
+    </label>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="typeCorruption[]" id="potsDeVin" value="Pots-de-vin">
+        <label class="form-check-label" for="potsDeVin">Pots-de-vin</label>
     </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="typeCorruption[]" id="autresCorrupt" value="Autres">
+        <label class="form-check-label" for="autresCorrupt">Autres (préciser)</label>
+    </div>
+</div>
+<div class="mb-3">
+    <input type="text" class="form-control" name="precisions_corruption" placeholder="Précisez si Autres" />
+</div>
+
+
+        <div class="mb-3">
+            <label class="form-label">
+                Quelles suggestions auriez-vous pour améliorer la transparence et l’intégrité ?
+            </label>
+            <textarea class="form-control" name="suggestions_corruption" rows="2" required></textarea>
+        </div>
+
+        <div class="d-grid">
+            <button type="button" id="submitCorruption" class="btn btn-primary">
+                <i class="fas fa-paper-plane me-1"></i>Soumettre
+            </button>
+        </div>
+    </form>
+</div>
+
     <!-- FIN : Corruption -->
 
     <!-- 6) Réclamations -->
@@ -1375,6 +1523,251 @@ function showForm(themeKey) {
 //fin envoi accueil et orientation
 
 
+//envoi diligence
+
+document.addEventListener("DOMContentLoaded", function () {
+    const formDiligence = document.getElementById("formDiligenceForm");
+    const submitDiligence = document.getElementById("submitDiligence");
+
+    if (formDiligence && submitDiligence) {
+        submitDiligence.addEventListener("click", async function (e) {
+            e.preventDefault();
+
+            if (!formDiligence.checkValidity()) {
+                formDiligence.reportValidity();
+                return;
+            }
+
+
+            // Désactiver le bouton pour éviter les doubles soumissions
+            submitDiligence.disabled = true;
+            submitDiligence.innerHTML = "Envoi en cours...";
+
+            // Collecte des données du formulaire
+            let formData = new FormData(formDiligence);
+            let jsonData = {};
+
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+
+            // Ajouter l'ID de soumission récupéré
+            jsonData["id_soumission"] = idSoumission;
+
+            // Conversion des boutons radio en booléens (1 ou 0)
+            jsonData["procedures_longues"] = document.querySelector('input[name="procedures_longues"]:checked') ? 1 : 0;
+            jsonData["formalites_complexes"] = document.querySelector('input[name="formComplexes"]:checked') ? 1 : 0;
+
+            console.log("📤 Données envoyées :", jsonData); // Debug
+
+            // Vérifier si la balise CSRF existe
+            const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+            let csrfToken = csrfMeta ? csrfMeta.getAttribute("content") : "";
+
+            // Envoi AJAX sécurisé
+            try {
+                const response = await fetch("{{ route('soumissions.diligence') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                    body: JSON.stringify(jsonData),
+                });
+
+                if (!response.ok) {
+                    let errText = await response.text();
+                    console.error("🚨 Erreur serveur :", errText);
+                    alert("❌ Erreur lors de l'enregistrement : " + errText);
+                    return;
+                }
+
+                const result = await response.json();
+                console.log("✅ Réponse JSON :", result);
+
+                if (!result.success) {
+                    alert("❌ Erreur serveur : " + (result.message || "Erreur inconnue."));
+                    return;
+                }
+
+                console.log("✅ Réponses Diligence enregistrées avec ID Soumission :", result.id_soumission);
+                alert("✅ Diligence enregistrée avec succès !");
+
+            } catch (error) {
+                console.error("🚨 Erreur AJAX :", error);
+                alert("Erreur de communication avec le serveur.");
+            } finally {
+                // Réactiver le bouton
+                submitDiligence.disabled = false;
+                submitDiligence.innerHTML = "<i class='fas fa-paper-plane me-1'></i>Soumettre";
+            }
+        });
+    }
+});
+
+
+//fin envoi diligence
+
+
+
+//debut envoi cout service
+document.addEventListener("DOMContentLoaded", function () {
+    const formCoutService = document.getElementById("formCoutServiceForm");
+    const submitCoutService = document.getElementById("submitCoutService");
+
+    if (formCoutService && submitCoutService) {
+        submitCoutService.addEventListener("click", async function (e) {
+            e.preventDefault();
+
+            if (!formCoutService.checkValidity()) {
+                formCoutService.reportValidity();
+                return;
+            }
+
+            // Désactiver le bouton pour éviter les doubles soumissions
+            submitCoutService.disabled = true;
+            submitCoutService.innerHTML = "Envoi en cours...";
+
+            // Collecte des données du formulaire
+            let formData = new FormData(formCoutService);
+            let jsonData = {};
+
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+
+
+            jsonData["id_soumission"] = idSoumission; // Ajouter l'ID de soumission
+
+            console.log("📤 Données envoyées :", jsonData); // Debug
+
+            // Vérifier si la balise CSRF existe
+            const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+            let csrfToken = csrfMeta ? csrfMeta.getAttribute("content") : "";
+
+            // Envoi AJAX sécurisé
+            try {
+                const response = await fetch("{{ route('soumissions.cout_service') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                    body: JSON.stringify(jsonData),
+                });
+
+                if (!response.ok) {
+                    let errText = await response.text();
+                    console.error("🚨 Erreur serveur :", errText);
+                    alert("❌ Erreur lors de l'enregistrement : " + errText);
+                    return;
+                }
+
+                const result = await response.json();
+                console.log("✅ Réponse JSON :", result);
+
+                if (!result.success) {
+                    alert("❌ Erreur serveur : " + (result.message || "Erreur inconnue."));
+                    return;
+                }
+
+                console.log("✅ Réponse enregistrée avec ID Soumission :", result.id_soumission);
+                alert("✅ Coût du service enregistré avec succès !");
+
+            } catch (error) {
+                console.error("🚨 Erreur AJAX :", error);
+                alert("Erreur de communication avec le serveur.");
+            } finally {
+                // Réactiver le bouton
+                submitCoutService.disabled = false;
+                submitCoutService.innerHTML = "<i class='fas fa-paper-plane me-1'></i>Soumettre";
+            }
+        });
+    }
+});
+//fin envoi cout service
+
+//envio corruption
+document.addEventListener("DOMContentLoaded", function () {
+    const formCorruption = document.getElementById("formCorruptionForm");
+    const submitCorruption = document.getElementById("submitCorruption");
+
+    if (formCorruption && submitCorruption) {
+        submitCorruption.addEventListener("click", async function (e) {
+            e.preventDefault();
+
+            if (!formCorruption.checkValidity()) {
+                formCorruption.reportValidity();
+                return;
+            }
+
+            submitCorruption.disabled = true;
+            submitCorruption.innerHTML = "Envoi en cours...";
+
+            let formData = new FormData(formCorruption);
+            let jsonData = {};
+
+            formData.forEach((value, key) => {
+                if (key === "type_corruption[]") {
+                    if (!jsonData["type_corruption"]) jsonData["type_corruption"] = [];
+                    jsonData["type_corruption"].push(value);
+                } else {
+                    jsonData[key] = value;
+                }
+            });
+
+            jsonData["corruption_reelle"] = document.querySelector('input[name="corruption_reelle"]:checked') ? 1 : 0;
+
+
+            jsonData["id_soumission"] = idSoumission;
+
+            console.log("📤 Données envoyées :", jsonData);
+
+            const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+            let csrfToken = csrfMeta ? csrfMeta.getAttribute("content") : "";
+
+            try {
+                const response = await fetch("{{ route('soumissions.corruption') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                    body: JSON.stringify(jsonData),
+                });
+
+                if (!response.ok) {
+                    let errText = await response.text();
+                    console.error("🚨 Erreur serveur :", errText);
+                    alert("❌ Erreur lors de l'enregistrement : " + errText);
+                    return;
+                }
+
+                const result = await response.json();
+                console.log("✅ Réponse JSON :", result);
+
+                if (!result.success) {
+                    alert("❌ Erreur serveur : " + (result.message || "Erreur inconnue."));
+                    return;
+                }
+
+                console.log("✅ Réponses Corruption enregistrées avec ID Soumission :", result.id_soumission);
+                alert("✅ Corruption enregistrée avec succès !");
+
+            } catch (error) {
+                console.error("🚨 Erreur AJAX :", error);
+                alert("Erreur de communication avec le serveur.");
+            } finally {
+                submitCorruption.disabled = false;
+                submitCorruption.innerHTML = "<i class='fas fa-paper-plane me-1'></i>Soumettre";
+            }
+        });
+    }
+});
+
+
+//fin envoi corruption
+
 
 function hideAllForms() {
   formAccesPublics.classList.add("hidden-section");
@@ -1516,8 +1909,9 @@ async function sendThemeForm(themeKey, formEl) {
     } break;
 
     case "corruption": {
-      let typeCorruption = getCheckedValues("typeCorruption[]");
-      formData.append('typeCorruption', JSON.stringify(typeCorruption));
+        let typeCorruption = getCheckedValues("typeCorruption[]");
+typeCorruption.forEach(value => formData.append('typeCorruption[]', value)); // ✅ Envoie un tableau correct
+
     } break;
 
     case "reclamations": {

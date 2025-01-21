@@ -206,7 +206,222 @@ class SoumissionController extends Controller
 }
 
 
+/**
+ * Enregistrer les réponses pour Diligence.
+ */
 
+ public function storeDiligence(Request $request)
+ {
+     try {
+         // 🔍 Étape 1: Log des données reçues
+         Log::info('📥 Données reçues pour Diligence :', $request->all());
+
+         // 🔹 Étape 2: Vérification de l'ID de soumission (récupéré depuis la session)
+         $idSoumission = session('id_soumission');
+
+         if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
+             Log::error("❌ ID de soumission invalide ou inexistant : " . ($idSoumission ?? 'NULL'));
+             return response()->json([
+                 'success' => false,
+                 'message' => 'ID de soumission invalide. Veuillez recommencer la soumission générale.'
+             ], 400);
+         }
+
+         Log::info("📥 ID de soumission récupéré dans storeDiligence : " . $idSoumission);
+
+         // 🔹 Étape 3: Validation des données
+         $validatedData = $request->validate([
+             'procedures_longues'   => 'required|boolean',
+             'pourquoi_longues'     => 'required|string',
+             'suggestions_delai'    => 'required|string',
+             'formalites_complexes' => 'required|boolean',
+             'pourquoi_complexes'   => 'required|string',
+             'suggestions_formalites' => 'required|string',
+         ]);
+
+         // ✅ Ajouter `id_soumission` manuellement dans les données à insérer
+         $validatedData['id_soumission'] = $idSoumission;
+
+         // 🔍 Vérification des données avant insertion
+         Log::info("✅ Données finales à enregistrer :", $validatedData);
+
+         // 🔹 Étape 4: Forcer l'insertion pour s'assurer que `id_soumission` est bien pris en compte
+         $response = Diligence::insert([
+             'id_soumission' => $validatedData['id_soumission'],
+             'procedures_longues' => $validatedData['procedures_longues'],
+             'pourquoi_longues' => $validatedData['pourquoi_longues'],
+             'suggestions_delai' => $validatedData['suggestions_delai'],
+             'formalites_complexes' => $validatedData['formalites_complexes'],
+             'pourquoi_complexes' => $validatedData['pourquoi_complexes'],
+             'suggestions_formalites' => $validatedData['suggestions_formalites'],
+             'created_at' => now(),
+             'updated_at' => now(),
+         ]);
+
+         // 🔹 Étape 5: Mise à jour des réponses globales
+         $this->updateReponsesGlobales($idSoumission, $validatedData);
+
+         return response()->json([
+             'success' => true,
+             'id_soumission' => $idSoumission,
+             'message' => 'Réponse enregistrée avec succès.',
+             'data'    => $response
+         ]);
+
+     } catch (\Exception $e) {
+         Log::error("🚨 Erreur lors de l'enregistrement Diligence : " . $e->getMessage());
+         return response()->json([
+             'success' => false,
+             'message' => 'Erreur lors de l’enregistrement.',
+             'error' => $e->getMessage()
+         ], 500);
+     }
+ }
+
+
+    /**
+     * store cout service
+     */
+    public function storeCoutService(Request $request)
+{
+    try {
+        // 🔍 Étape 1: Log des données reçues
+        Log::info('📥 Données reçues pour Coût du Service :', $request->all());
+
+        // 🔹 Étape 2: Vérification de l'ID de soumission (on récupère depuis la session)
+        $idSoumission = session('id_soumission');
+
+        if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
+            Log::error("❌ ID de soumission invalide ou inexistant : " . ($idSoumission ?? 'NULL'));
+            return response()->json([
+                'success' => false,
+                'message' => 'ID de soumission invalide. Veuillez recommencer la soumission générale.'
+            ], 400);
+        }
+
+        Log::info("📥 ID de soumission récupéré dans storeCoutService : " . $idSoumission);
+
+        // 🔹 Étape 3: Validation des données
+        $validatedData = $request->validate([
+            'evaluation_cout'     => 'required|string|max:50',
+            'cout_justifie'       => 'required|in:0,1',
+            'mecanisme_paiement'  => 'required|string|max:50',
+            'suggestions_cout'    => 'nullable|string',
+        ]);
+
+        // 🔹 Ajout de `id_soumission`
+        $validatedData['id_soumission'] = $idSoumission;
+
+        // 🔍 Vérification des données avant insertion
+        Log::info("✅ Données finales à enregistrer :", $validatedData);
+
+        // 🔹 Étape 4: Forcer l'insertion avec `id_soumission`
+        $response = CoutService::insert([
+            'id_soumission'      => $validatedData['id_soumission'],
+            'evaluation_cout'    => $validatedData['evaluation_cout'],
+            'cout_justifie'      => $validatedData['cout_justifie'],
+            'mecanisme_paiement' => $validatedData['mecanisme_paiement'],
+            'suggestions_cout'   => $validatedData['suggestions_cout'],
+            'created_at'         => now(),
+            'updated_at'         => now(),
+        ]);
+
+        // 🔹 Étape 5: Mise à jour des réponses globales
+        $this->updateReponsesGlobales($idSoumission, $validatedData);
+
+        return response()->json([
+            'success' => true,
+            'id_soumission' => $idSoumission,
+            'message' => 'Réponse enregistrée avec succès.',
+            'data'    => $response
+        ]);
+
+    } catch (\Exception $e) {
+        Log::error("🚨 Erreur lors de l'enregistrement Coût du Service : " . $e->getMessage());
+        return response()->json([
+            'success' => false,
+            'message' => 'Erreur lors de l’enregistrement.',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+
+   /**
+     *corruption
+     */
+    public function storeCorruption(Request $request)
+{
+    try {
+        // 🔍 Étape 1: Log des données reçues
+        Log::info('📥 Données reçues pour Corruption :', $request->all());
+
+        // 🔹 Étape 2: Récupération de l'ID de soumission
+        $idSoumission = session('id_soumission');
+
+        if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
+            Log::error("❌ ID de soumission invalide ou inexistant : " . ($idSoumission ?? 'NULL'));
+            return response()->json([
+                'success' => false,
+                'message' => 'ID de soumission invalide. Veuillez recommencer la soumission générale.'
+            ], 400);
+        }
+
+        // 🔹 Étape 3: Correction : Décoder `typeCorruption` si reçu en JSON
+        $typeCorruption = $request->input('typeCorruption', []);
+
+        if (!is_array($typeCorruption)) {
+            $typeCorruption = (array) $typeCorruption; // ✅ Force un tableau si une seule valeur est envoyée
+        }
+
+
+        // 🔹 Étape 4: Validation des données
+        $validatedData = $request->validate([
+            'corruption_existante'  => 'required|in:0,1',
+            'niveau_corruption'     => 'nullable|string|max:50',
+            'precisions_corruption' => 'nullable|string',
+            'suggestions_corruption' => 'nullable|string',
+            'typeCorruption'        => 'nullable|array', // S'assure que c'est un tableau
+            'typeCorruption.*'      => 'string',
+        ]);
+
+        // ✅ Transformation JSON propre pour `typeCorruption`
+        $validatedData['types_corruption'] = json_encode($typeCorruption);
+        $validatedData['id_soumission'] = $idSoumission;
+
+        // 🔍 Vérification des données avant insertion
+        Log::info("✅ Données à enregistrer :", $validatedData);
+
+        // ✅ Correction : Assurer que `id_soumission` est bien inséré
+        $response = Corruption::create([
+            'id_soumission' => $idSoumission, // ✅ Ajout de l'ID de soumission
+            'corruption_existante' => $validatedData['corruption_existante'],
+            'niveau_gravite' => $validatedData['niveau_corruption'],
+            'types_corruption' => json_encode($validatedData['typeCorruption']), // ✅ Stocker sous format JSON
+            'autres_corruption' => $validatedData['precisions_corruption'] ?? null,
+            'suggestions_integrite' => $validatedData['suggestions_corruption'],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // 🔹 Étape 5: Mise à jour des réponses globales
+        $this->updateReponsesGlobales($idSoumission, $validatedData);
+
+        return response()->json([
+            'success' => true,
+            'id_soumission' => $idSoumission,
+            'message' => 'Réponse enregistrée avec succès.',
+            'data'    => $response
+        ]);
+
+    } catch (\Exception $e) {
+        Log::error("🚨 Erreur lors de l'enregistrement Corruption : " . $e->getMessage());
+        return response()->json([
+            'success' => false,
+            'message' => 'Erreur lors de l’enregistrement.',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
 
 
 
@@ -215,20 +430,7 @@ class SoumissionController extends Controller
      */
 
 
-    public function storeDiligence(Request $request)
-    {
-        return $this->saveResponse($request, Diligence::class);
-    }
 
-    public function storeCoutService(Request $request)
-    {
-        return $this->saveResponse($request, CoutService::class);
-    }
-
-    public function storeCorruption(Request $request)
-    {
-        return $this->saveResponse($request, Corruption::class, ['type_corruption']);
-    }
 
     public function storeReclamations(Request $request)
     {

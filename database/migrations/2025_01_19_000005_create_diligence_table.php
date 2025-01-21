@@ -1,36 +1,25 @@
 <?php
+namespace App\Models;
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class CreateDiligenceTable extends Migration
+class Diligence extends Model
 {
-    public function up()
-    {
-        Schema::create('diligence', function (Blueprint $table) {
-            $table->bigIncrements('id_diligence');
-            $table->unsignedBigInteger('id_soumission');
+    use HasFactory;
 
-            $table->boolean('procedures_longues');
-            $table->text('pourquoi_longues');
-            $table->text('suggestions_delai');
+    protected $table = 'diligence';
+    protected $primaryKey = 'id_diligence';
 
-            $table->boolean('formalites_complexes');
-            $table->text('pourquoi_complexes');
-            $table->text('suggestions_formalites');
+    public $timestamps = true; // ✅ Activer `created_at` et `updated_at`
 
-            $table->timestamp('date_insertion')->useCurrent();
-
-            $table->foreign('id_soumission')
-                  ->references('id_soumission')
-                  ->on('soumissions')
-                  ->onDelete('cascade');
-        });
-    }
-
-    public function down()
-    {
-        Schema::dropIfExists('diligence');
-    }
+    protected $fillable = [
+        'id_soumission',
+        'procedures_longues',
+        'pourquoi_longues',
+        'suggestions_delai',
+        'formalites_complexes',
+        'pourquoi_complexes',
+        'suggestions_formalites',
+    ];
 }
