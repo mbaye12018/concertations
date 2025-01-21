@@ -1059,7 +1059,7 @@ form {
     <!-- FIN : Corruption -->
 
     <!-- 6) Réclamations -->
-    <div id="formReclamations" class="hidden-section">
+ <div id="formReclamations" class="hidden-section">
     <button class="btn btn-return" id="btnReturn6">
         <i class="fas fa-arrow-left me-1"></i>Retour
     </button>
@@ -1286,7 +1286,64 @@ form {
         Participation citoyenne
       </h3>
       <form id="formParticipationForm" class="needs-validation" novalidate>
-        <!-- ...champs spécifiques participation... -->
+        <div class="mb-3">
+          <label class="form-label">
+            Êtes-vous informé(e) des réformes des services publics dans votre région ?
+          </label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="information_reformes" value="1"  id="infref_oui" required>
+            <label class="form-check-label" for="infref_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="information_reformes" value="0"  id="infref_non" required>
+            <label class="form-check-label" for="infref_non">Non</label>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">
+            Êtes-vous satisfait du niveau de participation citoyenne ?
+          </label>
+          <select class="form-select" name ='satisfaction_participation'required>
+            <option value="">-- Sélectionnez --</option>
+            <option value="tres_satisfait">Très satisfait</option>
+            <option value="satisfait">Satisfait</option>
+            <option value="moyennement_satisfait">Moyennement satisfait</option>
+            <option value="insatisfait">Insatisfait</option>
+            <option value="tres_insatisfait">Très insatisfait</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">
+            Pensez-vous que l’utilisation de plateformes numériques facilite la participation ?
+          </label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="facilite_numerique" value="1" id="facil_oui" required>
+            <label class="form-check-label" for="facil_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="facilite_numerique" value="0" id="facil_non" required>
+            <label class="form-check-label" for="facil_non">Non</label>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">
+            Pensez-vous que la participation citoyenne a un impact réel ?
+          </label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="impact_reel" value="1" id="impactreel_oui" required>
+            <label class="form-check-label" for="impactreel_oui">Oui</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="impact_reel" value="0" id="impactreel_non" required>
+            <label class="form-check-label" for="impactreel_non">Non</label>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">
+            Quelles suggestions pour améliorer l’inclusion et la participation ?
+          </label>
+          <textarea name='suggestions_inclusion' class="form-control" rows="2" required></textarea>
+        </div>
         <div class="d-grid">
           <button type="button" id="submitParticipation" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
@@ -1294,6 +1351,16 @@ form {
         </div>
       </form>
     </div>
+
+
+
+
+
+
+
+
+
+
     <!-- FIN : Participation -->
 
     <!-- 9) Ressources humaines -->
@@ -2002,7 +2069,67 @@ document.getElementById("submitDigitale").addEventListener("click", function() {
 const autresServicesDigitaux = document.querySelector("input[name='services_digitaux_autres']")?.value || "";
 formData.append("services_digitaux_autres", autresServicesDigitaux);
 
-
+//participation
+document.addEventListener("DOMContentLoaded", function () {
+    const formParticipationForm = document.getElementById("formParticipationForm");
+    const submitParticipation = document.getElementById("submitParticipation");
+    if (formRessourcesHumaines && submitParticipation) {
+        submitParticipation.addEventListener("click", async function (e) {
+            e.preventDefault();
+            if (!formParticipationForm.checkValidity()) {
+                formRessourcesHumaines.reportValidity();
+                return;
+            }
+            submitParticipation.disabled = true;
+            submitParticipation.innerHTML = "Envoi en cours...";
+            let formData = new FormData(formParticipationForm);
+            let jsonData = {};
+            formData.forEach((value, key) => {
+                if (key === "type_participation[]") {
+                    if (!jsonData["type_participation"]) jsonData["type_participation"] = [];
+                    jsonData["type_participation"].push(value);
+                } else {
+                    jsonData[key] = value;
+                }
+            });
+            jsonData["type_participation_reelle"] = document.querySelector('input[name="type_participation_reelle"]:checked') ? 1 : 0;
+            jsonData["id_soumission"] = idSoumission;
+            console.log(":outbox: Données envoyées :", jsonData);
+            const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+            let csrfToken = csrfMeta ? csrfMeta.getAttribute("content") : "";
+            try {
+                const response = await fetch("{{ route('soumissions.participation') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                    body: JSON.stringify(jsonData),
+                });
+                if (!response.ok) {
+                    let errText = await response.text();
+                    console.error(":gyrophare: Erreur serveur :", errText);
+                    alert(":x: Erreur lors de l'enregistrement : " + errText);
+                    return;
+                }
+                const result = await response.json();
+                console.log(":coche_blanche: Réponse JSON :", result);
+                if (!result.success) {
+                    alert(":x: Erreur serveur : " + (result.message || "Erreur inconnue."));
+                    return;
+                }
+                console.log(":coche_blanche: Réponses Participation enregistrées avec ID Soumission :", result.id_soumission);
+                alert(":coche_blanche: Participation enregistrée avec succès !");
+            } catch (error) {
+                console.error(":gyrophare: Erreur AJAX :", error);
+                alert("Erreur de communication avec le serveur.");
+            } finally {
+                submitParticipation.disabled = false;
+                submitParticipation.innerHTML = "<i class='fas fa-paper-plane me-1'></i>Soumettre";
+            }
+        });
+    }
+});
 
 async function sendThemeForm(themeKey, formEl) {
     // 1) Vérifier la validité HTML5

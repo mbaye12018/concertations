@@ -645,7 +645,7 @@ public function storeCorruption(Request $request)
                     'id_soumission' => $validatedData['id_soumission'],
                      'avis_relations' => $validatedData['avis_relations'],
                       'pourquoi_relations' => $validatedData['pourquoi_relations'],
-                    'date_insertion' => now(),
+                   // 'date_insertion' => now(),
                     //'updated_at' => now(),
                 ]);
                 // :petit_diamant_bleu: Étape 5: Mise à jour des réponses globales
@@ -677,9 +677,62 @@ public function storeCorruption(Request $request)
 
 
 
-    public function storeParticipation(Request $request)
+   public function storeParticipation(Request $request)
     {
-        return $this->saveResponse($request, Participation::class);
+         try {
+                // :loupe_gauche: Étape 1: Log des données reçues
+                Log::info(':inbox: Données reçues pour Participation :', $request->all());
+                // :petit_diamant_bleu: Étape 2: Récupération de l'ID de soumission
+                $idSoumission = session('id_soumission');
+                if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
+                    Log::error(":x: ID de soumission invalide ou inexistant : " . ($idSoumission ?? 'NULL'));
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'ID de soumission invalide. Veuillez recommencer la soumission générale.'
+                    ], 400);
+                }
+                // :petit_diamant_bleu: Étape 4: Validation des données
+                $validatedData = $request->validate([
+                    'information_reformes' => 'required|boolean', // Obligatoire, doit être 0 ou 1
+                    'satisfaction_participation' => 'nullable|string|max:50', // Max 50 caractères
+                    'facilite_numerique' => 'required|boolean', // Obligatoire, doit être 0 ou 1
+                    'impact_reel' => 'required|boolean', // Obligatoire, doit être 0 ou 1
+                    'suggestions_inclusion' => 'nullable|string', // Facultatif, pas de limite stricte
+                ]);
+                   // :coche_blanche: Transformation JSON propre pour `typeCorruption`
+               // $validatedData['types_corruption'] = json_encode($typeCorruption);
+                $validatedData['id_soumission'] = $idSoumission;
+                // :loupe_gauche: Vérification des données avant insertion
+                Log::info(":coche_blanche: Données à enregistrer :", $validatedData);
+                // :coche_blanche: Correction : Assurer que `id_soumission` est bien inséré
+                $response = Participation::create([
+                    'id_soumission' => $idSoumission, // :coche_blanche: Ajout de l'ID de soumission
+                   'information_reformes' => $validatedData['information_reformes'] ?? 0, // Assurez une valeur par défaut
+                  'satisfaction_participation' => $validatedData['satisfaction_participation'],
+                    'facilite_numerique' => $validatedData['facilite_numerique'],
+                     'impact_reel' => $validatedData['impact_reel'],
+                     'suggestions_inclusion' => $validatedData['suggestions_inclusion'],
+                    // 'date_insertion' => now(),
+                    'updated_at' => now(),
+                    'created_at' => now(),
+                ]);
+                // :petit_diamant_bleu: Étape 5: Mise à jour des réponses globales
+                $this->updateReponsesGlobales($idSoumission, $validatedData);
+                return response()->json([
+                    'success' => true,
+                    'id_soumission' => $idSoumission,
+                    'message' => 'Réponse enregistrée avec succès.',
+                    'data'    => $response
+                ]);
+            } catch (\Exception $e) {
+                Log::error(":gyrophare: Erreur lors de l'enregistrement de la participation: " . $e->getMessage());
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Erreur lors de l’enregistrement.',
+                    'error' => $e->getMessage()
+                ], 500);
+            }
+        //return $this->saveResponse($request, Participation::class);
     }
 
     /**
