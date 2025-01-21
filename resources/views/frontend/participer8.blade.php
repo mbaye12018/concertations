@@ -780,37 +780,74 @@ form {
     <!-- FIN : Accès aux services publics -->
 
     <!-- 2) Accueil & orientation -->
-    <div id="formAccueilOrientation" class="hidden-section">
-      <button class="btn btn-return" id="btnReturn2">
-        <i class="fas fa-arrow-left me-1"></i>Retour
-      </button>
-      <h3 class="section-title">
-        <i class="fas fa-info-circle theme-icon"></i>
-        Accueil & orientation
-      </h3>
-      <form id="formAccueilOrientationForm" class="needs-validation" novalidate>
-        <!-- ...champs spécifiques à l’accueil & orientation... -->
-        <div class="mb-3">
-          <label class="form-label">
-            Comment évaluez-vous l’accueil et l’orientation dans les services publics ?
-          </label>
-          <select class="form-select" required>
-            <option value="">-- Sélectionnez --</option>
-            <option value="excellent">Excellent</option>
-            <option value="bon">Bon</option>
-            <option value="moyen">Moyen</option>
-            <option value="mauvais">Mauvais</option>
-            <option value="tres_mauvais">Très mauvais</option>
-          </select>
-        </div>
-        <!-- ...autres champs... -->
-        <div class="d-grid">
-          <button type="button" id="submitAccueilOrientation" class="btn btn-primary">
-            <i class="fas fa-paper-plane me-1"></i>Soumettre
-          </button>
-        </div>
-      </form>
+
+        <div id="formAccueilOrientation" class="hidden-section">
+        <button class="btn btn-return" id="btnReturn2">
+            <i class="fas fa-arrow-left me-1"></i>Retour
+        </button>
+        <h3 class="section-title">
+            <i class="fas fa-info-circle theme-icon"></i>
+            Accueil & orientation
+        </h3>
+        <form id="formAccueilOrientationForm" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label class="form-label">
+                    Comment évaluez-vous l’accueil et l’orientation dans les services publics ?
+                </label>
+                <select class="form-select" name="evaluation_accueil" required>
+                    <option value="">-- Sélectionnez --</option>
+                    <option value="excellent">Excellent</option>
+                    <option value="bon">Bon</option>
+                    <option value="moyen">Moyen</option>
+                    <option value="mauvais">Mauvais</option>
+                    <option value="tres_mauvais">Très mauvais</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Pourquoi ?</label>
+                <textarea class="form-control" name="pourquoi_accueil" rows="2" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">
+                    Les indications et signalétiques étaient-elles claires et suffisantes ?
+                </label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" name="signaletique_claire" id="sign_o" value="1" required>
+                    <label class="form-check-label" for="sign_o">Oui</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" name="signaletique_claire" id="sign_n" value="0" required>
+                    <label class="form-check-label" for="sign_n">Non</label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">
+                    Avez-vous été orienté(e) vers l’agent public ou le service approprié ?
+                </label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" name="bonne_orientation" id="guide_o" value="1" required>
+                    <label class="form-check-label" for="guide_o">Oui</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" name="bonne_orientation" id="guide_n" value="0" required>
+                    <label class="form-check-label" for="guide_n">Non</label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">
+                    Avez-vous des suggestions spécifiques pour améliorer l’accueil et l’orientation ?
+                </label>
+                <textarea class="form-control" name="suggestions_accueil" rows="2" required></textarea>
+            </div>
+
+            <div class="d-grid">
+                <button type="button" id="submitAccueilOrientation" class="btn btn-primary">
+                    <i class="fas fa-paper-plane me-1"></i>Soumettre
+                </button>
+            </div>
+        </form>
     </div>
+
     <!-- FIN : Accueil & orientation -->
 
     <!-- 3) Diligence -->
@@ -1252,6 +1289,92 @@ function showForm(themeKey) {
       break;
   }
 }
+
+
+
+//envoi des données avvueil et orientation
+    document.addEventListener("DOMContentLoaded", function () {
+        const formAccueilOrientation = document.getElementById("formAccueilOrientationForm");
+        const submitAccueilOrientation = document.getElementById("submitAccueilOrientation");
+
+        if (formAccueilOrientation && submitAccueilOrientation) {
+            submitAccueilOrientation.addEventListener("click", async function (e) {
+                e.preventDefault();
+
+                if (!formAccueilOrientation.checkValidity()) {
+                    formAccueilOrientation.reportValidity();
+                    return;
+                }
+
+                // Désactiver le bouton pour éviter les doubles soumissions
+                submitAccueilOrientation.disabled = true;
+                submitAccueilOrientation.innerHTML = "Envoi en cours...";
+
+                // Collecte des données du formulaire
+                let formData = new FormData(formAccueilOrientation);
+                let jsonData = {};
+
+                formData.forEach((value, key) => {
+                    jsonData[key] = value;
+                });
+
+                // Conversion des boutons radio en booléens (1 ou 0)
+                jsonData["signaletique_claire"] = document.querySelector('input[name="signaletique"]:checked') ? 1 : 0;
+                jsonData["bonne_orientation"] = document.querySelector('input[name="guide_service"]:checked') ? 1 : 0;
+
+
+                jsonData["id_soumission"] = idSoumission; // Ajouter l'ID de soumission
+
+                console.log("📤 Données envoyées :", jsonData); // Debug
+
+                // Vérifier si la balise CSRF existe
+                const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+                let csrfToken = csrfMeta ? csrfMeta.getAttribute("content") : "";
+
+                // Envoi AJAX sécurisé
+                try {
+                    const response = await fetch("{{ route('soumissions.accueil_orientation') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": csrfToken,
+                        },
+                        body: JSON.stringify(jsonData),
+                    });
+
+                    if (!response.ok) {
+                        let errText = await response.text();
+                        console.error("🚨 Erreur serveur :", errText);
+                        alert("❌ Erreur lors de l'enregistrement : " + errText);
+                        return;
+                    }
+
+                    const result = await response.json();
+                    console.log("✅ Réponse JSON :", result);
+
+                    if (!result.success) {
+                        alert("❌ Erreur serveur : " + (result.message || "Erreur inconnue."));
+                        return;
+                    }
+
+                    console.log("✅ Réponses Accueil & Orientation enregistrées avec ID Soumission :", result.id_soumission);
+                    alert("✅ Accueil & Orientation enregistrés avec succès !");
+
+                } catch (error) {
+                    console.error("🚨 Erreur AJAX :", error);
+                    alert("Erreur de communication avec le serveur.");
+                } finally {
+                    // Réactiver le bouton
+                    submitAccueilOrientation.disabled = false;
+                    submitAccueilOrientation.innerHTML = "<i class='fas fa-paper-plane me-1'></i>Soumettre";
+                }
+            });
+        }
+    });
+
+//fin envoi accueil et orientation
+
+
 
 function hideAllForms() {
   formAccesPublics.classList.add("hidden-section");

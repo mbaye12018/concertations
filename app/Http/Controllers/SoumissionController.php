@@ -93,49 +93,55 @@ class SoumissionController extends Controller
 
 
     /**
-     * Enregistrer les réponses pour l'accès aux services publics.
+     * Enregistrer les réponses pour accueil et orientation
      */
-    public function storeInfosGenerales(Request $request)
+    public function storeAccueilOrientation(Request $request)
     {
         try {
-            // 🔹 Supprimer l'ancienne session pour générer un nouveau ID à chaque refresh
-            session()->forget('id_soumission');
+            // 🔍 Étape 1: Log des données reçues
+            Log::info('📥 Données reçues pour Accueil & Orientation :', $request->all());
 
-            // 🔹 Validation des données
+            // 🔹 Étape 2: Vérification de l'ID de soumission (on récupère depuis la session)
+            $idSoumission = session('id_soumission');
+
+            if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
+                Log::error("❌ ID de soumission invalide ou inexistant : " . ($idSoumission ?? 'NULL'));
+                return response()->json([
+                    'success' => false,
+                    'message' => 'ID de soumission invalide. Veuillez recommencer la soumission générale.'
+                ], 400);
+            }
+
+            // 🔹 Étape 3: Vérification et structuration des données
             $validatedData = $request->validate([
-                'age' => 'required|string',
-                'sexe' => 'required|string|max:10',
-                'location' => 'required|string',
-                'region' => 'nullable|string',
-                'department' => 'nullable|string',
-                'country' => 'nullable|string',
+                'evaluation_accueil'  => 'required|string|max:50',
+                'pourquoi_accueil'    => 'required|string',
+                'signaletique_claire' => 'required|in:0,1', // 1 = Oui, 0 = Non
+                'bonne_orientation'   => 'required|in:0,1',
+                'suggestions_accueil' => 'nullable|string',
             ]);
 
-            // 🔹 Générer une nouvelle soumission
-            $soumission = Soumission::create([
-                'tranche_age' => $validatedData['age'],
-                'sexe' => $validatedData['sexe'],
-                'lieu_residence' => $validatedData['location'],
-                'region_id' => !empty($validatedData['region']) ? $validatedData['region'] : null,
-                'departement_id' => !empty($validatedData['department']) ? $validatedData['department'] : null,
-                'pays_diaspora' => !empty($validatedData['country']) ? $validatedData['country'] : null,
-                'date_soumission' => now(),
-            ]);
+            // 🔹 Ajout de l'ID de soumission validé
+            $validatedData['id_soumission'] = $idSoumission;
 
-            // 🔹 Stocker `id_soumission` temporairement
-            session(['id_soumission' => $soumission->id_soumission]);
+            // 🔍 Vérification des données avant insertion
+            Log::info("✅ Données à enregistrer :", $validatedData);
 
-            // 🔍 Log pour le suivi
-            Log::info("🆕 Nouvelle soumission enregistrée avec ID : " . $soumission->id_soumission);
+            // 🔹 Étape 4: Enregistrement dans la base **sans `updated_at` et `created_at`**
+            $response = AccueilOrientation::insert($validatedData);
+
+            // 🔹 Étape 5: Mise à jour des réponses globales
+            $this->updateReponsesGlobales($idSoumission, $validatedData);
 
             return response()->json([
                 'success' => true,
-                'id_soumission' => $soumission->id_soumission,
-                'message' => 'Soumission enregistrée avec succès.'
+                'id_soumission' => $idSoumission,
+                'message' => 'Réponse enregistrée avec succès.',
+                'data'    => $response
             ]);
 
         } catch (\Exception $e) {
-            Log::error("❌ Erreur d'enregistrement : " . $e->getMessage());
+            Log::error("🚨 Erreur lors de l'enregistrement Accueil & Orientation : " . $e->getMessage());
             return response()->json([
                 'success' => false,
                 'message' => 'Erreur lors de l’enregistrement.',
@@ -148,13 +154,66 @@ class SoumissionController extends Controller
 
 
 
+    /**
+     * Enregistrer les réponses pour l'accès aux services publics.
+     */
+    public function storeInfosGenerales(Request $request)
+{
+    try {
+        // 🔹 Supprimer l'ancienne session pour éviter d'anciens ID persistants
+        session()->forget('id_soumission');
+
+        // 🔹 Validation des données
+        $validatedData = $request->validate([
+            'age' => 'required|string',
+            'sexe' => 'required|string|max:10',
+            'location' => 'required|string',
+            'region' => 'nullable|string',
+            'department' => 'nullable|string',
+            'country' => 'nullable|string',
+        ]);
+
+        // 🔹 Création d'une nouvelle soumission
+        $soumission = Soumission::create([
+            'tranche_age' => $validatedData['age'],
+            'sexe' => $validatedData['sexe'],
+            'lieu_residence' => $validatedData['location'],
+            'region_id' => !empty($validatedData['region']) ? $validatedData['region'] : null,
+            'departement_id' => !empty($validatedData['department']) ? $validatedData['department'] : null,
+            'pays_diaspora' => !empty($validatedData['country']) ? $validatedData['country'] : null,
+            'date_soumission' => now(),
+        ]);
+
+        // 🔹 Stocker `id_soumission` en session pour réutilisation
+        session(['id_soumission' => $soumission->id_soumission]);
+
+        Log::info("🆕 Nouvelle soumission enregistrée avec ID : " . $soumission->id_soumission);
+
+        return response()->json([
+            'success' => true,
+            'id_soumission' => $soumission->id_soumission, // ✅ Retourne cet ID au frontend
+            'message' => 'Soumission enregistrée avec succès.'
+        ]);
+
+    } catch (\Exception $e) {
+        Log::error("❌ Erreur d'enregistrement : " . $e->getMessage());
+        return response()->json([
+            'success' => false,
+            'message' => 'Erreur lors de l’enregistrement.',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+
+
+
+
+
+
         /**
      * Enregistrer les réponses pour les autres thématiques.
      */
-    public function storeAccueilOrientation(Request $request)
-    {
-        return $this->saveResponse($request, AccueilOrientation::class);
-    }
+
 
     public function storeDiligence(Request $request)
     {
