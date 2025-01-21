@@ -14,12 +14,81 @@ use App\Models\Participation;
 use App\Models\RessourcesHumaines;
 use App\Models\ReponsesGlobales;
 use Illuminate\Support\Facades\Log;
+use App\Models\Soumission;
+use Illuminate\Support\Str;
 
 class SoumissionController extends Controller
 {
 
 
+ /**
+     * Enregistrer les réponses pour l'accès aux services publics.
+     */
+    public function storeAccesPublics(Request $request)
+    {
+        try {
+            // 🔍 Étape 1: Log des données reçues pour debug
+            Log::info('📥 Données reçues pour Accès Publics :', $request->all());
 
+            // 🔹 Étape 2: Vérification et conversion JSON
+            $servicesFrequentes = $request->input('servicesFrequents', []);
+            if (is_string($servicesFrequentes)) {
+                $servicesFrequentes = json_decode($servicesFrequentes, true);
+            }
+
+            $infoPreferences = $request->input('infoPreferences', []);
+            if (is_string($infoPreferences)) {
+                $infoPreferences = json_decode($infoPreferences, true);
+            }
+
+            // 🔹 Étape 3: Vérifier si l'ID de soumission existe
+            $idSoumission = session('id_soumission');
+
+            if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
+                Log::error("❌ ID de soumission invalide ou inexistant : " . ($idSoumission ?? 'NULL'));
+                return response()->json([
+                    'success' => false,
+                    'message' => 'ID de soumission invalide. Veuillez recommencer la soumission générale.'
+                ], 400);
+            }
+
+            // 🔹 Étape 4: Structurer les données avant insertion
+            $validatedData = [
+                'id_soumission'         => $idSoumission,
+                'services_frequentes'    => json_encode($servicesFrequentes),
+                'accessibilite'          => $request->input('accessibilite', ''),
+                'pourquoi_accessibilite' => $request->input('pourquoi_accessibilite', ''),
+                'suggestions_acces'      => $request->input('suggestions_acces', ''),
+                'mode_information'       => json_encode($infoPreferences),
+                'created_at'             => now(),
+                'updated_at'             => now(),
+            ];
+
+            // 🔍 Vérification des données avant insertion
+            Log::info("✅ Données à enregistrer :", $validatedData);
+
+            // 🔹 Étape 5: Enregistrement dans la base
+            $response = AccesServicesPublics::create($validatedData);
+
+            // 🔹 Étape 6: Mise à jour des réponses globales
+            $this->updateReponsesGlobales($idSoumission, $validatedData);
+
+            return response()->json([
+                'success' => true,
+                'id_soumission' => $idSoumission,
+                'message' => 'Réponse enregistrée avec succès.',
+                'data'    => $response
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error("🚨 Erreur lors de l'enregistrement Accès Publics : " . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors de l’enregistrement.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
 
 
@@ -27,53 +96,59 @@ class SoumissionController extends Controller
      * Enregistrer les réponses pour l'accès aux services publics.
      */
     public function storeInfosGenerales(Request $request)
-{
-    try {
-        // 🔹 Validation des données
-        $validatedData = $request->validate([
-            'age' => 'required|string',
-            'sexe' => 'required|string',
-            'location' => 'required|string',
-            'region' => 'nullable|string',
-            'department' => 'nullable|string',
-            'country' => 'nullable|string',
-        ]);
+    {
+        try {
+            // 🔹 Supprimer l'ancienne session pour générer un nouveau ID à chaque refresh
+            session()->forget('id_soumission');
 
-        // 🔹 Générer un ID unique pour la soumission
-        $idSoumission = uniqid('S_');
+            // 🔹 Validation des données
+            $validatedData = $request->validate([
+                'age' => 'required|string',
+                'sexe' => 'required|string|max:10',
+                'location' => 'required|string',
+                'region' => 'nullable|string',
+                'department' => 'nullable|string',
+                'country' => 'nullable|string',
+            ]);
 
-        // 🔹 Enregistrement en base
-        $soumission = Soumission::create([
-            'id_soumission' => $idSoumission,
-            'tranche_age' => $validatedData['age'],
-            'sexe' => $validatedData['sexe'],
-            'lieu_residence' => $validatedData['location'],
-            'region_id' => !empty($validatedData['region']) ? $validatedData['region'] : null,
-            'departement_id' => !empty($validatedData['department']) ? $validatedData['department'] : null,
-            'pays_diaspora' => !empty($validatedData['country']) ? $validatedData['country'] : null,
-            'date_soumission' => now(),
-        ]);
+            // 🔹 Générer une nouvelle soumission
+            $soumission = Soumission::create([
+                'tranche_age' => $validatedData['age'],
+                'sexe' => $validatedData['sexe'],
+                'lieu_residence' => $validatedData['location'],
+                'region_id' => !empty($validatedData['region']) ? $validatedData['region'] : null,
+                'departement_id' => !empty($validatedData['department']) ? $validatedData['department'] : null,
+                'pays_diaspora' => !empty($validatedData['country']) ? $validatedData['country'] : null,
+                'date_soumission' => now(),
+            ]);
 
-        return response()->json([
-            'success' => true,
-            'id_soumission' => $soumission->id_soumission,
-            'message' => 'Soumission enregistrée avec succès.'
-        ]);
+            // 🔹 Stocker `id_soumission` temporairement
+            session(['id_soumission' => $soumission->id_soumission]);
 
-    } catch (\Exception $e) {
-        Log::error("❌ Erreur d'enregistrement : " . $e->getMessage());
-        return response()->json([
-            'success' => false,
-            'message' => 'Erreur lors de l’enregistrement.',
-            'error' => $e->getMessage()
-        ], 500);
+            // 🔍 Log pour le suivi
+            Log::info("🆕 Nouvelle soumission enregistrée avec ID : " . $soumission->id_soumission);
+
+            return response()->json([
+                'success' => true,
+                'id_soumission' => $soumission->id_soumission,
+                'message' => 'Soumission enregistrée avec succès.'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error("❌ Erreur d'enregistrement : " . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors de l’enregistrement.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
-}
 
 
 
 
-    /**
+
+        /**
      * Enregistrer les réponses pour les autres thématiques.
      */
     public function storeAccueilOrientation(Request $request)
@@ -201,3 +276,4 @@ class SoumissionController extends Controller
     }
 
 }
+

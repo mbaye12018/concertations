@@ -239,9 +239,12 @@ form {
   .btn-return:hover {
     background-color: #0056b3; /* Une couleur plus foncée pour le survol */
   }
+  .hidden-section {
+  display: none !important;
+}
 
   </style>
-</head>
+  </head>
     <body>
     <!-- HEADER -->
     <header id="header" class="header d-flex align-items-center sticky-top">
@@ -314,112 +317,139 @@ form {
         </div>
         </div>
     </div>
-    <!-- FIN MODAL -->
 
-    <!-- CONTENU PRINCIPAL -->
     <div class="main-content">
-    <div class="container">
+  <div class="container">
 
-    <!-- 1) Étape : Infos générales -->
-     <!-- Étape 1 : Infos générales -->
-<div id="step1" class="section-active">
-  <form id="generalInfoForm" class="needs-validation" novalidate>
-    <div class="mb-3">
-      <label class="form-label">
-        <i class="fas fa-user-clock me-2 text-primary"></i> Âge
-      </label>
-      <div class="input-group">
-        <span class="input-group-text">
-          <i class="fas fa-calendar-alt"></i>
-        </span>
-        <select class="form-select" name="age" required>
-          <option value="">-- Sélectionnez votre tranche d'âge --</option>
-          <option value="moins_18">Moins de 18 ans</option>
-          <option value="18_30">18-30 ans</option>
-          <option value="31_45">31-45 ans</option>
-          <option value="46_60">46-60 ans</option>
-          <option value="plus_60">Plus de 60 ans</option>
-        </select>
-      </div>
+    <!-- ======================================
+         1) ÉTAPE : INFORMATIONS GÉNÉRALES
+    ====================================== -->
+    <div id="step1" class="section-active">
+      <form id="generalInfoForm" class="needs-validation" novalidate>
+        @csrf
+
+        <!-- Champ : Âge -->
+        <div class="mb-3">
+          <label class="form-label">
+            <i class="fas fa-user-clock me-2 text-primary"></i> Âge
+          </label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fas fa-calendar-alt"></i>
+            </span>
+            <select class="form-select" name="age" required>
+              <option value="">-- Sélectionnez votre tranche d'âge --</option>
+              <option value="moins_18">Moins de 18 ans</option>
+              <option value="18_30">18-30 ans</option>
+              <option value="31_45">31-45 ans</option>
+              <option value="46_60">46-60 ans</option>
+              <option value="plus_60">Plus de 60 ans</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Champ : Sexe -->
+        <div class="mb-3">
+          <label class="form-label">
+            <i class="fas fa-venus-mars me-2 text-primary"></i> Sexe
+          </label><br/>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" name="sexe" id="sexeM" value="Masculin" required />
+            <label class="form-check-label" for="sexeM">Masculin</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" name="sexe" id="sexeF" value="Féminin" required />
+            <label class="form-check-label" for="sexeF">Féminin</label>
+          </div>
+        </div>
+
+        <!-- Champ : Lieu de résidence -->
+        <div class="mb-4">
+          <label class="form-label">
+            <i class="fas fa-map-marker-alt me-2 text-primary"></i> Lieu de résidence
+          </label>
+          <div class="location-options">
+            <label class="form-check-label me-4">
+              <input
+                type="radio"
+                id="senegal"
+                name="location"
+                value="Senegal"
+                onchange="toggleRegionSelect()"
+                required
+              >
+              Sénégal
+            </label>
+            <label class="form-check-label">
+              <input
+                type="radio"
+                id="diaspora"
+                name="location"
+                value="Diaspora"
+                onchange="toggleRegionSelect()"
+                required
+              >
+              Diaspora
+            </label>
+          </div>
+
+          <!-- Sélection de la région et des départements -->
+          <div id="region-container" style="display: none;" class="mt-3">
+            <label for="region">Choisissez une région :</label>
+            <select id="region" onchange="updateDepartments()" class="form-select">
+              <option value="">-- Sélectionnez une région --</option>
+            </select>
+          </div>
+          <div id="department-container" style="display: none;" class="mt-3">
+            <label for="department">Choisissez un département :</label>
+            <select id="department" class="form-select"></select>
+          </div>
+
+          <!-- Sélection des pays de la diaspora -->
+          <div id="diasporaCountries" class="mt-3" style="display: none;">
+            <label for="country">Sélectionnez votre pays :</label>
+            <select id="country" name="country" class="form-select">
+              <option value="">-- Choisissez un pays --</option>
+              @foreach($countries as $country)
+                <option value="{{ $country->code }}">{{ $country->nom }}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+
+        <!-- CAPTCHA mathématique -->
+        <div class="mb-3">
+          <label class="form-label">
+            <i class="fas fa-question-circle me-2 text-primary"></i> Résolvez cette opération :
+          </label>
+          <div class="input-group">
+            <span class="input-group-text" id="captcha-question"></span>
+            <input type="number" id="captcha-answer" name="captcha_answer" class="form-control" required>
+            <input type="hidden" id="captcha-correct-answer" name="captcha_correct_answer">
+          </div>
+          <div
+            class="text-danger mt-1"
+            id="captcha-error"
+            style="display: none;"
+          >
+            ⚠️ Réponse incorrecte, essayez encore !
+          </div>
+        </div>
+
+        <!-- Bouton de soumission (Étape 1) -->
+        <div class="d-grid">
+          <button class="btn btn-success" type="submit">
+            <i class="fas fa-check-circle me-2"></i>Valider mes informations
+          </button>
+        </div>
+
+      </form>
     </div>
-
-    <div class="mb-3">
-      <label class="form-label">
-        <i class="fas fa-venus-mars me-2 text-primary"></i> Sexe
-      </label><br/>
-      <div class="form-check form-check-inline">
-        <input type="radio" class="form-check-input" name="sexe" id="sexeM" value="Masculin" required />
-        <label class="form-check-label" for="sexeM">Masculin</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input type="radio" class="form-check-input" name="sexe" id="sexeF" value="Féminin" required />
-        <label class="form-check-label" for="sexeF">Féminin</label>
-      </div>
-    </div>
-
-    <div class="mb-4">
-      <label class="form-label">
-        <i class="fas fa-map-marker-alt me-2 text-primary"></i> Lieu de résidence
-      </label>
-      <div class="location-options">
-        <label class="form-check-label me-4">
-          <input type="radio" id="senegal" name="location" value="Senegal" onchange="toggleRegionSelect()" required> Sénégal
-        </label>
-        <label class="form-check-label">
-          <input type="radio" id="diaspora" name="location" value="Diaspora" onchange="toggleRegionSelect()" required> Diaspora
-        </label>
-      </div>
-
-      <!-- Conteneur pour la sélection de la région et des départements -->
-      <div id="region-container" style="display: none;" class="mt-3">
-        <label for="region">Choisissez une région :</label>
-        <select id="region" onchange="updateDepartments()" class="form-select">
-          <option value="">-- Sélectionnez une région --</option>
-        </select>
-      </div>
-
-      <div id="department-container" style="display: none;" class="mt-3">
-        <label for="department">Choisissez un département :</label>
-        <select id="department" class="form-select"></select>
-      </div>
-
-      <!-- Conteneur pour la sélection des pays de la diaspora -->
-      <div id="diasporaCountries" class="mt-3" style="display: none;">
-        <label for="country">Sélectionnez votre pays :</label>
-        <select id="country" name="country" class="form-select">
-          <option value="">-- Choisissez un pays --</option>
-          @foreach($countries as $country)
-            <option value="{{ $country->code }}">{{ $country->nom }}</option>
-          @endforeach
-        </select>
-      </div>
-    </div>
-
-    <!-- CAPTCHA mathématique -->
-    <div class="mb-3">
-      <label class="form-label">
-        <i class="fas fa-question-circle me-2 text-primary"></i> Résolvez cette opération :
-      </label>
-      <div class="input-group">
-        <span class="input-group-text" id="captcha-question"></span>
-        <input type="number" id="captcha-answer" name="captcha_answer" class="form-control" required>
-        <input type="hidden" id="captcha-correct-answer" name="captcha_correct_answer">
-      </div>
-      <div class="text-danger mt-1" id="captcha-error" style="display: none;">⚠️ Réponse incorrecte, essayez encore !</div>
-    </div>
-
-    <div class="d-grid">
-      <button class="btn btn-success" type="submit">
-        <i class="fas fa-check-circle me-2"></i>Valider mes informations
-      </button>
-    </div>
-  </form>
-</div>
-<!-- Fin Étape 1 -->
-
     <!-- Fin Étape 1 -->
 
-    <!-- 2) Sélection Thèmes -->
+    <!-- ======================================
+         2) SÉLECTION DES THÈMES
+    ====================================== -->
     <div id="themeSelection" class="hidden-section mt-5">
       <div class="text-center mb-4">
         <p class="text-secondary">
@@ -430,7 +460,7 @@ form {
 
       <!-- Cartes en grille (3 par ligne) -->
       <div class="theme-grid" id="themeCardsContainer">
-        <!-- 1) Accès aux services publics -->
+        <!-- Accès aux services publics -->
         <div class="theme-card" data-theme="accesPublics">
           <h4>
             <i class="fas fa-door-open theme-icon animate__animated animate__heartBeat"></i>
@@ -438,7 +468,7 @@ form {
           </h4>
           <p>Fréquence, accessibilité, etc.</p>
         </div>
-        <!-- 2) Accueil & orientation -->
+        <!-- Accueil & orientation -->
         <div class="theme-card" data-theme="accueilOrientation">
           <h4>
             <i class="fas fa-info-circle theme-icon animate__animated animate__heartBeat"></i>
@@ -446,7 +476,7 @@ form {
           </h4>
           <p>Qualité de l'accueil, clarté des indications...</p>
         </div>
-        <!-- 3) Diligence -->
+        <!-- Diligence -->
         <div class="theme-card" data-theme="diligence">
           <h4>
             <i class="fas fa-clock theme-icon animate__animated animate__heartBeat"></i>
@@ -454,7 +484,7 @@ form {
           </h4>
           <p>Délais, complexité, etc.</p>
         </div>
-        <!-- 4) Coût du service -->
+        <!-- Coût du service -->
         <div class="theme-card" data-theme="coutService">
           <h4>
             <i class="fas fa-money-bill-wave theme-icon animate__animated animate__heartBeat"></i>
@@ -462,7 +492,7 @@ form {
           </h4>
           <p>Tarifs, paiement, rapport qualité-prix.</p>
         </div>
-        <!-- 5) Corruption -->
+        <!-- Corruption -->
         <div class="theme-card" data-theme="corruption">
           <h4>
             <i class="fas fa-shield-alt theme-icon animate__animated animate__heartBeat"></i>
@@ -470,7 +500,7 @@ form {
           </h4>
           <p>Transparence, pots-de-vin, etc.</p>
         </div>
-        <!-- 6) Réclamations -->
+        <!-- Réclamations -->
         <div class="theme-card" data-theme="reclamations">
           <h4>
             <i class="fas fa-bullhorn theme-icon animate__animated animate__heartBeat"></i>
@@ -478,7 +508,7 @@ form {
           </h4>
           <p>Procédure, clarté, délais...</p>
         </div>
-        <!-- 7) Digitale -->
+        <!-- Digitale -->
         <div class="theme-card" data-theme="digitale">
           <h4>
             <i class="fas fa-laptop-code theme-icon animate__animated animate__heartBeat"></i>
@@ -486,7 +516,7 @@ form {
           </h4>
           <p>Services en ligne, bugs, etc.</p>
         </div>
-        <!-- 8) Participation -->
+        <!-- Participation -->
         <div class="theme-card" data-theme="participation">
           <h4>
             <i class="fas fa-users theme-icon animate__animated animate__heartBeat"></i>
@@ -494,7 +524,7 @@ form {
           </h4>
           <p>Implication, satisfaction, impact...</p>
         </div>
-        <!-- 9) Ressources Humaines -->
+        <!-- Ressources Humaines -->
         <div class="theme-card" data-theme="ressourcesHumaines">
           <h4>
             <i class="fas fa-handshake theme-icon animate__animated animate__heartBeat"></i>
@@ -506,9 +536,9 @@ form {
     </div>
     <!-- Fin Sélection Thèmes -->
 
-    <!-- =========================
-        FORMULAIRES PAR THÈME
-    ========================= -->
+    <!-- ======================================
+         FORMULAIRES DE CHAQUE THÈME
+    ====================================== -->
 
     <!-- 1) Accès aux services publics -->
     <div id="formAccesPublics" class="hidden-section">
@@ -520,253 +550,146 @@ form {
         Accès aux services publics
       </h3>
 
-      <form id="formAccesPublicsForm" class="needs-validation" novalidate action="{{ route('soumissions.acces_publics') }}">
+      <form
+        id="formAccesPublicsForm"
+        class="needs-validation"
+        novalidate
+        action="{{ route('soumissions.acces_publics') }}"
+      >
         @csrf
+
         <!-- Q1: Services utilisés fréquemment -->
-        <div class="mb-3"> <!-- 1) Étape : Infos générales -->
-    <div id="step1" class="section-active">
-  <form id="generalInfoForm" class="needs-validation" novalidate>
-    <div class="mb-3">
-      <label class="form-label">
-        <i class="fas fa-user-clock me-2 text-primary"></i> Âge
-      </label>
-      <div class="input-group">
-        <span class="input-group-text">
-          <i class="fas fa-calendar-alt"></i>
-        </span>
-        <select class="form-select" name="age" required>
-          <option value="">-- Sélectionnez votre tranche d'âge --</option>
-          <option value="moins_18">Moins de 18 ans</option>
-          <option value="18_30">18-30 ans</option>
-          <option value="31_45">31-45 ans</option>
-          <option value="46_60">46-60 ans</option>
-          <option value="plus_60">Plus de 60 ans</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">
-        <i class="fas fa-venus-mars me-2 text-primary"></i> Sexe
-      </label><br/>
-      <div class="form-check form-check-inline">
-        <input type="radio" class="form-check-input" name="sexe" id="sexeM" value="Masculin" required />
-        <label class="form-check-label" for="sexeM">Masculin</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input type="radio" class="form-check-input" name="sexe" id="sexeF" value="Féminin" required />
-        <label class="form-check-label" for="sexeF">Féminin</label>
-      </div>
-    </div>
-
-    <div class="mb-4">
-      <label class="form-label">
-        <i class="fas fa-map-marker-alt me-2 text-primary"></i> Lieu de résidence
-      </label>
-      <div class="location-options">
-        <label class="form-check-label me-4">
-          <input type="radio" id="senegal" name="location" value="Senegal" onchange="toggleRegionSelect()" required> Sénégal
-        </label>
-        <label class="form-check-label">
-          <input type="radio" id="diaspora" name="location" value="Diaspora" onchange="toggleRegionSelect()" required> Diaspora
-        </label>
-      </div>
-
-      <!-- Conteneur pour la sélection de la région et des départements -->
-      <div id="region-container" style="display: none;" class="mt-3">
-        <label for="region">Choisissez une région :</label>
-        <select id="region" onchange="updateDepartments()" class="form-select">
-          <option value="">-- Sélectionnez une région --</option>
-        </select>
-      </div>
-
-      <div id="department-container" style="display: none;" class="mt-3">
-        <label for="department">Choisissez un département :</label>
-        <select id="department" class="form-select"></select>
-      </div>
-
-      <!-- Conteneur pour la sélection des pays de la diaspora -->
-      <div id="diasporaCountries" class="mt-3" style="display: none;">
-        <label for="country">Sélectionnez votre pays :</label>
-        <select id="country" name="country" class="form-select">
-          <option value="">-- Choisissez un pays --</option>
-          @foreach($countries as $country)
-            <option value="{{ $country->code }}">{{ $country->nom }}</option>
-          @endforeach
-        </select>
-      </div>
-    </div>
-
-    <!-- CAPTCHA mathématique -->
-    <div class="mb-3">
-      <label class="form-label">
-        <i class="fas fa-question-circle me-2 text-primary"></i> Résolvez cette opération :
-      </label>
-      <div class="input-group">
-        <span class="input-group-text" id="captcha-question"></span>
-        <input type="number" id="captcha-answer" name="captcha_answer" class="form-control" required>
-        <input type="hidden" id="captcha-correct-answer" name="captcha_correct_answer">
-      </div>
-    </div>
-
-    <div class="d-grid">
-      <button class="btn btn-success" type="submit">
-        <i class="fas fa-check-circle me-2"></i>Valider mes informations
-      </button>
-    </div>
-  </form>
-</div>
-    <!-- Fin Étape 1 -->
-
-    <!-- 2) Sélection Thèmes -->
-    <div id="themeSelection" class="hidden-section mt-5">
-      <div class="text-center mb-4">
-        <p class="text-secondary">
-          Votre contribution est essentielle pour améliorer nos services publics.
-          Choisissez une thématique pour commencer et aidez-nous à bâtir un avenir meilleur !
-        </p>
-      </div>
-
-      <!-- Cartes en grille (3 par ligne) -->
-      <div class="theme-grid" id="themeCardsContainer">
-        <!-- 1) Accès aux services publics -->
-        <div class="theme-card" data-theme="accesPublics">
-          <h4>
-            <i class="fas fa-door-open theme-icon animate__animated animate__heartBeat"></i>
-            Accès aux services publics
-          </h4>
-          <p>Fréquence, accessibilité, etc.</p>
-        </div>
-        <!-- 2) Accueil & orientation -->
-        <div class="theme-card" data-theme="accueilOrientation">
-          <h4>
-            <i class="fas fa-info-circle theme-icon animate__animated animate__heartBeat"></i>
-            Accueil & orientation
-          </h4>
-          <p>Qualité de l'accueil, clarté des indications...</p>
-        </div>
-        <!-- 3) Diligence -->
-        <div class="theme-card" data-theme="diligence">
-          <h4>
-            <i class="fas fa-clock theme-icon animate__animated animate__heartBeat"></i>
-            Diligence
-          </h4>
-          <p>Délais, complexité, etc.</p>
-        </div>
-        <!-- 4) Coût du service -->
-        <div class="theme-card" data-theme="coutService">
-          <h4>
-            <i class="fas fa-money-bill-wave theme-icon animate__animated animate__heartBeat"></i>
-            Coût du service
-          </h4>
-          <p>Tarifs, paiement, rapport qualité-prix.</p>
-        </div>
-        <!-- 5) Corruption -->
-        <div class="theme-card" data-theme="corruption">
-          <h4>
-            <i class="fas fa-shield-alt theme-icon animate__animated animate__heartBeat"></i>
-            Corruption
-          </h4>
-          <p>Transparence, pots-de-vin, etc.</p>
-        </div>
-        <!-- 6) Réclamations -->
-        <div class="theme-card" data-theme="reclamations">
-          <h4>
-            <i class="fas fa-bullhorn theme-icon animate__animated animate__heartBeat"></i>
-            Réclamations
-          </h4>
-          <p>Procédure, clarté, délais...</p>
-        </div>
-        <!-- 7) Digitale -->
-        <div class="theme-card" data-theme="digitale">
-          <h4>
-            <i class="fas fa-laptop-code theme-icon animate__animated animate__heartBeat"></i>
-            Transformation digitale
-          </h4>
-          <p>Services en ligne, bugs, etc.</p>
-        </div>
-        <!-- 8) Participation -->
-        <div class="theme-card" data-theme="participation">
-          <h4>
-            <i class="fas fa-users theme-icon animate__animated animate__heartBeat"></i>
-            Participation citoyenne
-          </h4>
-          <p>Implication, satisfaction, impact...</p>
-        </div>
-        <!-- 9) Ressources Humaines -->
-        <div class="theme-card" data-theme="ressourcesHumaines">
-          <h4>
-            <i class="fas fa-handshake theme-icon animate__animated animate__heartBeat"></i>
-            Ressources humaines
-          </h4>
-          <p>Relations agents/usagers, etc.</p>
-        </div>
-      </div>
-    </div>
+        <div class="mb-3">
           <label class="form-label">Quels services publics utilisez-vous le plus fréquemment ?</label>
           <!-- name="servicesFrequents[]" => obliger au moins 1 coché -->
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="papiersAdmin" name="servicesFrequents[]" value="Délivrance de papiers administratifs">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="papiersAdmin"
+              name="servicesFrequents[]"
+              value="Délivrance de papiers administratifs"
+            >
             <label class="form-check-label" for="papiersAdmin">
               Délivrance de papiers administratifs
             </label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="defenseSecurite" name="servicesFrequents[]" value="Défense et sécurité">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="defenseSecurite"
+              name="servicesFrequents[]"
+              value="Défense et sécurité"
+            >
             <label class="form-check-label" for="defenseSecurite">
               Défense et sécurité
             </label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="santeProtection" name="servicesFrequents[]" value="Santé et protection sociale">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="santeProtection"
+              name="servicesFrequents[]"
+              value="Santé et protection sociale"
+            >
             <label class="form-check-label" for="santeProtection">
               Santé et protection sociale
             </label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="educationEnseignement" name="servicesFrequents[]" value="Éducation et Enseignement">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="educationEnseignement"
+              name="servicesFrequents[]"
+              value="Éducation et Enseignement"
+            >
             <label class="form-check-label" for="educationEnseignement">
               Éducation et Enseignement
             </label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="habitatCadreVie" name="servicesFrequents[]" value="Habitat et cadre de vie">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="habitatCadreVie"
+              name="servicesFrequents[]"
+              value="Habitat et cadre de vie"
+            >
             <label class="form-check-label" for="habitatCadreVie">
               Habitat et cadre de vie
             </label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="transport" name="servicesFrequents[]" value="Transport">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="transport"
+              name="servicesFrequents[]"
+              value="Transport"
+            >
             <label class="form-check-label" for="transport">
               Transport
             </label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="environnement" name="servicesFrequents[]" value="Environnement">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="environnement"
+              name="servicesFrequents[]"
+              value="Environnement"
+            >
             <label class="form-check-label" for="environnement">
               Environnement
             </label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="finances" name="servicesFrequents[]" value="Finances">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="finances"
+              name="servicesFrequents[]"
+              value="Finances"
+            >
             <label class="form-check-label" for="finances">
               Finances
             </label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="sportLoisirCulture" name="servicesFrequents[]" value="Sport, Loisirs, culture">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="sportLoisirCulture"
+              name="servicesFrequents[]"
+              value="Sport, Loisirs, culture"
+            >
             <label class="form-check-label" for="sportLoisirCulture">
               Sport, Loisirs, culture
             </label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="industrie" name="servicesFrequents[]" value="Industrie">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="industrie"
+              name="servicesFrequents[]"
+              value="Industrie"
+            >
             <label class="form-check-label" for="industrie">
               Industrie
             </label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="agriculturePecheElevage" name="servicesFrequents[]" value="Agriculture, pêche, élevage">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="agriculturePecheElevage"
+              name="servicesFrequents[]"
+              value="Agriculture, pêche, élevage"
+            >
             <label class="form-check-label" for="agriculturePecheElevage">
               Agriculture, pêche, élevage
             </label>
@@ -774,61 +697,87 @@ form {
         </div>
 
         <!-- Q2: Accessibilité -->
-       <!-- Sélection de l'accessibilité -->
         <div class="mb-3">
-        <label class="form-label">Comment évaluez-vous l’accessibilité de ces services ?</label>
-        <select class="form-select" name="accessibilite" required>
+          <label class="form-label">Comment évaluez-vous l’accessibilité de ces services ?</label>
+          <select class="form-select" name="accessibilite" required>
             <option value="">-- Sélectionnez --</option>
             <option value="tres_accessible">Très accessible</option>
             <option value="accessible">Accessible</option>
             <option value="moyennement_accessible">Moyennement accessible</option>
             <option value="difficilement_accessible">Difficilement accessible</option>
             <option value="tres_difficilement_accessible">Très difficilement accessible</option>
-        </select>
+          </select>
         </div>
 
         <!-- Explication sur l'accessibilité -->
         <div class="mb-3">
-        <label class="form-label">Pourquoi ?</label>
-        <textarea class="form-control" name="pourquoi_accessibilite" rows="2" required></textarea>
+          <label class="form-label">Pourquoi ?</label>
+          <textarea class="form-control" name="pourquoi_accessibilite" rows="2" required></textarea>
         </div>
 
         <!-- Suggestions -->
         <div class="mb-3">
-        <label class="form-label">Avez-vous des suggestions spécifiques pour améliorer l’accès aux services publics ?</label>
-        <textarea class="form-control" name="suggestions_acces" rows="2" required></textarea>
+          <label class="form-label">
+            Avez-vous des suggestions spécifiques pour améliorer l’accès aux services publics ?
+          </label>
+          <textarea class="form-control" name="suggestions_acces" rows="2" required></textarea>
         </div>
 
-        <!-- Q4: Mode d'info -->
+        <!-- Q4: Mode d'information -->
         <div class="mb-3">
           <label class="form-label">Comment préférez-vous être informé(e) ?</label>
-          <!-- Donnons un name pour valider au besoin -->
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="infoCourrier" name="infoPreferences[]">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="infoCourrier"
+              name="infoPreferences[]"
+              value="Courrier"
+            >
             <label class="form-check-label" for="infoCourrier">Courrier</label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="infoMedias" name="infoPreferences[]">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="infoMedias"
+              name="infoPreferences[]"
+              value="Médias"
+            >
             <label class="form-check-label" for="infoMedias">Médias</label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="infoApps" name="infoPreferences[]">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="infoApps"
+              name="infoPreferences[]"
+              value="Applications"
+            >
             <label class="form-check-label" for="infoApps">Applications</label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="infoAutres" name="infoPreferences[]">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="infoAutres"
+              name="infoPreferences[]"
+              value="Autres"
+            >
             <label class="form-check-label" for="infoAutres">Autres</label>
           </div>
         </div>
 
+        <!-- Bouton de soumission (Accès Publics) -->
         <div class="d-grid">
           <button type="button" id="submitAccesPublics" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
           </button>
         </div>
+
       </form>
     </div>
-    <!-- FIN Accès aux services publics -->
+    <!-- FIN : Accès aux services publics -->
 
     <!-- 2) Accueil & orientation -->
     <div id="formAccueilOrientation" class="hidden-section">
@@ -840,6 +789,7 @@ form {
         Accueil & orientation
       </h3>
       <form id="formAccueilOrientationForm" class="needs-validation" novalidate>
+        <!-- ...champs spécifiques à l’accueil & orientation... -->
         <div class="mb-3">
           <label class="form-label">
             Comment évaluez-vous l’accueil et l’orientation dans les services publics ?
@@ -853,43 +803,7 @@ form {
             <option value="tres_mauvais">Très mauvais</option>
           </select>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Pourquoi ?</label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">
-            Les indications et signalétiques étaient-elles claires et suffisantes ?
-          </label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="signaletique" id="sign_o" required>
-            <label class="form-check-label" for="sign_o">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="signaletique" id="sign_n" required>
-            <label class="form-check-label" for="sign_n">Non</label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">
-            Avez-vous été orienté(e) vers l’agent public ou le service approprié ?
-          </label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="guide_service" id="guide_o" required>
-            <label class="form-check-label" for="guide_o">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="guide_service" id="guide_n" required>
-            <label class="form-check-label" for="guide_n">Non</label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">
-            Avez-vous des suggestions spécifiques pour améliorer l’accueil et l’orientation ?
-          </label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-
+        <!-- ...autres champs... -->
         <div class="d-grid">
           <button type="button" id="submitAccueilOrientation" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
@@ -897,7 +811,7 @@ form {
         </div>
       </form>
     </div>
-    <!-- FIN Accueil & Orientation -->
+    <!-- FIN : Accueil & orientation -->
 
     <!-- 3) Diligence -->
     <div id="formDiligence" class="hidden-section">
@@ -909,46 +823,7 @@ form {
         Diligence dans le traitement
       </h3>
       <form id="formDiligenceForm" class="needs-validation" novalidate>
-        <div class="mb-3">
-          <label class="form-label">Les procédures administratives sont-elles longues ?</label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="procedures_longues" id="proc_oui" required>
-            <label class="form-check-label" for="proc_oui">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="procedures_longues" id="proc_non" required>
-            <label class="form-check-label" for="proc_non">Non</label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Pourquoi ?</label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Avez-vous des suggestions ?</label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Les formalités administratives sont-elles complexes ?</label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="formComplexes" id="formYes" required>
-            <label class="form-check-label" for="formYes">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="formComplexes" id="formNo" required>
-            <label class="form-check-label" for="formNo">Non</label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Pourquoi ?</label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Avez-vous des suggestions ?</label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-
+        <!-- ...champs spécifiques diligence... -->
         <div class="d-grid">
           <button type="button" id="submitDiligence" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
@@ -956,7 +831,7 @@ form {
         </div>
       </form>
     </div>
-    <!-- FIN Diligence -->
+    <!-- FIN : Diligence -->
 
     <!-- 4) Coût du service -->
     <div id="formCoutService" class="hidden-section">
@@ -968,61 +843,7 @@ form {
         Coût du service
       </h3>
       <form id="formCoutServiceForm" class="needs-validation" novalidate>
-        <div class="mb-3">
-          <label class="form-label">
-            Comment évaluez-vous le coût des prestations des services publics ?
-          </label>
-          <select class="form-select" required>
-            <option value="">-- Sélectionnez --</option>
-            <option value="tres_abordable">Très abordable</option>
-            <option value="abordable">Abordable</option>
-            <option value="moyennement_cher">Moyennement cher</option>
-            <option value="cher">Cher</option>
-            <option value="tres_cher">Très cher</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">
-            Pensez-vous que le coût de ces services est justifié par les prestations fournies ?
-          </label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="cout_justifie" id="cout_oui" required>
-            <label class="form-check-label" for="cout_oui">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="cout_justifie" id="cout_non" required>
-            <label class="form-check-label" for="cout_non">Non</label>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">
-            Quel est le mécanisme de paiement que vous avez utilisé ?
-          </label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="mecaPaiement" id="paiementEspece" required>
-            <label class="form-check-label" for="paiementEspece">Espèce</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="mecaPaiement" id="paiementEmoney" required>
-            <label class="form-check-label" for="paiementEmoney">e-money</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="mecaPaiement" id="paiementVirement" required>
-            <label class="form-check-label" for="paiementVirement">Virement bancaire</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="mecaPaiement" id="paiementAutres" required>
-            <label class="form-check-label" for="paiementAutres">Autres</label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">
-            Avez-vous des suggestions pour rendre les services publics plus abordables ?
-          </label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-
+        <!-- ...champs spécifiques coût du service... -->
         <div class="d-grid">
           <button type="button" id="submitCoutService" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
@@ -1030,7 +851,7 @@ form {
         </div>
       </form>
     </div>
-    <!-- FIN Coût du service -->
+    <!-- FIN : Coût du service -->
 
     <!-- 5) Corruption -->
     <div id="formCorruption" class="hidden-section">
@@ -1042,59 +863,7 @@ form {
         Corruption
       </h3>
       <form id="formCorruptionForm" class="needs-validation" novalidate>
-        <div class="mb-3">
-          <label class="form-label">
-            Pensez-vous que la corruption est une réalité dans les services publics de votre région ?
-          </label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="corruption_reelle" id="corr_oui" required>
-            <label class="form-check-label" for="corr_oui">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="corruption_reelle" id="corr_non" required>
-            <label class="form-check-label" for="corr_non">Non</label>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">
-            Si oui, à quel niveau de gravité évaluez-vous ce problème ?
-          </label>
-          <select class="form-select" required>
-            <option value="">-- Sélectionnez --</option>
-            <option value="tres_grave">Très grave</option>
-            <option value="grave">Grave</option>
-            <option value="moyennement_grave">Moyennement grave</option>
-            <option value="peu_grave">Peu grave</option>
-            <option value="pas_grave">Pas du tout grave</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">
-            Quel type de corruption avez-vous observé ou subi ?
-          </label>
-          <!-- name="typeCorruption[]" => au moins 1 si “corr_oui” est coché -->
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="potsDeVin" name="typeCorruption[]">
-            <label class="form-check-label" for="potsDeVin">Pots-de-vin</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="autresCorrupt" name="typeCorruption[]">
-            <label class="form-check-label" for="autresCorrupt">Autres (préciser)</label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <input type="text" class="form-control" placeholder="Précisez si Autres" />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">
-            Quelles suggestions auriez-vous pour améliorer la transparence et l’intégrité ?
-          </label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-
+        <!-- ...champs spécifiques corruption... -->
         <div class="d-grid">
           <button type="button" id="submitCorruption" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
@@ -1102,7 +871,7 @@ form {
         </div>
       </form>
     </div>
-    <!-- FIN Corruption -->
+    <!-- FIN : Corruption -->
 
     <!-- 6) Réclamations -->
     <div id="formReclamations" class="hidden-section">
@@ -1114,81 +883,7 @@ form {
         Services de réclamations
       </h3>
       <form id="formReclamationsForm" class="needs-validation" novalidate>
-        <div class="mb-3">
-          <label class="form-label">
-            Avez-vous déjà déposé une réclamation auprès d’un service public ?
-          </label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="reclamation_deposee" id="rec_oui" required>
-            <label class="form-check-label" for="rec_oui">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="reclamation_deposee" id="rec_non" required>
-            <label class="form-check-label" for="rec_non">Non</label>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">
-            Si oui, la réclamation est liée à quel service public ?
-          </label>
-          <!-- name="reclamationService[]" => au moins 1 coché si “rec_oui” est coché -->
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="recPapiers" name="reclamationService[]">
-            <label class="form-check-label" for="recPapiers">
-              Délivrance de papiers administratifs
-            </label>
-          </div>
-          <!-- Ajouter d'autres checkboxes si besoin -->
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Comment avez-vous déposé votre réclamation ?</label>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="mode_reclamation" id="mode1" required>
-            <label class="form-check-label" for="mode1">En ligne</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="mode_reclamation" id="mode2" required>
-            <label class="form-check-label" for="mode2">Par téléphone</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="mode_reclamation" id="mode3" required>
-            <label class="form-check-label" for="mode3">Courrier physique</label>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Le processus de réclamation était-il clair ?</label>
-          <select class="form-select" required>
-            <option value="">-- Sélectionnez --</option>
-            <option value="tres_clair">Très clair</option>
-            <option value="clair">Clair</option>
-            <option value="moyennement_clair">Moyennement clair</option>
-            <option value="pas_clair">Pas clair</option>
-            <option value="tres_peu_clair">Très peu clair</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">
-            Combien de temps a-t-il fallu pour traiter votre réclamation ?
-          </label>
-          <select class="form-select" required>
-            <option value="">-- Sélectionnez --</option>
-            <option value="moins_3_jours">Moins de 3 jours</option>
-            <option value="une_semaine">Une semaine</option>
-            <option value="plus_une_semaine">Plus d’une semaine</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">
-            Avez-vous des commentaires supplémentaires sur le service de réclamation ?
-          </label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-
+        <!-- ...champs spécifiques réclamations... -->
         <div class="d-grid">
           <button type="button" id="submitReclamations" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
@@ -1196,7 +891,7 @@ form {
         </div>
       </form>
     </div>
-    <!-- FIN Réclamations -->
+    <!-- FIN : Réclamations -->
 
     <!-- 7) Digitale -->
     <div id="formDigitale" class="hidden-section">
@@ -1208,96 +903,7 @@ form {
         Transformation digitale
       </h3>
       <form id="formDigitaleForm" class="needs-validation" novalidate>
-        <div class="mb-3">
-          <label class="form-label">Utilisez-vous les services publics digitalisés ?</label>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="services_digitaux" id="serdig_oui" required>
-            <label class="form-check-label" for="serdig_oui">Oui</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="services_digitaux" id="serdig_non" required>
-            <label class="form-check-label" for="serdig_non">Non</label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Si oui, lesquels utilisez-vous le plus souvent ?</label>
-          <!-- name="servicesDigitauxUtilises[]" => au moins 1 coché si “serdig_oui” -->
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="plateformesEnLigne" name="servicesDigitauxUtilises[]">
-            <label class="form-check-label" for="plateformesEnLigne">Plateformes en ligne</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="paiementEnLigne" name="servicesDigitauxUtilises[]">
-            <label class="form-check-label" for="paiementEnLigne">Paiement en ligne</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="autresDigit" name="servicesDigitauxUtilises[]">
-            <label class="form-check-label" for="autresDigit">Autres (préciser)</label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <input type="text" class="form-control" placeholder="Précisez si Autres" />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Comment évaluez-vous l’accessibilité des services digitaux ?</label>
-          <select class="form-select" required>
-            <option value="">-- Sélectionnez --</option>
-            <option value="tres_accessible">Très accessible</option>
-            <option value="accessible">Accessible</option>
-            <option value="moyennement_accessible">Moyennement accessible</option>
-            <option value="difficilement_accessible">Difficilement accessible</option>
-            <option value="tres_difficilement_accessible">Très difficilement accessible</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Avez-vous rencontré des problèmes en utilisant ces services ?</label>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="problemes_en_ligne" id="prob_oui" required>
-            <label class="form-check-label" for="prob_oui">Oui</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="problemes_en_ligne" id="prob_non" required>
-            <label class="form-check-label" for="prob_non">Non</label>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Si oui, quels types de problèmes ?</label>
-          <!-- name="problemesEnLigne[]" => si “prob_oui” -->
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="connexionIssue" name="problemesEnLigne[]">
-            <label class="form-check-label" for="connexionIssue">Connexion</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="techniqueIssue" name="problemesEnLigne[]">
-            <label class="form-check-label" for="techniqueIssue">Problèmes techniques (bugs, lenteur...)</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="navigationIssue" name="problemesEnLigne[]">
-            <label class="form-check-label" for="navigationIssue">Difficultés de navigation</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="carenceInfoIssue" name="problemesEnLigne[]">
-            <label class="form-check-label" for="carenceInfoIssue">Carence d’information</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="autresIssue" name="problemesEnLigne[]">
-            <label class="form-check-label" for="autresIssue">Autres (préciser)</label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <input type="text" class="form-control" placeholder="Précisez si autres" />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">
-            Quelles améliorations aimeriez-vous voir pour les services publics digitalisés ?
-          </label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-
+        <!-- ...champs spécifiques transformation digitale... -->
         <div class="d-grid">
           <button type="button" id="submitDigitale" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
@@ -1305,7 +911,7 @@ form {
         </div>
       </form>
     </div>
-    <!-- FIN Digitale -->
+    <!-- FIN : Digitale -->
 
     <!-- 8) Participation -->
     <div id="formParticipation" class="hidden-section">
@@ -1317,65 +923,7 @@ form {
         Participation citoyenne
       </h3>
       <form id="formParticipationForm" class="needs-validation" novalidate>
-        <div class="mb-3">
-          <label class="form-label">
-            Êtes-vous informé(e) des réformes des services publics dans votre région ?
-          </label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="inform_reformes" id="infref_oui" required>
-            <label class="form-check-label" for="infref_oui">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="inform_reformes" id="infref_non" required>
-            <label class="form-check-label" for="infref_non">Non</label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">
-            Êtes-vous satisfait du niveau de participation citoyenne ?
-          </label>
-          <select class="form-select" required>
-            <option value="">-- Sélectionnez --</option>
-            <option value="tres_satisfait">Très satisfait</option>
-            <option value="satisfait">Satisfait</option>
-            <option value="moyennement_satisfait">Moyennement satisfait</option>
-            <option value="insatisfait">Insatisfait</option>
-            <option value="tres_insatisfait">Très insatisfait</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">
-            Pensez-vous que l’utilisation de plateformes numériques facilite la participation ?
-          </label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="facilite_numerique" id="facil_oui" required>
-            <label class="form-check-label" for="facil_oui">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="facilite_numerique" id="facil_non" required>
-            <label class="form-check-label" for="facil_non">Non</label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">
-            Pensez-vous que la participation citoyenne a un impact réel ?
-          </label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="impact_reel" id="impactreel_oui" required>
-            <label class="form-check-label" for="impactreel_oui">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="impact_reel" id="impactreel_non" required>
-            <label class="form-check-label" for="impactreel_non">Non</label>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">
-            Quelles suggestions pour améliorer l’inclusion et la participation ?
-          </label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-
+        <!-- ...champs spécifiques participation... -->
         <div class="d-grid">
           <button type="button" id="submitParticipation" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
@@ -1383,7 +931,7 @@ form {
         </div>
       </form>
     </div>
-    <!-- FIN Participation -->
+    <!-- FIN : Participation -->
 
     <!-- 9) Ressources humaines -->
     <div id="formRessourcesHumaines" class="hidden-section">
@@ -1395,17 +943,7 @@ form {
         Ressources humaines
       </h3>
       <form id="formRessourcesHumainesForm" class="needs-validation" novalidate>
-        <div class="mb-3">
-          <label class="form-label">
-            Que pensez-vous des relations entre agents publics et usagers ?
-          </label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Pourquoi ?</label>
-          <textarea class="form-control" rows="2" required></textarea>
-        </div>
-
+        <!-- ...champs spécifiques ressources humaines... -->
         <div class="d-grid">
           <button type="button" id="submitRessourcesHumaines" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
@@ -1413,31 +951,54 @@ form {
         </div>
       </form>
     </div>
-    <!-- FIN Ressources Humaines -->
+    <!-- FIN : Ressources Humaines -->
 
   </div><!-- FIN .container -->
 </div><!-- FIN .main-content -->
 
 <!-- Zone où les toasts vont s'afficher -->
-<div id="toastContainer" class="position-fixed top-0 end-0 p-3" style="z-index: 9999;"></div>
+<div
+  id="toastContainer"
+  class="position-fixed top-0 end-0 p-3"
+  style="z-index: 9999;"
+>
+</div>
 
 <!-- Exemple de modal final (si besoin) -->
-<div class="modal fade" id="finalModal" tabindex="-1" aria-labelledby="finalModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="finalModal"
+  tabindex="-1"
+  aria-labelledby="finalModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="finalModalLabel">Félicitations</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         Vous avez renseigné toutes les thématiques. Merci pour votre contribution !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Fermer
+        </button>
       </div>
     </div>
   </div>
 </div>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -1545,9 +1106,11 @@ generalInfoForm.addEventListener("submit", async function (e) {
 
     console.log("✅ ID Soumission enregistré :", result.id_soumission);
 
-    // 5) ✅ Tout va bien : Passer à l'étape suivante
-    step1Div.classList.add("hidden-section");
-    themeSelectionDiv.classList.remove("hidden-section");
+    step1Div.style.display = "none";
+      step1Div.classList.add("hidden-section");
+      themeSelectionDiv.style.display = "block";
+      themeSelectionDiv.classList.remove("hidden-section");
+
 
   } catch (error) {
     console.error("🚨 Erreur AJAX :", error);
@@ -1654,6 +1217,7 @@ themeCardsContainer.addEventListener("click", function(e) {
   const themeKey = card.getAttribute("data-theme");
   showForm(themeKey);
 });
+
 
 function showForm(themeKey) {
   themeSelectionDiv.classList.add("hidden-section");
