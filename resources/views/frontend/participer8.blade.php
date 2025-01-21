@@ -1988,7 +1988,7 @@ document.getElementById("submitReclamations").addEventListener("click", function
 //envoi digital
 document.getElementById("submitDigitale").addEventListener("click", function() {
     sendThemeForm("digitale", document.getElementById("formDigitaleForm"));
-});
+
 
 const autresServicesDigitaux = document.querySelector("input[name='services_digitaux_autres']")?.value || "";
 formData.append("services_digitaux_autres", autresServicesDigitaux);
@@ -2091,8 +2091,20 @@ formData.append('evaluation_accessibilite', evaluationAccessibilite);
         alert("Erreur de communication avec le serveur.");
     }
 }
+});
+
+
+
 
 // fin envoi digital
+
+
+
+
+
+
+
+
 
 function hideAllForms() {
   formAccesPublics.classList.add("hidden-section");
