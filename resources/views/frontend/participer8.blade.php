@@ -1306,7 +1306,16 @@ form {
         Ressources humaines
       </h3>
       <form id="formRessourcesHumainesForm" class="needs-validation" novalidate>
-        <!-- ...champs spécifiques ressources humaines... -->
+        <div class="mb-3">
+          <label class="form-label">
+            Que pensez-vous des relations entre agents publics et usagers ?
+          </label>
+          <textarea name='avis_relations' class="form-control" rows="2" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Pourquoi ?</label>
+          <textarea name='pourquoi_relations' class="form-control" rows="2" required></textarea>
+        </div>
         <div class="d-grid">
           <button type="button" id="submitRessourcesHumaines" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
@@ -2097,6 +2106,81 @@ formData.append('evaluation_accessibilite', evaluationAccessibilite);
 
 
 // fin envoi digital
+
+
+//envoi rh
+document.addEventListener("DOMContentLoaded", function () {
+    const formRessourcesHumaines = document.getElementById("formRessourcesHumainesForm");
+    const submitRessourcesHumaines = document.getElementById("submitRessourcesHumaines");
+    if (formRessourcesHumaines && submitRessourcesHumaines) {
+        submitRessourcesHumaines.addEventListener("click", async function (e) {
+            e.preventDefault();
+            if (!formRessourcesHumaines.checkValidity()) {
+                formRessourcesHumaines.reportValidity();
+                return;
+            }
+            submitRessourcesHumaines.disabled = true;
+            submitRessourcesHumaines.innerHTML = "Envoi en cours...";
+            let formData = new FormData(formRessourcesHumaines);
+            let jsonData = {};
+            formData.forEach((value, key) => {
+                if (key === "type_ressourcehumain[]") {
+                    if (!jsonData["type_ressourcehumain"]) jsonData["type_ressourcehumain"] = [];
+                    jsonData["type_ressourcehumain"].push(value);
+                } else {
+                    jsonData[key] = value;
+                }
+            });
+            jsonData["ressourcehumain_reelle"] = document.querySelector('input[name="ressourcehumain_reelle"]:checked') ? 1 : 0;
+            jsonData["id_soumission"] = idSoumission;
+            console.log(":outbox: Données envoyées :", jsonData);
+            const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+            let csrfToken = csrfMeta ? csrfMeta.getAttribute("content") : "";
+            try {
+                const response = await fetch("{{ route('soumissions.ressources_humaines') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
+                    },
+                    body: JSON.stringify(jsonData),
+                });
+                if (!response.ok) {
+                    let errText = await response.text();
+                    console.error(":gyrophare: Erreur serveur :", errText);
+                    alert(":x: Erreur lors de l'enregistrement : " + errText);
+                    return;
+                }
+                const result = await response.json();
+                console.log(":coche_blanche: Réponse JSON :", result);
+                if (!result.success) {
+                    alert(":x: Erreur serveur : " + (result.message || "Erreur inconnue."));
+                    return;
+                }
+                console.log(":coche_blanche: Réponses Ressource humain enregistrées avec ID Soumission :", result.id_soumission);
+                alert(":coche_blanche: Ressource humain enregistrée avec succès !");
+            } catch (error) {
+                console.error(":gyrophare: Erreur AJAX :", error);
+                alert("Erreur de communication avec le serveur.");
+            } finally {
+                submitRessourcesHumaines.disabled = false;
+                submitRessourcesHumaines.innerHTML = "<i class='fas fa-paper-plane me-1'></i>Soumettre";
+            }
+        });
+    }
+});
+
+
+//fin envoi rh
+
+
+
+
+
+
+
+
+
 
 
 
