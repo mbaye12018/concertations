@@ -12,12 +12,19 @@ class Digitale extends Model
     protected $table = 'digitale';
 
     protected $fillable = [
-        'utilisation_services_digitaux', 'services_frequents', 'accessibilite_services',
-        'problemes_rencontres', 'suggestions_amelioration'
+        'id_soumission',
+        'utilise_services_digitaux',
+        'services_digitaux_frequents',
+        'autres_services_digitaux', // ✅ Ajout ici
+        'evaluation_accessibilite',
+        'rencontree_problemes',
+        'types_problemes',
+        'autres_problemes',
+        'suggestions_digitale',
     ];
 
     protected $casts = [
-        'services_frequents' => 'array',
-        'problemes_rencontres' => 'array',
+        'services_digitaux_frequents' => 'array',
+        'types_problemes' => 'array',
     ];
 }

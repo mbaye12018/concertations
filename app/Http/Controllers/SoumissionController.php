@@ -16,6 +16,8 @@ use App\Models\ReponsesGlobales;
 use Illuminate\Support\Facades\Log;
 use App\Models\Soumission;
 use Illuminate\Support\Str;
+use App\Models\Reclamation;
+use Illuminate\Support\Facades\Validator;
 
 class SoumissionController extends Controller
 {
@@ -194,6 +196,10 @@ class SoumissionController extends Controller
             'id_soumission' => $soumission->id_soumission, // ✅ Retourne cet ID au frontend
             'message' => 'Soumission enregistrée avec succès.'
         ]);
+        Log::info("📌 ID de soumission actuellement stocké en session : " . session('id_soumission'));
+        Log::info("✅ Données finales avant insertion :", ['id_soumission' => $idSoumission, 'data' => $validatedData]);
+
+
 
     } catch (\Exception $e) {
         Log::error("❌ Erreur d'enregistrement : " . $e->getMessage());
@@ -349,13 +355,21 @@ class SoumissionController extends Controller
    /**
      *corruption
      */
-    public function storeCorruption(Request $request)
+/**
+ * Enregistrer les réponses pour Corruption.
+ */
+
+
+ /**
+ * Enregistrer les réponses pour Corruption.
+ */
+public function storeCorruption(Request $request)
 {
     try {
         // 🔍 Étape 1: Log des données reçues
         Log::info('📥 Données reçues pour Corruption :', $request->all());
 
-        // 🔹 Étape 2: Récupération de l'ID de soumission
+        // 🔹 Étape 2: Récupération de l'ID de soumission (depuis la session)
         $idSoumission = session('id_soumission');
 
         if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
@@ -366,13 +380,13 @@ class SoumissionController extends Controller
             ], 400);
         }
 
+        Log::info("📥 ID de soumission récupéré dans storeCorruption : " . $idSoumission);
+
         // 🔹 Étape 3: Correction : Décoder `typeCorruption` si reçu en JSON
         $typeCorruption = $request->input('typeCorruption', []);
-
         if (!is_array($typeCorruption)) {
-            $typeCorruption = (array) $typeCorruption; // ✅ Force un tableau si une seule valeur est envoyée
+            $typeCorruption = json_decode($typeCorruption, true) ?? [];
         }
-
 
         // 🔹 Étape 4: Validation des données
         $validatedData = $request->validate([
@@ -384,19 +398,19 @@ class SoumissionController extends Controller
             'typeCorruption.*'      => 'string',
         ]);
 
-        // ✅ Transformation JSON propre pour `typeCorruption`
+        // ✅ Transformation JSON propre pour `types_corruption`
         $validatedData['types_corruption'] = json_encode($typeCorruption);
         $validatedData['id_soumission'] = $idSoumission;
 
         // 🔍 Vérification des données avant insertion
-        Log::info("✅ Données à enregistrer :", $validatedData);
+        Log::info("✅ Données finales à enregistrer :", $validatedData);
 
         // ✅ Correction : Assurer que `id_soumission` est bien inséré
-        $response = Corruption::create([
-            'id_soumission' => $idSoumission, // ✅ Ajout de l'ID de soumission
+        $response = Corruption::insert([
+            'id_soumission' => $validatedData['id_soumission'], // ✅ Ajout de l'ID de soumission
             'corruption_existante' => $validatedData['corruption_existante'],
             'niveau_gravite' => $validatedData['niveau_corruption'],
-            'types_corruption' => json_encode($validatedData['typeCorruption']), // ✅ Stocker sous format JSON
+            'types_corruption' => $validatedData['types_corruption'], // ✅ Stocké sous format JSON
             'autres_corruption' => $validatedData['precisions_corruption'] ?? null,
             'suggestions_integrite' => $validatedData['suggestions_corruption'],
             'created_at' => now(),
@@ -424,6 +438,234 @@ class SoumissionController extends Controller
 }
 
 
+        /**
+     * reclamation
+     */
+
+     public function storeReclamations(Request $request)
+     {
+         try {
+             // 🔍 Étape 1: Log des données reçues
+             Log::info('📥 Données reçues pour Réclamations :', $request->all());
+
+             // 🔹 Étape 2: Vérification de l'ID de soumission
+             $idSoumission = session('id_soumission');
+
+             if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
+                 Log::error("❌ ID de soumission invalide ou inexistant : " . ($idSoumission ?? 'NULL'));
+                 return response()->json([
+                     'success' => false,
+                     'message' => 'ID de soumission invalide. Veuillez recommencer la soumission générale.'
+                 ], 400);
+             }
+
+             Log::info("📥 ID de soumission récupéré dans storeReclamations : " . $idSoumission);
+
+             // 🔹 Étape 3: Validation des données
+             $validatedData = $request->validate([
+                 'deja_deposee'       => 'required|in:0,1',
+                 'mode_reclamation'   => 'nullable|string|max:50',
+                 'processus_clair'    => 'nullable|string|max:50',
+                 'delai_traitement'   => 'nullable|string|max:50',
+                 'commentaires_reclamation' => 'nullable|string',
+                 'service_concerne'   => 'nullable|array', // ✅ Assurer que c'est un tableau
+                 'service_concerne.*' => 'string',
+             ]);
+
+             // ✅ Transformation JSON propre pour `service_concerne`
+             $validatedData['service_concerne'] = json_encode($request->input('service_concerne', []));
+             $validatedData['id_soumission'] = $idSoumission;
+
+             // 🔍 Vérification des données avant insertion
+             Log::info("✅ Données finales à enregistrer :", $validatedData);
+
+             // ✅ Correction : Utilisation de `Reclamations`
+             $response = Reclamations::create([
+                 'id_soumission' => $idSoumission,
+                 'deja_deposee' => $validatedData['deja_deposee'],
+                 'service_concerne' => $validatedData['service_concerne'],
+                 'mode_reclamation' => $validatedData['mode_reclamation'],
+                 'processus_clair' => $validatedData['processus_clair'],
+                 'delai_traitement' => $validatedData['delai_traitement'],
+                 'commentaires_reclamation' => $validatedData['commentaires_reclamation'],
+                 'created_at' => now(),
+                 'updated_at' => now(),
+             ]);
+
+             // 🔹 Étape 5: Mise à jour des réponses globales
+             $this->updateReponsesGlobales($idSoumission, $validatedData);
+
+             return response()->json([
+                 'success' => true,
+                 'id_soumission' => $idSoumission,
+                 'message' => 'Réponse enregistrée avec succès.',
+                 'data'    => $response
+             ]);
+
+         } catch (\Exception $e) {
+             Log::error("🚨 Erreur lors de l'enregistrement Réclamations : " . $e->getMessage());
+             return response()->json([
+                 'success' => false,
+                 'message' => 'Erreur lors de l’enregistrement.',
+                 'error' => $e->getMessage()
+             ], 500);
+         }
+     }
+
+
+       /**
+     * digital
+     */
+    public function storeDigitale(Request $request)
+    {
+        try {
+            // 🔍 Étape 1: Log des données reçues
+            Log::info('📥 Données reçues pour Digitale :', $request->all());
+
+            // 🔹 Étape 2: Récupération de l'ID de soumission depuis la session
+            $idSoumission = session('id_soumission');
+            Log::info("🔍 ID de soumission récupéré depuis la session : " . ($idSoumission ?? 'NULL'));
+
+            // Vérification de l'ID de soumission
+            if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
+                Log::error("❌ ID de soumission invalide ou inexistant : " . ($idSoumission ?? 'NULL'));
+                return response()->json([
+                    'success' => false,
+                    'message' => 'ID de soumission invalide. Veuillez recommencer la soumission générale.'
+                ], 400);
+            }
+
+            Log::info("📥 ID de soumission validé : " . $idSoumission);
+
+            // 🔹 Étape 3: Ajouter l'ID de soumission aux données reçues
+            $data = $request->all();
+            $data['id_soumission'] = $idSoumission;
+            $data['autres_services_digitaux'] = $request->input('autres_services_digitaux', '');
+            Log::info("🔍 Données après ajout de 'id_soumission' et 'autres_services_digitaux' : ", $data);
+
+            // 🔹 Étape 4: Validation des données
+            Log::info("🔍 Début de la validation des données.");
+            $validatedData = Validator::make($data, [
+                'id_soumission' => 'required|exists:soumissions,id_soumission',
+                'utilise_services_digitaux' => 'required|boolean',
+                'services_digitaux_utilises' => 'nullable|array',
+                'autres_services_digitaux' => 'nullable|string|max:255',
+                'evaluation_accessibilite' => 'required|string|max:50',
+                'rencontree_problemes' => 'required|boolean',
+                'types_problemes' => 'nullable|array',
+                'autres_problemes' => 'nullable|string|max:255',
+                'suggestions_digitale' => 'required|string',
+            ])->validate();
+
+            Log::info("✅ Données validées avec succès :", $validatedData);
+
+            // 🔹 Étape 5: Préparation des données pour insertion
+            $dataToInsert = [
+                'id_soumission' => $validatedData['id_soumission'],
+                'utilise_services_digitaux' => $validatedData['utilise_services_digitaux'],
+                'services_digitaux_frequents' => json_encode($validatedData['services_digitaux_utilises'] ?? []),
+                'autres_services_digitaux' => $validatedData['autres_services_digitaux'],
+                'evaluation_accessibilite' => $validatedData['evaluation_accessibilite'],
+                'rencontree_problemes' => $validatedData['rencontree_problemes'],
+                'types_problemes' => json_encode($validatedData['types_problemes'] ?? []),
+                'autres_problemes' => $validatedData['autres_problemes'] ?? '',
+                'suggestions_digitale' => $validatedData['suggestions_digitale'],
+                'created_at' => now(),
+                'updated_at' => now(),
+
+
+            ];
+
+            Log::info("🔍 Données prêtes pour insertion :", $dataToInsert);
+
+            // 🔹 Étape 6: Insertion dans la base de données
+            $response = Digitale::create($dataToInsert);
+            Log::info("✅ Données insérées avec succès dans la table Digitale. ID de soumission : " . $idSoumission);
+
+            // 🔹 Étape 7: Mise à jour des réponses globales
+            $this->updateReponsesGlobales($idSoumission, $validatedData);
+            Log::info("✅ Réponses globales mises à jour avec succès pour l'ID de soumission : " . $idSoumission);
+
+            // Retour du succès
+            return response()->json([
+                'success' => true,
+                'id_soumission' => $idSoumission,
+                'message' => 'Réponse enregistrée avec succès.',
+                'data' => $response
+            ]);
+
+        } catch (\Exception $e) {
+            // 🔴 Gestion des exceptions
+            Log::error("🚨 Exception lors de l'enregistrement Digitale : " . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors de l’enregistrement.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+
+
+  /**
+     * Enregistrer les réponses pour rh
+     */
+
+
+
+
+
+    public function storeRessourcesHumaines(Request $request)
+    {
+            try {
+                // :loupe_gauche: Étape 1: Log des données reçues
+                Log::info(':inbox: Données reçues pour Ressource humain :', $request->all());
+                // :petit_diamant_bleu: Étape 2: Vérification de l'ID de soumission (récupéré depuis la session)
+                $idSoumission = session('id_soumission');
+                if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
+                    Log::error(":x: ID de soumission invalide ou inexistant : " . ($idSoumission ?? 'NULL'));
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'ID de soumission invalide. Veuillez recommencer la soumission générale.'
+                    ], 400);
+                }
+                Log::info(":inbox: ID de soumission récupéré dans storeRessourcehumain : " . $idSoumission);
+                // :petit_diamant_bleu: Étape 3: Validation des données
+                $validatedData = $request->validate([
+                     /*bon*/    'avis_relations'     => 'required|string',
+                      /*bon*/ 'pourquoi_relations' => 'required|string',
+                ]);
+                // :coche_blanche: Ajouter `id_soumission` manuellement dans les données à insérer
+                $validatedData['id_soumission'] = $idSoumission;
+                // :loupe_gauche: Vérification des données avant insertion
+                Log::info(":coche_blanche: Données finales à enregistrer :", $validatedData);
+                // :petit_diamant_bleu: Étape 4: Forcer l'insertion pour s'assurer que `id_soumission` est bien pris en compte
+                $response = RessourcesHumaines::insert([
+                    'id_soumission' => $validatedData['id_soumission'],
+                     'avis_relations' => $validatedData['avis_relations'],
+                      'pourquoi_relations' => $validatedData['pourquoi_relations'],
+                    'date_insertion' => now(),
+                    //'updated_at' => now(),
+                ]);
+                // :petit_diamant_bleu: Étape 5: Mise à jour des réponses globales
+                $this->updateReponsesGlobales($idSoumission, $validatedData);
+                return response()->json([
+                    'success' => true,
+                    'id_soumission' => $idSoumission,
+                    'message' => 'Réponse enregistrée avec succès.',
+                    'data'    => $response
+                ]);
+            } catch (\Exception $e) {
+                Log::error(":gyrophare: Erreur lors de l'enregistrement Ressource humain : " . $e->getMessage());
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Erreur lors de l’enregistrement.',
+                    'error' => $e->getMessage()
+                ], 500);
+            }
+    }
+
 
         /**
      * Enregistrer les réponses pour les autres thématiques.
@@ -432,24 +674,12 @@ class SoumissionController extends Controller
 
 
 
-    public function storeReclamations(Request $request)
-    {
-        return $this->saveResponse($request, Reclamations::class, ['reclamation_service']);
-    }
 
-    public function storeDigitale(Request $request)
-    {
-        return $this->saveResponse($request, Digitale::class, ['services_digitaux_utilises', 'problemes_en_ligne']);
-    }
+
 
     public function storeParticipation(Request $request)
     {
         return $this->saveResponse($request, Participation::class);
-    }
-
-    public function storeRessourcesHumaines(Request $request)
-    {
-        return $this->saveResponse($request, RessourcesHumaines::class);
     }
 
     /**

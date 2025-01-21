@@ -10,6 +10,7 @@ class CreateCorruptionTable extends Migration
     {
         Schema::create('corruption', function (Blueprint $table) {
             $table->bigIncrements('id_corruption');
+
             $table->unsignedBigInteger('id_soumission');
 
             $table->boolean('corruption_existante');     // 1=Oui, 0=Non

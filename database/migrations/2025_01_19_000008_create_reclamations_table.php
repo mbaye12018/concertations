@@ -13,13 +13,13 @@ class CreateReclamationsTable extends Migration
             $table->unsignedBigInteger('id_soumission');
 
             $table->boolean('deja_deposee');
-            $table->text('service_concerne')->nullable();     // ex: "papiersAdmin,transport"
+            $table->json('service_concerne')->nullable(); // ✅ Stockage sous JSON
             $table->string('mode_reclamation', 50)->nullable();
             $table->string('processus_clair', 50)->nullable();
             $table->string('delai_traitement', 50)->nullable();
             $table->text('commentaires_reclamation')->nullable();
 
-            $table->timestamp('date_insertion')->useCurrent();
+            $table->timestamps(); // ✅ Ajout `created_at` et `updated_at`
 
             $table->foreign('id_soumission')
                   ->references('id_soumission')
@@ -27,6 +27,7 @@ class CreateReclamationsTable extends Migration
                   ->onDelete('cascade');
         });
     }
+
 
     public function down()
     {

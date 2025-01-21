@@ -9,10 +9,19 @@ class Reclamations extends Model
 {
     use HasFactory;
 
-    protected $table = 'reclamations';
+    protected $table = 'reclamations'; // ✅ Assure que le nom de la table est correct
 
     protected $fillable = [
-        'a_depose_reclamation', 'service_concerne', 'mode_reclamation',
-        'clarte_processus', 'delai_traitement', 'commentaires_supplementaires'
+        'id_soumission',
+        'deja_deposee',
+        'service_concerne',
+        'mode_reclamation',
+        'processus_clair',
+        'delai_traitement',
+        'commentaires_reclamation',
+    ];
+
+    protected $casts = [
+        'service_concerne' => 'array', // ✅ Assurer que c'est traité comme JSON
     ];
 }

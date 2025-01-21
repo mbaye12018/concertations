@@ -1060,42 +1060,220 @@ form {
 
     <!-- 6) Réclamations -->
     <div id="formReclamations" class="hidden-section">
-      <button class="btn btn-return" id="btnReturn6">
+    <button class="btn btn-return" id="btnReturn6">
         <i class="fas fa-arrow-left me-1"></i>Retour
-      </button>
-      <h3 class="section-title">
+    </button>
+    <h3 class="section-title">
         <i class="fas fa-bullhorn theme-icon"></i>
         Services de réclamations
-      </h3>
-      <form id="formReclamationsForm" class="needs-validation" novalidate>
-        <!-- ...champs spécifiques réclamations... -->
-        <div class="d-grid">
-          <button type="button" id="submitReclamations" class="btn btn-primary">
-            <i class="fas fa-paper-plane me-1"></i>Soumettre
-          </button>
+    </h3>
+    <form id="formReclamationsForm" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label class="form-label">Avez-vous déjà déposé une réclamation auprès d’un service public ?</label>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="deja_deposee" id="rec_oui" value="1" required>
+                <label class="form-check-label" for="rec_oui">Oui</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="deja_deposee" id="rec_non" value="0" required>
+                <label class="form-check-label" for="rec_non">Non</label>
+            </div>
         </div>
-      </form>
-    </div>
-    <!-- FIN : Réclamations -->
 
-    <!-- 7) Digitale -->
+        <div class="mb-3">
+            <label class="form-label">Si oui, la réclamation est liée à quel service public ?</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="service_concerne[]" value="papiersAdmin" id="recPapiers">
+                <label class="form-check-label" for="recPapiers">Délivrance de papiers administratifs</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="service_concerne[]" value="defense" id="recDefense">
+                <label class="form-check-label" for="recDefense">Défense et sécurité</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="service_concerne[]" value="sante" id="recSante">
+                <label class="form-check-label" for="recSante">Santé et protection sociale</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="service_concerne[]" value="education" id="recEducation">
+                <label class="form-check-label" for="recEducation">Éducation et enseignement</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="service_concerne[]" value="habitat" id="recHabitat">
+                <label class="form-check-label" for="recHabitat">Habitat et cadre de vie</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="service_concerne[]" value="transport" id="recTransport">
+                <label class="form-check-label" for="recTransport">Transport</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="service_concerne[]" value="environnement" id="recEnvironnement">
+                <label class="form-check-label" for="recEnvironnement">Environnement</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="service_concerne[]" value="finances" id="recFinances">
+                <label class="form-check-label" for="recFinances">Finances</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="service_concerne[]" value="sport" id="recSport">
+                <label class="form-check-label" for="recSport">Sport, loisirs, culture</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="service_concerne[]" value="industrie" id="recIndustrie">
+                <label class="form-check-label" for="recIndustrie">Industrie</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="service_concerne[]" value="agriculture" id="recAgriculture">
+                <label class="form-check-label" for="recAgriculture">Agriculture, pêche, élevage</label>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Comment avez-vous déposé votre réclamation ?</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="mode_reclamation" id="mode1" value="en_ligne" required>
+                <label class="form-check-label" for="mode1">En ligne</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="mode_reclamation" id="mode2" value="telephone" required>
+                <label class="form-check-label" for="mode2">Par téléphone</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="mode_reclamation" id="mode3" value="courrier" required>
+                <label class="form-check-label" for="mode3">Courrier physique</label>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Le processus de réclamation était-il clair ?</label>
+            <select class="form-select" name="processus_clair" required>
+                <option value="">-- Sélectionnez --</option>
+                <option value="tres_clair">Très clair</option>
+                <option value="clair">Clair</option>
+                <option value="moyennement_clair">Moyennement clair</option>
+                <option value="pas_clair">Pas clair</option>
+                <option value="tres_peu_clair">Très peu clair</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Combien de temps a-t-il fallu pour traiter votre réclamation ?</label>
+            <select class="form-select" name="delai_traitement" required>
+                <option value="">-- Sélectionnez --</option>
+                <option value="moins_3_jours">Moins de 3 jours</option>
+                <option value="une_semaine">Une semaine</option>
+                <option value="plus_une_semaine">Plus d’une semaine</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Avez-vous des commentaires supplémentaires sur le service de réclamation ?</label>
+            <textarea class="form-control" name="commentaires_reclamation" rows="2"></textarea>
+        </div>
+
+        <div class="d-grid">
+            <button type="button" id="submitReclamations" class="btn btn-primary">
+                <i class="fas fa-paper-plane me-1"></i>Soumettre
+            </button>
+        </div>
+    </form>
+</div>
+
+    <!-- FIN : Réclamations -->
     <div id="formDigitale" class="hidden-section">
-      <button class="btn btn-return" id="btnReturn7">
+    <button class="btn btn-return" id="btnReturn7">
         <i class="fas fa-arrow-left me-1"></i>Retour
-      </button>
-      <h3 class="section-title">
+    </button>
+    <h3 class="section-title">
         <i class="fas fa-laptop-code theme-icon"></i>
         Transformation digitale
-      </h3>
-      <form id="formDigitaleForm" class="needs-validation" novalidate>
-        <!-- ...champs spécifiques transformation digitale... -->
-        <div class="d-grid">
-          <button type="button" id="submitDigitale" class="btn btn-primary">
-            <i class="fas fa-paper-plane me-1"></i>Soumettre
-          </button>
-        </div>
-      </form>
+    </h3>
+    <form id="formDigitaleForm" class="needs-validation" novalidate>
+    <div class="mb-3">
+    <label class="form-label">Utilisez-vous les services publics digitalisés ?</label>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="utilise_services_digitaux" value="1" id="serdig_oui" required>
+        <label class="form-check-label" for="serdig_oui">Oui</label>
     </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="utilise_services_digitaux" value="0" id="serdig_non" required>
+        <label class="form-check-label" for="serdig_non">Non</label>
+    </div>
+</div>
+
+
+        <div class="mb-3">
+            <label class="form-label">Si oui, lesquels utilisez-vous le plus souvent ?</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="services_digitaux_utilises[]" value="plateformes" id="plateformesEnLigne">
+                <label class="form-check-label" for="plateformesEnLigne">Plateformes en ligne</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="services_digitaux_utilises[]" value="paiement" id="paiementEnLigne">
+                <label class="form-check-label" for="paiementEnLigne">Paiement en ligne</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="services_digitaux_utilises[]" value="autres" id="autresDigit">
+                <label class="form-check-label" for="autresDigit">Autres (préciser)</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" name="services_digitaux_autres" placeholder="Précisez si Autres" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Comment évaluez-vous l’accessibilité des services digitaux ?</label>
+            <select class="form-select" name="evaluation_accessibilite" required>
+
+                <option value="">-- Sélectionnez --</option>
+                <option value="tres_accessible">Très accessible</option>
+                <option value="accessible">Accessible</option>
+                <option value="moyennement_accessible">Moyennement accessible</option>
+                <option value="difficilement_accessible">Difficilement accessible</option>
+                <option value="tres_difficilement_accessible">Très difficilement accessible</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+    <label class="form-label">Avez-vous rencontré des problèmes en utilisant ces services ?</label>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="rencontree_problemes" id="prob_oui" value="1" required>
+        <label class="form-check-label" for="prob_oui">Oui</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="rencontree_problemes" id="prob_non" value="0" required>
+                <label class="form-check-label" for="prob_non">Non</label>
+            </div>
+        </div>
+
+
+
+
+        <div class="mb-3">
+            <label class="form-label">Si oui, quels types de problèmes ?</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="problemes_digitaux_types[]" value="connexion" id="connexionIssue">
+                <label class="form-check-label" for="connexionIssue">Connexion</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="problemes_digitaux_types[]" value="technique" id="techniqueIssue">
+                <label class="form-check-label" for="techniqueIssue">Problèmes techniques (bugs, lenteur...)</label>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Quelles améliorations aimeriez-vous voir ?</label>
+            <textarea class="form-control" name="suggestions_digitale" rows="2"></textarea>
+        </div>
+
+        <div class="d-grid">
+            <button type="button" id="submitDigitale" class="btn btn-primary">
+                <i class="fas fa-paper-plane me-1"></i>Soumettre
+            </button>
+        </div>
+    </form>
+</div>
+
     <!-- FIN : Digitale -->
 
     <!-- 8) Participation -->
@@ -1768,6 +1946,153 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //fin envoi corruption
 
+//envoi reclamation
+document.getElementById("submitReclamations").addEventListener("click", function () {
+    const formEl = document.getElementById("formReclamationsForm");
+
+    if (!formEl.checkValidity()) {
+        formEl.reportValidity();
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('_token', '{{ csrf_token() }}');
+
+    formData.append("deja_deposee", document.querySelector("input[name='deja_deposee']:checked")?.value || "0");
+    formData.append("mode_reclamation", document.querySelector("input[name='mode_reclamation']:checked")?.value || "");
+    formData.append("processus_clair", document.querySelector("select[name='processus_clair']").value);
+    formData.append("delai_traitement", document.querySelector("select[name='delai_traitement']").value);
+    formData.append("commentaires_reclamation", document.querySelector("textarea[name='commentaires_reclamation']").value);
+
+    // Gérer les checkboxes pour `service_concerne`
+    const services = Array.from(document.querySelectorAll("input[name='service_concerne[]']:checked"))
+        .map(ch => ch.value);
+    formData.append("service_concerne", JSON.stringify(services));
+
+    fetch("/store-reclamations", {
+        method: "POST",
+        body: formData
+    }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Réclamation enregistrée !");
+            } else {
+                alert("Erreur : " + data.message);
+            }
+        })
+        .catch(error => console.error("Erreur :", error));
+});
+// fin envoi reclamation
+
+
+//envoi digital
+document.getElementById("submitDigitale").addEventListener("click", function() {
+    sendThemeForm("digitale", document.getElementById("formDigitaleForm"));
+});
+
+const autresServicesDigitaux = document.querySelector("input[name='services_digitaux_autres']")?.value || "";
+formData.append("services_digitaux_autres", autresServicesDigitaux);
+
+
+
+async function sendThemeForm(themeKey, formEl) {
+    // 1) Vérifier la validité HTML5
+    if (!formEl.checkValidity()) {
+        formEl.reportValidity();
+        return;
+    }
+
+    // 2) Contrôler les checkboxes obligatoires, selon le thème
+    switch(themeKey) {
+        case "digitale":
+            const serdigOui = formEl.querySelector("#serdig_oui");
+            if (serdigOui && serdigOui.checked) {
+                if (!isAtLeastOneChecked(formEl, "services_digitaux_utilises[]")) {
+                    alert("Vous avez indiqué utiliser des services digitalisés, veuillez cocher au moins un service.");
+                    return;
+                }
+            }
+
+            const probOui = formEl.querySelector("#prob_oui");
+            if (probOui && probOui.checked) {
+                if (!isAtLeastOneChecked(formEl, "problemes_digitaux_types[]")) {
+                    alert("Vous avez indiqué avoir rencontré des problèmes, veuillez préciser au moins un type de problème.");
+                    return;
+                }
+            }
+            break;
+    }
+
+    // 3) Construire le FormData manuellement
+    const routeUrl = themeRoutes[themeKey];
+    if (!routeUrl) {
+        alert("Pas de route configurée pour le thème : " + themeKey);
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('_token', '{{ csrf_token() }}'); // CSRF Token pour Laravel
+
+    // Récupérer TOUTES les inputs "text", "select", "textarea" (sauf checkboxes)
+    const inputs = formEl.querySelectorAll('input:not([type="checkbox"])[name], select[name], textarea[name]');
+    inputs.forEach(input => {
+        formData.append(input.name, input.value);
+    });
+
+    // ✅ Correction du champ "evaluation_accessibilite"
+    const evaluationAccessibilite = document.querySelector("select[name='evaluation_accessibilite']").value;
+formData.append('evaluation_accessibilite', evaluationAccessibilite);
+
+    // Gérer CHAQUE ensemble de checkboxes dans ce thème
+    if (themeKey === "digitale") {
+        let servicesDigitaux = getCheckedValues("services_digitaux_utilises[]");
+        servicesDigitaux.forEach(value => formData.append('services_digitaux_utilises[]', value));
+
+        let problemes = getCheckedValues("problemes_digitaux_types[]");
+        problemes.forEach(value => formData.append('problemes_digitaux_types[]', value));
+    }
+
+    // 4) Envoi AJAX sécurisé
+    try {
+        const response = await fetch(routeUrl, {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            let errText = await response.text();
+            alert("Erreur lors de l'enregistrement : " + errText);
+            return;
+        }
+
+        const result = await response.json();
+        if (!result.success) {
+            alert("Le serveur a répondu success=false : " + (result.message || 'Erreur inconnue.'));
+            return;
+        }
+
+        // 5) Tout va bien => marquons le thème comme complété
+        themesStatus[themeKey] = true;
+
+        // 6) Revenir à l'écran de sélection
+        goBack(formEl.parentElement);
+
+        // 7) Retirer la carte du thème
+        removeCard(themeKey);
+
+        // 8) Afficher un toast
+        showToast(themeKey);
+
+        // 9) Vérifier si tous les thèmes sont complétés
+        checkAllDone();
+
+    } catch (error) {
+        console.error("🚨 Erreur AJAX :", error);
+        alert("Erreur de communication avec le serveur.");
+    }
+}
+
+// fin envoi digital
 
 function hideAllForms() {
   formAccesPublics.classList.add("hidden-section");
@@ -1797,176 +2122,180 @@ btnReturn7 && btnReturn7.addEventListener("click", () => goBack(formDigitale));
 btnReturn8 && btnReturn8.addEventListener("click", () => goBack(formParticipation));
 btnReturn9 && btnReturn9.addEventListener("click", () => goBack(formRessourcesHumaines));
 
-/* ========================================
-   4) VALIDATION “AU MOINS UN CHECKBOX”
-======================================== */
-function isAtLeastOneChecked(formEl, checkboxGroupName) {
-  const checkboxes = formEl.querySelectorAll(`input[name="${checkboxGroupName}"]`);
-  return Array.from(checkboxes).some(ch => ch.checked);
-}
+    /* ========================================
+    4) VALIDATION “AU MOINS UN CHECKBOX”
+    ======================================== */
+    function isAtLeastOneChecked(formEl, checkboxGroupName) {
+    const checkboxes = formEl.querySelectorAll(`input[name="${checkboxGroupName}"]`);
+    return Array.from(checkboxes).some(ch => ch.checked);
+    }
 
-function getCheckedValues(checkboxName) {
-  return Array.from(document.querySelectorAll(`input[name="${checkboxName}"]:checked`))
-              .map(ch => ch.value);
-}
+    function getCheckedValues(checkboxName) {
+    return Array.from(document.querySelectorAll(`input[name="${checkboxName}"]:checked`))
+                .map(ch => ch.value);
+    }
 
-/* ==============================
-   5) SOUMISSION THÈMES (AJAX)
-============================== */
-submitAccesPublics      && submitAccesPublics.addEventListener("click", () => sendThemeForm("accesPublics", formAccesPublicsForm));
-submitAccueilOrientation&& submitAccueilOrientation.addEventListener("click", () => sendThemeForm("accueilOrientation", formAccueilOrientationForm));
-submitDiligence         && submitDiligence.addEventListener("click", () => sendThemeForm("diligence", formDiligenceForm));
-submitCoutService       && submitCoutService.addEventListener("click", () => sendThemeForm("coutService", formCoutServiceForm));
-submitCorruption        && submitCorruption.addEventListener("click", () => sendThemeForm("corruption", formCorruptionForm));
-submitReclamations      && submitReclamations.addEventListener("click", () => sendThemeForm("reclamations", formReclamationsForm));
-submitDigitale          && submitDigitale.addEventListener("click", () => sendThemeForm("digitale", formDigitaleForm));
-submitParticipation     && submitParticipation.addEventListener("click", () => sendThemeForm("participation", formParticipationForm));
-submitRessourcesHumaines&& submitRessourcesHumaines.addEventListener("click", () => sendThemeForm("ressourcesHumaines", formRessourcesHumainesForm));
+    /* ==============================
+    5) SOUMISSION THÈMES (AJAX)
+    ============================== */
+    submitAccesPublics      && submitAccesPublics.addEventListener("click", () => sendThemeForm("accesPublics", formAccesPublicsForm));
+    submitAccueilOrientation&& submitAccueilOrientation.addEventListener("click", () => sendThemeForm("accueilOrientation", formAccueilOrientationForm));
+    submitDiligence         && submitDiligence.addEventListener("click", () => sendThemeForm("diligence", formDiligenceForm));
+    submitCoutService       && submitCoutService.addEventListener("click", () => sendThemeForm("coutService", formCoutServiceForm));
+    submitCorruption        && submitCorruption.addEventListener("click", () => sendThemeForm("corruption", formCorruptionForm));
+    submitReclamations      && submitReclamations.addEventListener("click", () => sendThemeForm("reclamations", formReclamationsForm));
+    submitDigitale          && submitDigitale.addEventListener("click", () => sendThemeForm("digitale", formDigitaleForm));
+    submitParticipation     && submitParticipation.addEventListener("click", () => sendThemeForm("participation", formParticipationForm));
+    submitRessourcesHumaines&& submitRessourcesHumaines.addEventListener("click", () => sendThemeForm("ressourcesHumaines", formRessourcesHumainesForm));
 
-async function sendThemeForm(themeKey, formEl) {
-  // 1) Vérifier la validité HTML5
-  if (!formEl.checkValidity()) {
-    formEl.reportValidity();
-    return;
-  }
-
-  // 2) Contrôler les checkboxes obligatoires, selon le thème
-  switch(themeKey) {
-    case "accesPublics":
-      if (!isAtLeastOneChecked(formEl, "servicesFrequents[]")) {
-        alert("Veuillez cocher au moins un service fréquenté dans 'Accès aux services publics'.");
+    async function sendThemeForm(themeKey, formEl) {
+    // 1) Vérifier la validité HTML5
+    if (!formEl.checkValidity()) {
+        formEl.reportValidity();
         return;
-      }
-      if (!isAtLeastOneChecked(formEl, "infoPreferences[]")) {
-        alert("Veuillez sélectionner au moins un mode d'information.");
+    }
+
+    // 2) Contrôler les checkboxes obligatoires, selon le thème
+    switch(themeKey) {
+        case "accesPublics":
+        if (!isAtLeastOneChecked(formEl, "servicesFrequents[]")) {
+            alert("Veuillez cocher au moins un service fréquenté dans 'Accès aux services publics'.");
+            return;
+        }
+        if (!isAtLeastOneChecked(formEl, "infoPreferences[]")) {
+            alert("Veuillez sélectionner au moins un mode d'information.");
+            return;
+        }
+        break;
+
+        case "corruption":
+        const corrOui = formEl.querySelector("#corr_oui");
+        if (corrOui && corrOui.checked) {
+            if (!isAtLeastOneChecked(formEl, "typeCorruption[]")) {
+            alert("Vous avez indiqué 'Oui' à la corruption, veuillez cocher au moins un type de corruption observé.");
+            return;
+            }
+        }
+        break;
+
+        case "reclamations":
+    const recOui = formEl.querySelector("#rec_oui");
+    if (recOui && recOui.checked) {
+        if (!isAtLeastOneChecked(formEl, "service_concerne[]")) {
+        alert("Vous avez indiqué avoir déposé une réclamation, veuillez cocher au moins un service concerné.");
         return;
-      }
-      break;
-
-    case "corruption":
-      const corrOui = formEl.querySelector("#corr_oui");
-      if (corrOui && corrOui.checked) {
-        if (!isAtLeastOneChecked(formEl, "typeCorruption[]")) {
-          alert("Vous avez indiqué 'Oui' à la corruption, veuillez cocher au moins un type de corruption observé.");
-          return;
         }
-      }
-      break;
-
-    case "reclamations":
-      const recOui = formEl.querySelector("#rec_oui");
-      if (recOui && recOui.checked) {
-        if (!isAtLeastOneChecked(formEl, "reclamationService[]")) {
-          alert("Vous avez indiqué avoir déposé une réclamation, veuillez cocher au moins un service concerné.");
-          return;
-        }
-      }
-      break;
+    }
+    break;
 
     case "digitale":
-      const serdigOui = formEl.querySelector("#serdig_oui");
-      if (serdigOui && serdigOui.checked) {
-        if (!isAtLeastOneChecked(formEl, "servicesDigitauxUtilises[]")) {
-          alert("Vous avez indiqué utiliser des services digitalisés, veuillez cocher au moins un service.");
-          return;
+    const serdigOui = formEl.querySelector("#serdig_oui");
+    if (serdigOui && serdigOui.checked) {
+        if (!isAtLeastOneChecked(formEl, "services_digitaux_utilises[]")) {
+            alert("Vous avez indiqué utiliser des services digitalisés, veuillez cocher au moins un service.");
+            return;
         }
-      }
-      const probOui = formEl.querySelector("#prob_oui");
-      if (probOui && probOui.checked) {
-        if (!isAtLeastOneChecked(formEl, "problemesEnLigne[]")) {
-          alert("Vous avez indiqué avoir rencontré des problèmes, veuillez préciser au moins un type de problème.");
-          return;
+    }
+
+    const probOui = formEl.querySelector("#prob_oui");
+    if (probOui && probOui.checked) {
+        if (!isAtLeastOneChecked(formEl, "problemes_digitaux_types[]")) {
+            alert("Vous avez indiqué avoir rencontré des problèmes, veuillez préciser au moins un type de problème.");
+            return;
         }
-      }
-      break;
-    // Les autres thèmes n'ont pas de checkboxes “obligatoires” multiples.
-  }
+    }
+    break;
 
-  // 3) Construire le FormData manuellement
-  const routeUrl = themeRoutes[themeKey];
-  if (!routeUrl) {
-    alert("Pas de route configurée pour le thème : " + themeKey);
-    return;
-  }
+        // Les autres thèmes n'ont pas de checkboxes “obligatoires” multiples.
+    }
 
-  const formData = new FormData();
-  formData.append('_token', '{{ csrf_token() }}'); // CSRF Token pour Laravel
+    // 3) Construire le FormData manuellement
+    const routeUrl = themeRoutes[themeKey];
+    if (!routeUrl) {
+        alert("Pas de route configurée pour le thème : " + themeKey);
+        return;
+    }
 
-  // Récupérer TOUTES les inputs "text", "select", "textarea" (sauf checkboxes)
-  const inputs = formEl.querySelectorAll('input:not([type="checkbox"])[name], select[name], textarea[name]');
-  inputs.forEach(input => {
-    formData.append(input.name, input.value);
-  });
+    const formData = new FormData();
+    formData.append('_token', '{{ csrf_token() }}'); // CSRF Token pour Laravel
 
-  // Gérer CHAQUE ensemble de checkboxes dans ce thème
-  switch(themeKey) {
-    case "accesPublics": {
-      let servicesFrequents = getCheckedValues("servicesFrequents[]");
-      formData.append('servicesFrequents', JSON.stringify(servicesFrequents));
-
-      let infoPreferences = getCheckedValues("infoPreferences[]");
-      formData.append('infoPreferences', JSON.stringify(infoPreferences));
-    } break;
-
-    case "corruption": {
-        let typeCorruption = getCheckedValues("typeCorruption[]");
-typeCorruption.forEach(value => formData.append('typeCorruption[]', value)); // ✅ Envoie un tableau correct
-
-    } break;
-
-    case "reclamations": {
-      let reclamationService = getCheckedValues("reclamationService[]");
-      formData.append('reclamationService', JSON.stringify(reclamationService));
-    } break;
-
-    case "digitale": {
-      let servicesDigitaux = getCheckedValues("servicesDigitauxUtilises[]");
-      formData.append('servicesDigitauxUtilises', JSON.stringify(servicesDigitaux));
-
-      let problemes = getCheckedValues("problemesEnLigne[]");
-      formData.append('problemesEnLigne', JSON.stringify(problemes));
-    } break;
-  }
-
-  // 4) Envoi AJAX
-  try {
-    const response = await fetch(routeUrl, {
-      method: "POST",
-      body: formData
+    // Récupérer TOUTES les inputs "text", "select", "textarea" (sauf checkboxes)
+    const inputs = formEl.querySelectorAll('input:not([type="checkbox"])[name], select[name], textarea[name]');
+    inputs.forEach(input => {
+        formData.append(input.name, input.value);
     });
 
-    if (!response.ok) {
-      let errText = await response.text();
-      alert("Erreur lors de l'enregistrement : " + errText);
-      return;
+    // Gérer CHAQUE ensemble de checkboxes dans ce thème
+    switch(themeKey) {
+        case "accesPublics": {
+        let servicesFrequents = getCheckedValues("servicesFrequents[]");
+        formData.append('servicesFrequents', JSON.stringify(servicesFrequents));
+
+        let infoPreferences = getCheckedValues("infoPreferences[]");
+        formData.append('infoPreferences', JSON.stringify(infoPreferences));
+        } break;
+
+        case "corruption": {
+            let typeCorruption = getCheckedValues("typeCorruption[]");
+    typeCorruption.forEach(value => formData.append('typeCorruption[]', value)); // ✅ Envoie un tableau correct
+
+        } break;
+
+        case "reclamations": {
+    let serviceConcerne = getCheckedValues("service_concerne[]");
+    serviceConcerne.forEach(value => formData.append('service_concerne[]', value)); // ✅ Envoi correct
+    } break;
+
+
+        case "digitale": {
+            let servicesDigitaux = getCheckedValues("services_digitaux_utilises[]");
+    servicesDigitaux.forEach(value => formData.append('services_digitaux_utilises[]', value)); // ✅ Ajout chaque valeur individuellement
+
+    let problemes = getCheckedValues("problemes_digitaux_types[]");
+problemes.forEach(value => formData.append('problemes_digitaux_types[]', value)); // ✅ Format correct pour Laravel
+
+        } break;
     }
 
-    const result = await response.json();
-    if (!result.success) {
-      alert("Le serveur a répondu success=false : " + (result.message || 'Erreur inconnue.'));
-      return;
+    // 4) Envoi AJAX
+    try {
+        const response = await fetch(routeUrl, {
+        method: "POST",
+        body: formData
+        });
+
+        if (!response.ok) {
+        let errText = await response.text();
+        alert("Erreur lors de l'enregistrement : " + errText);
+        return;
+        }
+
+        const result = await response.json();
+        if (!result.success) {
+        alert("Le serveur a répondu success=false : " + (result.message || 'Erreur inconnue.'));
+        return;
+        }
+
+        // 5) Tout va bien => marquons le thème comme complété
+        themesStatus[themeKey] = true;
+
+        // 6) Revenir à l'écran de sélection
+        goBack(formEl.parentElement);
+
+        // 7) Retirer la carte du thème
+        removeCard(themeKey);
+
+        // 8) Afficher un toast
+        showToast(themeKey);
+
+        // 9) Vérifier si tous les thèmes sont complétés
+        checkAllDone();
+
+    } catch (error) {
+        console.error("Exception JS lors de l'enregistrement", error);
+        alert("Exception JS : " + error.message);
     }
-
-    // 5) Tout va bien => marquons le thème comme complété
-    themesStatus[themeKey] = true;
-
-    // 6) Revenir à l'écran de sélection
-    goBack(formEl.parentElement);
-
-    // 7) Retirer la carte du thème
-    removeCard(themeKey);
-
-    // 8) Afficher un toast
-    showToast(themeKey);
-
-    // 9) Vérifier si tous les thèmes sont complétés
-    checkAllDone();
-
-  } catch (error) {
-    console.error("Exception JS lors de l'enregistrement", error);
-    alert("Exception JS : " + error.message);
-  }
-}
+    }
 
 /* ============================
    SUPPRIMER LA CARTE

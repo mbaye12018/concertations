@@ -900,9 +900,9 @@ form {
                 <!-- Ici encore, si vous voulez forcer "au moins 1" => validation JS custom -->
                 <div class="form-check">
                 <input type="checkbox" class="form-check-input" name="typeCorruption[]" id="potsDeVin" value="Pots-de-vin">
-<label class="form-check-label" for="potsDeVin">Pots-de-vin</label>
+            <label class="form-check-label" for="potsDeVin">Pots-de-vin</label>
 
-                </div>
+                            </div>
                 <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="autresCorrupt">
                 <label class="form-check-label" for="autresCorrupt">Autres (préciser)</label>

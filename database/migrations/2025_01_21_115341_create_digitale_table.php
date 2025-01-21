@@ -22,7 +22,7 @@ class CreateDigitaleTable extends Migration
             $table->string('autres_problemes', 255)->nullable();
             $table->text('suggestions_digitale');
 
-            $table->timestamp('date_insertion')->useCurrent();
+            $table->timestamps(); // ✅ Ajoute `created_at` et `updated_at`
 
             $table->foreign('id_soumission')
                   ->references('id_soumission')
