@@ -27,70 +27,78 @@ class SoumissionController extends Controller
      * Enregistrer les réponses pour l'accès aux services publics.
      */
     public function storeAccesPublics(Request $request)
-    {
-        try {
-            // 🔍 Étape 1: Log des données reçues pour debug
-            Log::info('📥 Données reçues pour Accès Publics :', $request->all());
+{
+    try {
+        // 🔍 Étape 1: Log des données reçues pour debug
+        Log::info('📥 Données reçues pour Accès Publics :', $request->all());
 
-            // 🔹 Étape 2: Vérification et conversion JSON
-            $servicesFrequentes = $request->input('servicesFrequents', []);
-            if (is_string($servicesFrequentes)) {
-                $servicesFrequentes = json_decode($servicesFrequentes, true);
-            }
+        // 🔹 Étape 2: Vérification et conversion JSON
+        $servicesFrequentes = $request->input('servicesFrequents', []);
+        if (!is_array($servicesFrequentes)) {
+            $servicesFrequentes = json_decode($servicesFrequentes, true);  // Si c'est une chaîne JSON
+        }
 
-            $infoPreferences = $request->input('infoPreferences', []);
-            if (is_string($infoPreferences)) {
-                $infoPreferences = json_decode($infoPreferences, true);
-            }
+        $infoPreferences = $request->input('infoPreferences', []);
+        if (!is_array($infoPreferences)) {
+            $infoPreferences = json_decode($infoPreferences, true);  // Si c'est une chaîne JSON
+        }
 
-            // 🔹 Étape 3: Vérifier si l'ID de soumission existe
-            $idSoumission = session('id_soumission');
+        // 🔹 Étape 3: Conversion de 'accessibilite' en JSON et gestion des valeurs nulles
+        $accessibilite = $request->input('accessibilite', []);
+        $accessibilite = array_filter($accessibilite, function($value) {
+            return $value !== null; // Filtrer les valeurs nulles avant d'encoder
+        });
+        $accessibiliteJson = json_encode($accessibilite); // Encoder l'accessibilité en JSON
 
-            if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
-                Log::error("❌ ID de soumission invalide ou inexistant : " . ($idSoumission ?? 'NULL'));
-                return response()->json([
-                    'success' => false,
-                    'message' => 'ID de soumission invalide. Veuillez recommencer la soumission générale.'
-                ], 400);
-            }
-
-            // 🔹 Étape 4: Structurer les données avant insertion
-            $validatedData = [
-                'id_soumission'         => $idSoumission,
-                'services_frequentes'    => json_encode($servicesFrequentes),
-                'accessibilite'          => $request->input('accessibilite', ''),
-                'pourquoi_accessibilite' => $request->input('pourquoi_accessibilite', ''),
-                'suggestions_acces'      => $request->input('suggestions_acces', ''),
-                'mode_information'       => json_encode($infoPreferences),
-                'created_at'             => now(),
-                'updated_at'             => now(),
-            ];
-
-            // 🔍 Vérification des données avant insertion
-            Log::info("✅ Données à enregistrer :", $validatedData);
-
-            // 🔹 Étape 5: Enregistrement dans la base
-            $response = AccesServicesPublics::create($validatedData);
-
-            // 🔹 Étape 6: Mise à jour des réponses globales
-            $this->updateReponsesGlobales($idSoumission, $validatedData);
-
-            return response()->json([
-                'success' => true,
-                'id_soumission' => $idSoumission,
-                'message' => 'Réponse enregistrée avec succès.',
-                'data'    => $response
-            ]);
-
-        } catch (\Exception $e) {
-            Log::error("🚨 Erreur lors de l'enregistrement Accès Publics : " . $e->getMessage());
+        // 🔹 Étape 4: Vérification si l'ID de soumission existe
+        $idSoumission = session('id_soumission');
+        if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
+            Log::error("❌ ID de soumission invalide ou inexistant : " . ($idSoumission ?? 'NULL'));
             return response()->json([
                 'success' => false,
-                'message' => 'Erreur lors de l’enregistrement.',
-                'error' => $e->getMessage()
-            ], 500);
+                'message' => 'ID de soumission invalide. Veuillez recommencer la soumission générale.'
+            ], 400);
         }
+
+        // 🔹 Étape 5: Structurer les données avant insertion
+        $validatedData = [
+            'id_soumission'         => $idSoumission,
+            'services_frequentes'    => json_encode($servicesFrequentes), // Encodé en JSON
+            'accessibilite'          => $accessibiliteJson, // Encodé en JSON
+            'pourquoi_accessibilite' => $request->input('pourquoi_accessibilite', ''),
+            'suggestions_acces'      => $request->input('suggestions_acces', ''),
+            'mode_information'       => json_encode($infoPreferences), // Encodé en JSON
+            'created_at'             => now(),
+            'updated_at'             => now(),
+        ];
+
+        // 🔍 Vérification des données avant insertion
+        Log::info("✅ Données à enregistrer :", $validatedData);
+
+        // 🔹 Étape 6: Enregistrement dans la base
+        $response = AccesServicesPublics::create($validatedData);
+
+        // 🔹 Étape 7: Mise à jour des réponses globales
+        $this->updateReponsesGlobales($idSoumission, $validatedData);
+
+        return response()->json([
+            'success' => true,
+            'id_soumission' => $idSoumission,
+            'message' => 'Réponse enregistrée avec succès.',
+            'data'    => $response
+        ]);
+
+    } catch (\Exception $e) {
+        Log::error("🚨 Erreur lors de l'enregistrement Accès Publics : " . $e->getMessage());
+        return response()->json([
+            'success' => false,
+            'message' => 'Erreur lors de l’enregistrement.',
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
+
+    
 
 
 
@@ -239,10 +247,10 @@ class SoumissionController extends Controller
          $validatedData = $request->validate([
              'procedures_longues'   => 'required|boolean',
              'pourquoi_longues'     => 'required|string',
-             'suggestions_delai'    => 'required|string',
+             'suggestions_delai'    => 'nullable|string',
              'formalites_complexes' => 'required|boolean',
              'pourquoi_complexes'   => 'required|string',
-             'suggestions_formalites' => 'required|string',
+             'suggestions_formalites' => 'nullable|string',
          ]);
 
          // ✅ Ajouter `id_soumission` manuellement dans les données à insérer
@@ -611,63 +619,7 @@ public function storeCorruption(Request $request)
   /**
      * Enregistrer les réponses pour rh
      */
-
-
-
-
-
-    public function storeRessourcesHumaines(Request $request)
-    {
-            try {
-                // :loupe_gauche: Étape 1: Log des données reçues
-                Log::info(':inbox: Données reçues pour Ressource humain :', $request->all());
-                // :petit_diamant_bleu: Étape 2: Vérification de l'ID de soumission (récupéré depuis la session)
-                $idSoumission = session('id_soumission');
-                if (!$idSoumission || !Soumission::where('id_soumission', $idSoumission)->exists()) {
-                    Log::error(":x: ID de soumission invalide ou inexistant : " . ($idSoumission ?? 'NULL'));
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'ID de soumission invalide. Veuillez recommencer la soumission générale.'
-                    ], 400);
-                }
-                Log::info(":inbox: ID de soumission récupéré dans storeRessourcehumain : " . $idSoumission);
-                // :petit_diamant_bleu: Étape 3: Validation des données
-                $validatedData = $request->validate([
-                     /*bon*/    'avis_relations'     => 'required|string',
-                      /*bon*/ 'pourquoi_relations' => 'required|string',
-                ]);
-                // :coche_blanche: Ajouter `id_soumission` manuellement dans les données à insérer
-                $validatedData['id_soumission'] = $idSoumission;
-                // :loupe_gauche: Vérification des données avant insertion
-                Log::info(":coche_blanche: Données finales à enregistrer :", $validatedData);
-                // :petit_diamant_bleu: Étape 4: Forcer l'insertion pour s'assurer que `id_soumission` est bien pris en compte
-                $response = RessourcesHumaines::insert([
-                    'id_soumission' => $validatedData['id_soumission'],
-                     'avis_relations' => $validatedData['avis_relations'],
-                      'pourquoi_relations' => $validatedData['pourquoi_relations'],
-                   // 'date_insertion' => now(),
-                    //'updated_at' => now(),
-                ]);
-                // :petit_diamant_bleu: Étape 5: Mise à jour des réponses globales
-                $this->updateReponsesGlobales($idSoumission, $validatedData);
-                return response()->json([
-                    'success' => true,
-                    'id_soumission' => $idSoumission,
-                    'message' => 'Réponse enregistrée avec succès.',
-                    'data'    => $response
-                ]);
-            } catch (\Exception $e) {
-                Log::error(":gyrophare: Erreur lors de l'enregistrement Ressource humain : " . $e->getMessage());
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Erreur lors de l’enregistrement.',
-                    'error' => $e->getMessage()
-                ], 500);
-            }
-    }
-
-
-        /**
+=     /**
      * Enregistrer les réponses pour les autres thématiques.
      */
 

@@ -30,74 +30,86 @@
         },
       });
     </script>
+
+
 <style>
-  /* General Styles for the grid */
-.theme-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    justify-items: center;
-    background-color: #f4f7fc;
-}
+  /* General Styles */
+  body {
+      font-family: 'Public Sans', sans-serif;
+      background-color: #f4f7fc;
+      color: #333;
+  }
 
-/* Theme card styling */
-.theme-card {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    max-width: 300px;
-    width: 100%;
-}
+  .btn-choose-theme {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 24px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
-/* Add hover effects */
-.theme-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
+  .btn-choose-theme:hover {
+      background-color: #0056b3;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
 
-/* Theme icons */
-.theme-icon {
-    font-size: 3rem;
-    color: #4e73df;
-    transition: color 0.3s ease;
-}
+  .btn-choose-theme:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 
-/* Change color on hover */
-.theme-card:hover .theme-icon {
-    color: #2e59d9;
-}
+  .theme-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      max-width: 320px;
+      width: 100%;
+  }
 
-/* Title Styling */
-.theme-card h4 {
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin: 10px 0;
-    color: #333;
-}
+  .theme-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
 
-/* Paragraph Styling */
-.theme-card p {
-    font-size: 1rem;
-    color: #666;
-    margin: 10px 0;
-}
+  .theme-icon {
+      font-size: 3rem;
+      color: #4e73df;
+      transition: color 0.3s ease;
+  }
 
-/* Responsive adjustments */
-@media screen and (max-width: 768px) {
-    .theme-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
+  .theme-card:hover .theme-icon {
+      color: #007bff;
+  }
 
-    .theme-card {
-        max-width: 260px;
-    }
-}
+  .theme-select {
+      width: 70%;
+      padding: 12px 18px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      border-radius: 25px;
+      border: 1px solid #ddd;
+      background-color: #f8f9fa;
+      transition: border 0.3s ease;
+  }
 
+  .theme-select:hover {
+      border-color: #007bff;
+  }
 </style>
+
+<!-- Make sure the HTML elements are aligned well with these styles -->
+
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../assets/css/plugins.min.css" />
@@ -145,12 +157,7 @@
             </a>
               </li>
              
-              <li class="nav-item">
-                <a class="nav-link" href="{{ route('statistique.statistique') }}">
-                  <i class="far fa-chart-bar"></i>
-                  <p>Statistique</p>
-                </a>
-            </li>
+              
             </ul>
           </div>
         </div>
@@ -221,79 +228,13 @@
             <div
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
             </div>
-            <div class="row">
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-primary bubble-shadow-small"
-                        >
-                          <i class="fas fa-users"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Avis recueillis</p>
-                          <h4 class="card-title"> {{ $total }}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> 
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-info bubble-shadow-small"
-                        >
-                        <i class="fas fa-users"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Sénégal</p>
-                          <h4 class="card-title">{{ $senegalTotal }}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-success bubble-shadow-small"
-                        >
-                        <i class="fas fa-users"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Diaspora</p>
-                          <h4 class="card-title">{{ $diasporaTotal }}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-            
+           
             <div class="row">
               <div class="col-md-12">
                 <div class="card card-round">
                   <div class="card-header">
                     <div class="card-head-row">
-                      <div class="card-title">Statistique sur les themes</div>
+                      <div class="card-title">Statistique</div>
                       <div class="card-tools">
                         <a
                           href="#"
@@ -321,84 +262,82 @@
           
             </div>
 
-            <!-- Cartes en grille (3 par ligne) -->
-         <div class="theme-grid" id="themeCardsContainer">
-    <!-- 1) Accès aux services publics -->
-    <a href="/acces-publics" class="theme-card" data-theme="accesPublics">
-        <h4>
-            <i class="fas fa-door-open theme-icon animate__animated animate__heartBeat"></i>
-            Accès aux services publics
-        </h4>
-        <p>Fréquence, accessibilité, etc.</p>
-    </a>
-    <!-- 2) Accueil & orientation -->
-    <a href="/accueil-orientation" class="theme-card" data-theme="accueilOrientation">
-        <h4>
-            <i class="fas fa-info-circle theme-icon animate__animated animate__heartBeat"></i>
-            Accueil & orientation
-        </h4>
-        <p>Qualité de l'accueil, clarté des indications...</p>
-    </a>
-    <!-- 3) Diligence -->
-    <a href="/diligence" class="theme-card" data-theme="diligence">
-        <h4>
-            <i class="fas fa-clock theme-icon animate__animated animate__heartBeat"></i>
-            Diligence
-        </h4>
-        <p>Délais, complexité, etc.</p>
-    </a>
-    <!-- 4) Coût du service -->
-    <a href="/cout-service" class="theme-card" data-theme="coutService">
-        <h4>
-            <i class="fas fa-money-bill-wave theme-icon animate__animated animate__heartBeat"></i>
-            Coût du service
-        </h4>
-        <p>Tarifs, paiement, rapport qualité-prix.</p>
-    </a>
-    <!-- 5) Corruption -->
-    <a href="/corruption" class="theme-card" data-theme="corruption">
-        <h4>
-            <i class="fas fa-shield-alt theme-icon animate__animated animate__heartBeat"></i>
-            Corruption
-        </h4>
-        <p>Transparence, pots-de-vin, etc.</p>
-    </a>
-    <!-- 6) Réclamations -->
-    <a href="/reclamations" class="theme-card" data-theme="reclamations">
-        <h4>
-            <i class="fas fa-bullhorn theme-icon animate__animated animate__heartBeat"></i>
-            Réclamations
-        </h4>
-        <p>Procédure, clarté, délais...</p>
-    </a>
-    <!-- 7) Digitale -->
-    <a href="/digitale" class="theme-card" data-theme="digitale">
-        <h4>
-            <i class="fas fa-laptop-code theme-icon animate__animated animate__heartBeat"></i>
-            Transformation digitale
-        </h4>
-        <p>Services en ligne, bugs, etc.</p>
-    </a>
-    <!-- 8) Participation -->
-    <a href="/participation" class="theme-card" data-theme="participation">
-        <h4>
-            <i class="fas fa-users theme-icon animate__animated animate__heartBeat"></i>
-            Participation citoyenne
-        </h4>
-        <p>Implication, satisfaction, impact...</p>
-    </a>
-    <!-- 9) Ressources Humaines -->
-    <a href="/ressources-humaines" class="theme-card" data-theme="ressourcesHumaines">
-        <h4>
-            <i class="fas fa-handshake theme-icon animate__animated animate__heartBeat"></i>
-            Ressources humaines
-        </h4>
-        <p>Relations agents/usagers, etc.</p>
-    </a>
+         
+       
+</div>
+
+<div class="text-center mb-4">
+    <h2 class="text-primary">Accès aux services publics</h2>
+    <select id="themeSelect" class="form-select">
+        <option value="" disabled selected>Veuillez choisir un service public</option>
+        <option value="delivrancePapierAdmin">Délivrance de papiers administratifs</option>
+        <option value="defenseSecurite">Défense et sécurité</option>
+        <option value="santeProtection">Santé et protection sociale</option>
+        <option value="educationEnseignement">Éducation et Enseignement</option>
+        <option value="habitatCadreVie">Habitat et cadre de vie</option>
+        <option value="transport">Transport</option>
+        <option value="environnement">Environnement</option>
+        <option value="finances">Finances</option>
+        <option value="sportLoisirsCulture">Sport, Loisirs, culture</option>
+        <option value="industrie">Industrie</option>
+        <option value="agriculture">Agriculture, pêche, élevage</option>
+</select>
+
+
+</div>
+<div class="text-center mt-4">
+    <canvas id="themeChart" width="200" height="50"></canvas>
 </div>
 
 
 
+             <a href="{{ route('admin.dashboard') }}" class="btn-choose-theme">
+  <span class="btn-text">Choisir un autre thème</span>
+</a>
+
+<style>
+  /* Button for choosing another theme */
+  .btn-choose-theme {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    background-color: #28a745; /* Green background for a fresh look */
+    color: white;
+    border: 2px solid #28a745;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-choose-theme:hover {
+    background-color: #218838;
+    border-color: #218838;
+    transform: translateY(-3px);
+  }
+
+  .btn-choose-theme:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-choose-theme .btn-text {
+    margin-left: 8px;
+    font-size: 1rem;
+  }
+
+  /* Add a left arrow icon before the text */
+  .btn-choose-theme::before {
+    content: '\f0a8'; /* Font Awesome left arrow icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 1.3rem;
+    margin-right: 8px;
+  }
+</style>
 
 
                           
@@ -409,8 +348,7 @@
                           
                       </table>
                     </div>
-                    <div id="myChartLegend"></div>
-                  </div>
+                    </div>
                 </div>
               </div>
              
@@ -418,7 +356,7 @@
            
           </div>
         </div>
-
+       
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
             
@@ -452,6 +390,66 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                          
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+    const themeSelect = document.getElementById("themeSelect");
+    const themeChartCanvas = document.getElementById("themeChart").getContext("2d");
+
+    const themeData = {
+        delivrancePapierAdmin: [5, 10, 20, 30, 35],
+        defenseSecurite: [10, 12, 25, 40, 13],
+        santeProtection: [15, 20, 18, 25, 22],
+        educationEnseignement: [8, 15, 30, 25, 22],
+        habitatCadreVie: [5, 15, 40, 25, 10],
+        transport: [20, 18, 12, 30, 20],
+        environnement: [18, 28, 22, 15, 10],
+        finances: [12, 10, 15, 30, 33],
+        sportLoisirsCulture: [10, 8, 30, 45, 7],
+        industrie: [13, 22, 35, 10, 15],
+        agriculture: [7, 20, 30, 35, 8],
+    };
+
+    const accessibilityLabels = ['Très accessible', 'Accessible', 'Moyenne accessible', 'Difficile accessible', 'Très difficile accessible'];
+
+    let chart = new Chart(themeChartCanvas, {
+        type: 'bar',
+        data: {
+            labels: accessibilityLabels,
+            datasets: [{
+                label: 'Accessibilité',
+                data: themeData.accesPublics, // Default data
+                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'],
+                borderColor: '#fff',
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    themeSelect.addEventListener("change", function() {
+        const selectedTheme = themeSelect.value;
+
+        if (selectedTheme) {
+            // Update the chart data based on the selected theme
+            chart.data.datasets[0].data = themeData[selectedTheme];
+        } else {
+            // Keep the chart empty if no theme is selected
+            chart.data.datasets[0].data = [];
+        }
+
+        // Re-render the chart
+        chart.update();
+    });
+</script>
+
 
   </body>
 </html>

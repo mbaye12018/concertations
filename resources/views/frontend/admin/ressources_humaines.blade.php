@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+rh<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -144,13 +144,6 @@
                 <p>Utilisateur</p>
             </a>
               </li>
-             
-              <li class="nav-item">
-                <a class="nav-link" href="{{ route('statistique.statistique') }}">
-                  <i class="far fa-chart-bar"></i>
-                  <p>Statistique</p>
-                </a>
-            </li>
             </ul>
           </div>
         </div>
@@ -221,79 +214,13 @@
             <div
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
             </div>
-            <div class="row">
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-primary bubble-shadow-small"
-                        >
-                          <i class="fas fa-users"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Avis recueillis</p>
-                          <h4 class="card-title"> {{ $total }}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> 
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-info bubble-shadow-small"
-                        >
-                        <i class="fas fa-users"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Sénégal</p>
-                          <h4 class="card-title">{{ $senegalTotal }}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-success bubble-shadow-small"
-                        >
-                        <i class="fas fa-users"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Diaspora</p>
-                          <h4 class="card-title">{{ $diasporaTotal }}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-            
+          
             <div class="row">
               <div class="col-md-12">
                 <div class="card card-round">
                   <div class="card-header">
                     <div class="card-head-row">
-                      <div class="card-title">Statistique sur les themes</div>
+                      <div class="card-title">Statistique</div>
                       <div class="card-tools">
                         <a
                           href="#"
@@ -322,79 +249,18 @@
             </div>
 
             <!-- Cartes en grille (3 par ligne) -->
-         <div class="theme-grid" id="themeCardsContainer">
-    <!-- 1) Accès aux services publics -->
-    <a href="/acces-publics" class="theme-card" data-theme="accesPublics">
-        <h4>
-            <i class="fas fa-door-open theme-icon animate__animated animate__heartBeat"></i>
-            Accès aux services publics
-        </h4>
-        <p>Fréquence, accessibilité, etc.</p>
-    </a>
-    <!-- 2) Accueil & orientation -->
-    <a href="/accueil-orientation" class="theme-card" data-theme="accueilOrientation">
-        <h4>
-            <i class="fas fa-info-circle theme-icon animate__animated animate__heartBeat"></i>
-            Accueil & orientation
-        </h4>
-        <p>Qualité de l'accueil, clarté des indications...</p>
-    </a>
-    <!-- 3) Diligence -->
-    <a href="/diligence" class="theme-card" data-theme="diligence">
-        <h4>
-            <i class="fas fa-clock theme-icon animate__animated animate__heartBeat"></i>
-            Diligence
-        </h4>
-        <p>Délais, complexité, etc.</p>
-    </a>
-    <!-- 4) Coût du service -->
-    <a href="/cout-service" class="theme-card" data-theme="coutService">
-        <h4>
-            <i class="fas fa-money-bill-wave theme-icon animate__animated animate__heartBeat"></i>
-            Coût du service
-        </h4>
-        <p>Tarifs, paiement, rapport qualité-prix.</p>
-    </a>
-    <!-- 5) Corruption -->
-    <a href="/corruption" class="theme-card" data-theme="corruption">
-        <h4>
-            <i class="fas fa-shield-alt theme-icon animate__animated animate__heartBeat"></i>
-            Corruption
-        </h4>
-        <p>Transparence, pots-de-vin, etc.</p>
-    </a>
-    <!-- 6) Réclamations -->
-    <a href="/reclamations" class="theme-card" data-theme="reclamations">
-        <h4>
-            <i class="fas fa-bullhorn theme-icon animate__animated animate__heartBeat"></i>
-            Réclamations
-        </h4>
-        <p>Procédure, clarté, délais...</p>
-    </a>
-    <!-- 7) Digitale -->
-    <a href="/digitale" class="theme-card" data-theme="digitale">
-        <h4>
-            <i class="fas fa-laptop-code theme-icon animate__animated animate__heartBeat"></i>
-            Transformation digitale
-        </h4>
-        <p>Services en ligne, bugs, etc.</p>
-    </a>
-    <!-- 8) Participation -->
-    <a href="/participation" class="theme-card" data-theme="participation">
-        <h4>
-            <i class="fas fa-users theme-icon animate__animated animate__heartBeat"></i>
-            Participation citoyenne
-        </h4>
-        <p>Implication, satisfaction, impact...</p>
-    </a>
-    <!-- 9) Ressources Humaines -->
-    <a href="/ressources-humaines" class="theme-card" data-theme="ressourcesHumaines">
+            <div class="theme-grid" id="themeCardsContainer">
+            <a href="/ressources-humaines" class="theme-card" data-theme="ressourcesHumaines">
         <h4>
             <i class="fas fa-handshake theme-icon animate__animated animate__heartBeat"></i>
             Ressources humaines
         </h4>
         <p>Relations agents/usagers, etc.</p>
     </a>
+  
+   
+   
+   
 </div>
 
 

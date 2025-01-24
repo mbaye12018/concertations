@@ -1,80 +1,59 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\EnqueteGenerale;  // Le modèle pour les enquêtes
-use App\Models\Region;  // Le modèle pour les régions
-use App\Models\Department;  // Modèle pour les départements, si applicable
-
+use App\Models\Soumission; // Assurez-vous d'utiliser le bon modèle
 
 class StatistiqueController extends Controller
 {
     public function index()
     {
-        // Récupérer les données pour le Sénégal et la Diaspora
-        $totalSenegal = EnqueteGenerale::where('location', 'Senegal')->count();
-        $totalDiaspora = EnqueteGenerale::where('location', 'Diaspora')->count();
-
-        // Récupérer les données par région pour le Sénégal
-        $regions = Region::all(); // Exemple, ajustez selon votre structure
+        // Récupérer les totaux pour le Sénégal et la Diaspora
+        $totalSenegal = Soumission::where('lieu_residence', 'Senegal')->count();
+        $totalDiaspora = Soumission::where('lieu_residence', 'Diaspora')->count();
 
         // Passer les données à la vue
-        return view('statistique.index', compact('totalSenegal', 'totalDiaspora', 'regions'));
+        return view('statistique.index', compact('totalSenegal', 'totalDiaspora'));
     }
 
-    // StatistiqueController.php
-public function getStatistics(Request $request)
+   
+    public function getStatistics(Request $request)
 {
     $location = $request->input('location');
-    $region = $request->input('region');
-    
-    if ($location === 'senegal' && $region) {
-        // Récupérer les départements pour le Sénégal
-        $data = EnqueteGenerale::where('location', 'Senegal')
-            ->where('region', $region)
-            ->select('department', \DB::raw('count(*) as total'))
-            ->groupBy('department')
-            ->get();
-    } elseif ($location === 'diaspora') {
-        // Récupérer les pays pour la Diaspora
-        $data = EnqueteGenerale::where('location', 'Diaspora')
-            ->select('country', \DB::raw('count(*) as total'))
-            ->groupBy('country')
-            ->get();
-    } else {
-        return response()->json(['error' => 'Invalid location'], 400);
+    $regionId = $request->input('region_id'); // Nouvelle variable pour la région
+
+    // En fonction de la localisation choisie, récupérez les statistiques
+    if ($location == 'Senegal') {
+        // Si une région est choisie, récupérez les statistiques pour cette région
+        if ($regionId) {
+            $senegalCount = Soumission::where('lieu_residence', 'Sénégal')
+                                      ->where('region_id', $regionId)
+                                      ->count();
+            return response()->json([
+                'labels' => ['Région ' . $regionId],
+                'chartData' => [$senegalCount]
+            ]);
+        } else {
+            // Sinon, récupérez les statistiques globales pour le Sénégal
+            $senegalCount = Soumission::where('lieu_residence', 'Sénégal')->count();
+            return response()->json([
+                'labels' => ['Sénégal'],
+                'chartData' => [$senegalCount]
+            ]);
+        }
+    } elseif ($location == 'Diaspora') {
+        $diasporaCount = Soumission::where('lieu_residence', 'Diaspora')->count();
+        return response()->json([
+            'labels' => ['Diaspora'],
+            'chartData' => [$diasporaCount]
+        ]);
     }
 
-    return response()->json($data);
+    // Si aucune localisation n'est choisie
+    return response()->json([
+        'labels' => [],
+        'chartData' => []
+    ]);
 }
 
-    
-    
 }
-
-
-   
-    
-
-    
-
-   
-    
-    
-    
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-

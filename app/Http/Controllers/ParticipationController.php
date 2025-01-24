@@ -18,4 +18,9 @@ class ParticipationController extends Controller
 
         return redirect()->route('participation.form')->with('success', 'Merci pour votre participation !');
     }
+    public function index()
+    {
+        
+    return view('frontend.admin.participation');
+    }
 }

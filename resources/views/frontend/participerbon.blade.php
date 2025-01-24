@@ -1373,57 +1373,6 @@ form {
         Ressources humaines
       </h3>
       <form id="formRessourcesHumainesForm" class="needs-validation" novalidate>
-    <div class="mb-3">
-          <label class="form-label">
-            Les agents publics fournissent-ils des informations claires,complétes et précises ?
-          </label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="info_claire" value="1" id="info_claire_oui" required>
-            <label class="form-check-label" for="info_claire_oui">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="info_claire" value="0" id="info_claire_non" required>
-            <label class="form-check-label" for="info_clair_non">Non</label>
-          </div>
-    </div>
-      <div class="mb-3">
-          <label class="form-label">Pourquoi ?</label>
-          <textarea name='pourquoi_info_claire' class="form-control" rows="2" required></textarea>
-    </div>
-    <div class="mb-3">
-          <label class="form-label">
-            Pensez-vous que les agents publics ont l'esprit collaboratif ?
-          </label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="esprit_collaboratif" value="1" id="esprit" required>
-            <label class="form-check-label" for="esprit_collaboratif_oui">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="esprit_collaboratif" value="0" id="esprit_non" required>
-            <label class="form-check-label" for="esprit_collaboratif_non">Non</label>
-          </div>
-    </div>
-    <div class="mb-3">
-          <label class="form-label">Pourquoi ?</label>
-          <textarea name='pourquoi_esprit_collaboratif' class="form-control" rows="2" required></textarea>
-    </div>
-    <div class="mb-3">
-          <label class="form-label">
-            Pensez-vous que les compétences des agents publics sont en phase avec les attentes des usagers ?
-          </label>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="competence_agents" value="1" id="competence_agents_oui" required>
-            <label class="form-check-label" for="competence_agents_oui">Oui</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" class="form-check-input" name="competence_agents" value="0" id="competence_agents_non" required>
-            <label class="form-check-label" for="competence_agents_non">Non</label>
-          </div>
-    </div>
-    <div class="mb-3">
-          <label class="form-label">Pourquoi ?</label>
-          <textarea name='pourquoi_competence_agents' class="form-control" rows="2" required></textarea>
-    </div>
         <div class="mb-3">
           <label class="form-label">
             Que pensez-vous des relations entre agents publics et usagers ?
@@ -1434,7 +1383,6 @@ form {
           <label class="form-label">Pourquoi ?</label>
           <textarea name='pourquoi_relations' class="form-control" rows="2" required></textarea>
         </div>
-
         <div class="d-grid">
           <button type="button" id="submitRessourcesHumaines" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
@@ -1495,42 +1443,42 @@ form {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
- <script>
-        /* ======================
-        GÉNÉRATION ET VALIDATION DU CAPTCHA
-        ====================== */
+<script>
+/* ======================
+   GÉNÉRATION ET VALIDATION DU CAPTCHA
+====================== */
 
-        function generateCaptcha() {
-        let num1 = Math.floor(Math.random() * 10) + 1;
-        let num2 = Math.floor(Math.random() * 10) + 1;
-        let operators = ['+', '-'];
-        let operator = operators[Math.floor(Math.random() * operators.length)];
-        let correctAnswer = operator === '+' ? num1 + num2 : num1 - num2;
+function generateCaptcha() {
+  let num1 = Math.floor(Math.random() * 10) + 1;
+  let num2 = Math.floor(Math.random() * 10) + 1;
+  let operators = ['+', '-'];
+  let operator = operators[Math.floor(Math.random() * operators.length)];
+  let correctAnswer = operator === '+' ? num1 + num2 : num1 - num2;
 
-        const captchaQuestion = document.getElementById('captcha-question');
-        const captchaCorrectAnswer = document.getElementById('captcha-correct-answer');
+  const captchaQuestion = document.getElementById('captcha-question');
+  const captchaCorrectAnswer = document.getElementById('captcha-correct-answer');
 
-        if (captchaQuestion && captchaCorrectAnswer) {
-            captchaQuestion.textContent = `${num1} ${operator} ${num2} = ?`;
-            captchaCorrectAnswer.value = correctAnswer;
-        }
-        }
+  if (captchaQuestion && captchaCorrectAnswer) {
+    captchaQuestion.textContent = `${num1} ${operator} ${num2} = ?`;
+    captchaCorrectAnswer.value = correctAnswer;
+  }
+}
 
-        document.addEventListener("DOMContentLoaded", function () {
-        generateCaptcha(); // Générer un premier CAPTCHA au chargement
-        });
+document.addEventListener("DOMContentLoaded", function () {
+  generateCaptcha(); // Générer un premier CAPTCHA au chargement
+});
 
-    /* ==================================================
-    CONTRÔLE DU FORMULAIRE INFOS GÉNÉRALES (step1)
-    ================================================== */
-    const step1Div = document.getElementById("step1");
-    const generalInfoForm = document.getElementById("generalInfoForm");
-    const themeSelectionDiv = document.getElementById("themeSelection");
+/* ==================================================
+   CONTRÔLE DU FORMULAIRE INFOS GÉNÉRALES (step1)
+================================================== */
+const step1Div = document.getElementById("step1");
+const generalInfoForm = document.getElementById("generalInfoForm");
+const themeSelectionDiv = document.getElementById("themeSelection");
 
-    generalInfoForm.addEventListener("submit", async function (e) {
-    e.preventDefault(); // Empêche l'action par défaut
+generalInfoForm.addEventListener("submit", async function (e) {
+  e.preventDefault(); // Empêche l'action par défaut
 
-    if (!generalInfoForm.checkValidity()) {
+  if (!generalInfoForm.checkValidity()) {
     generalInfoForm.reportValidity();
     return;
   }
@@ -1611,26 +1559,26 @@ form {
     submitButton.disabled = false;
     submitButton.innerHTML = "Valider mes informations";
   }
-  });
+});
 
 
 
-    /* ============================
-    1) RÉFÉRENCES GÉNÉRALES
-    ============================ */
-    const themeCardsContainer = document.getElementById("themeCardsContainer");
+/* ============================
+   1) RÉFÉRENCES GÉNÉRALES
+============================ */
+const themeCardsContainer = document.getElementById("themeCardsContainer");
 
-    // Toast container
-    const toastContainer = document.getElementById("toastContainer") || null;
-    // Modal final
-    const finalModalEl = document.getElementById("finalModal") || null;
-    let finalModal = null;
-    if (finalModalEl) {
-    finalModal = new bootstrap.Modal(finalModalEl, { keyboard: false });
-    }
+// Toast container
+const toastContainer = document.getElementById("toastContainer") || null;
+// Modal final
+const finalModalEl = document.getElementById("finalModal") || null;
+let finalModal = null;
+if (finalModalEl) {
+  finalModal = new bootstrap.Modal(finalModalEl, { keyboard: false });
+}
 
-    // Formulaires (DIV conteneur)
-    const formAccesPublics     = document.getElementById("formAccesPublics");
+// Formulaires (DIV conteneur)
+const formAccesPublics     = document.getElementById("formAccesPublics");
 const formAccueilOrientation = document.getElementById("formAccueilOrientation");
 const formDiligence        = document.getElementById("formDiligence");
 const formCoutService      = document.getElementById("formCoutService");

@@ -236,13 +236,13 @@
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
                           <p class="card-category">Avis recueillis</p>
-                          <h4 class="card-title"> {{ $total }}</h4>
+                          <h4 class="card-title">1974</h4>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div> 
+              </div>
               <div class="col-sm-6 col-md-4">
                 <div class="card card-stats card-round">
                   <div class="card-body">
@@ -257,7 +257,7 @@
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
                           <p class="card-category">Sénégal</p>
-                          <h4 class="card-title">{{ $senegalTotal }}</h4>
+                          <h4 class="card-title">1453</h4>
                         </div>
                       </div>
                     </div>
@@ -278,7 +278,7 @@
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
                           <p class="card-category">Diaspora</p>
-                          <h4 class="card-title">{{ $diasporaTotal }}</h4>
+                          <h4 class="card-title">521</h4>
                         </div>
                       </div>
                     </div>
@@ -287,13 +287,12 @@
               </div>
               
             </div>
-            
             <div class="row">
               <div class="col-md-12">
                 <div class="card card-round">
                   <div class="card-header">
                     <div class="card-head-row">
-                      <div class="card-title">Statistique sur les themes</div>
+                      <div class="card-title">Statistique</div>
                       <div class="card-tools">
                         <a
                           href="#"
@@ -322,7 +321,7 @@
             </div>
 
             <!-- Cartes en grille (3 par ligne) -->
-         <div class="theme-grid" id="themeCardsContainer">
+  <div class="theme-grid" id="themeCardsContainer">
     <!-- 1) Accès aux services publics -->
     <a href="/acces-publics" class="theme-card" data-theme="accesPublics">
         <h4>

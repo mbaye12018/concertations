@@ -9,54 +9,55 @@ use App\Models\Region;
 use App\Models\Departement;
 use App\Models\EnqueteRapporteur;
 use Illuminate\Support\Facades\DB; 
-
+use App\Models\Soumission; 
 
 class AdminController extends Controller
 {
     public function index()
     {
-        // Fetch location data
-        $les_donnees = EnqueteGenerale::select('location', \DB::raw('count(*) as total'))
-            ->whereIn('location', ['Senegal', 'Diaspora']) 
-            ->groupBy('location')
+        // Fetch location data (Sénégal et Diaspora) et calculer leur total
+        $les_donnees = Soumission::select('lieu_residence', \DB::raw('count(*) as total'))
+            ->whereIn('lieu_residence', ['Senegal', 'Diaspora'])
+            ->groupBy('lieu_residence')
             ->get();
+        
+        // Get the totals for Senegal and Diaspora
+        $senegalTotal = $les_donnees->firstWhere('lieu_residence', 'Senegal')->total ?? 0;
+        $diasporaTotal = $les_donnees->firstWhere('lieu_residence', 'Diaspora')->total ?? 0;
+        
+        // Calculate total sum
+        $total = $senegalTotal + $diasporaTotal;
     
-        $labels = $les_donnees->pluck('location');
-        $data = $les_donnees->pluck('total');
-
-        // Fetch data
+        // Fetch other data (secteurs, regions, départements)
         $secteurs = Secteur::select('nom_secteur')->get();
         $regions = Region::select('nom')->get();
         $departements = Departement::select('nom')->get();
-
-
-        $regionCounts = EnqueteRapporteur::select('region_id', DB::raw('count(*) as total'))
-        ->groupBy('region_id',)
-        ->get();
-
-        $departementCounts = EnqueteRapporteur::select('departement_id', DB::raw('count(*) as total_departement'))
-        ->groupBy('departement_id')
-        ->get();
-
-
-
-        // $departementCounts = EnqueteRapporteur::select('departement_id', DB::raw('count(*) as total_departement')) 
-        //  ->WHERE('region_id',1)
-        // ->groupBy('departement_id')
-        // ->get();
-    
+        
+        // Fetch counts of regions and départements from EnqueteRapporteur
+        $regionCounts = EnqueteRapporteur::select('region_id', \DB::raw('count(*) as total'))
+            ->groupBy('region_id')
+            ->get();
+        
+        $departementCounts = EnqueteRapporteur::select('departement_id', \DB::raw('count(*) as total_departement'))
+            ->groupBy('departement_id')
+            ->get();
+        
         // Pass all data to the view
         return view('frontend.admin.dashboard', [
-            'labels' => $labels,
-            'data' => $data,
+            'senegalTotal' => $senegalTotal,
+            'diasporaTotal' => $diasporaTotal,
+            'total' => $total,
             'secteurs' => $secteurs,
             'regions' => $regions,
             'departements' => $departements,
             'regionCounts' => $regionCounts,
             'departementCounts' => $departementCounts
-            // 'departementbyregion' => $departementByDepartement
         ]);
     }
+    
+    
+      
+
     public function getDepartementsStats($region_id) {
         $departementCounts = EnqueteRapporteur::select('departement_id', DB::raw('count(*) as total_departement'))
             ->where('region_id', $region_id)

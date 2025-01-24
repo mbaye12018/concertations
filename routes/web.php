@@ -18,7 +18,15 @@ use App\Http\Controllers\AjoutController;
 use App\Http\Controllers\UtilisateurController;
 use App\Http\Controllers\StatistiqueController;
 use App\Http\Controllers\PaysMondeController;
-
+use App\Http\Controllers\AccesPublicsController;
+use App\Http\Controllers\AccueilOrientationController;
+use App\Http\Controllers\DiligenceController;
+use App\Http\Controllers\CoutServiceController;
+use App\Http\Controllers\CorruptionController;
+use App\Http\Controllers\ReclamationsController;
+use App\Http\Controllers\DigitaleController;
+//use App\Http\Controllers\StatistiqueController;
+use App\Http\Controllers\RessourcesHumainesController;
 // Contrôleurs pour soumissions / réponses
 use App\Http\Controllers\SoumissionController;
 use App\Http\Controllers\ReponseController;
@@ -96,6 +104,7 @@ Route::put('/utilisateur/{id}', [UtilisateurController::class, 'update'])->name(
 // ==================
 Route::get('/statistique', [StatistiqueController::class, 'index'])->name('statistique.statistique');
 Route::get('/get-statistics', [StatistiqueController::class, 'getStatistics']);
+Route::get('/statistique/get', [StatistiqueController::class, 'getStatistics'])->name('statistique.getStatistics');
 
 // ==================
 //  PaysMondeController
@@ -132,5 +141,22 @@ Route::post('/soumissions/ressources-humaines', [SoumissionController::class, 's
 // Si tu gères les infos générales dans la table "soumissions"
 Route::post('/soumissions/infos-generales', [SoumissionController::class, 'storeInfosGenerales'])->name('soumissions.infos_generales');
 
+// ==================
+//  Les routes pour chaque THÉMATIQUE
+// ==================
 
 
+Route::get('/statistiques', [StatistiqueController::class, 'index'])->name('statistique.index');
+Route::get('/statistiques/data', [StatistiqueController::class, 'getStatistics'])->name('statistique.getStatistics');
+
+
+
+Route::get('/acces-publics', [AccesPublicsController::class, 'index']);
+Route::get('/accueil-orientation', [AccueilOrientationController::class, 'index']);
+Route::get('/diligence', [DiligenceController::class, 'index']);
+Route::get('/cout-service', [CoutServiceController::class, 'index']);
+Route::get('/corruption', [CorruptionController::class, 'index']);
+Route::get('/reclamations', [ReclamationsController::class, 'index']);
+Route::get('/digitale', [DigitaleController::class, 'index']);
+Route::get('/participation', [ParticipationController::class, 'index']);
+Route::get('/ressources-humaines', [RessourcesHumainesController::class, 'index']);
