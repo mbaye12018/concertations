@@ -30,86 +30,90 @@
         },
       });
     </script>
-
-
 <style>
-  /* General Styles */
-  body {
-      font-family: 'Public Sans', sans-serif;
-      background-color: #f4f7fc;
-      color: #333;
-  }
+  /* General Styles for the grid */
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+    background-color: #f4f7fc;
+}
 
-  .btn-choose-theme {
-      display: inline-flex;
-      align-items: center;
-      padding: 12px 24px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 30px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+/* Theme card styling */
+.theme-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 300px;
+    width: 100%;
+}
 
-  .btn-choose-theme:hover {
-      background-color: #0056b3;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  }
+/* Add hover effects */
+.theme-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
 
-  .btn-choose-theme:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+/* Theme icons */
+.theme-icon {
+    font-size: 3rem;
+    color: #4e73df;
+    transition: color 0.3s ease;
+}
 
-  .theme-card {
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      max-width: 320px;
-      width: 100%;
-  }
+/* Change color on hover */
+.theme-card:hover .theme-icon {
+    color: #2e59d9;
+}
 
-  .theme-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  }
+/* Title Styling */
+.theme-card h4 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #333;
+}
 
-  .theme-icon {
-      font-size: 3rem;
-      color: #4e73df;
-      transition: color 0.3s ease;
-  }
+/* Paragraph Styling */
+.theme-card p {
+    font-size: 1rem;
+    color: #666;
+    margin: 10px 0;
+}
 
-  .theme-card:hover .theme-icon {
-      color: #007bff;
-  }
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .theme-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
 
-  .theme-select {
-      width: 70%;
-      padding: 12px 18px;
-      font-size: 1rem;
-      margin-bottom: 20px;
-      border-radius: 25px;
-      border: 1px solid #ddd;
-      background-color: #f8f9fa;
-      transition: border 0.3s ease;
-  }
+    .theme-card {
+        max-width: 260px;
+    }
+}
+/* Style pour le champ select */
+#themeSelect {
+    width: 60%;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+}
 
-  .theme-select:hover {
-      border-color: #007bff;
-  }
+/* Style pour le graphique */
+#themeChart {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
 </style>
-
-<!-- Make sure the HTML elements are aligned well with these styles -->
-
-
     <!-- CSS Files -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../assets/css/plugins.min.css" />
@@ -157,7 +161,12 @@
             </a>
               </li>
              
-              
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('statistique.statistique') }}">
+                  <i class="far fa-chart-bar"></i>
+                  <p>Statistique</p>
+                </a>
+            </li>
             </ul>
           </div>
         </div>
@@ -213,11 +222,7 @@
                 </div>
                           
               </ul>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+         
           </nav>
              
           <!-- End Navbar -->
@@ -286,7 +291,7 @@
 
 </div>
 <div class="text-center mt-4">
-    <canvas id="themeChart" width="200" height="50"></canvas>
+    <canvas id="themeChart" width="600" height="400"></canvas>
 </div>
 
 
@@ -392,64 +397,7 @@
                          
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
-    const themeSelect = document.getElementById("themeSelect");
-    const themeChartCanvas = document.getElementById("themeChart").getContext("2d");
-
-    const themeData = {
-        delivrancePapierAdmin: [5, 10, 20, 30, 35],
-        defenseSecurite: [10, 12, 25, 40, 13],
-        santeProtection: [15, 20, 18, 25, 22],
-        educationEnseignement: [8, 15, 30, 25, 22],
-        habitatCadreVie: [5, 15, 40, 25, 10],
-        transport: [20, 18, 12, 30, 20],
-        environnement: [18, 28, 22, 15, 10],
-        finances: [12, 10, 15, 30, 33],
-        sportLoisirsCulture: [10, 8, 30, 45, 7],
-        industrie: [13, 22, 35, 10, 15],
-        agriculture: [7, 20, 30, 35, 8],
-    };
-
-    const accessibilityLabels = ['Très accessible', 'Accessible', 'Moyenne accessible', 'Difficile accessible', 'Très difficile accessible'];
-
-    let chart = new Chart(themeChartCanvas, {
-        type: 'bar',
-        data: {
-            labels: accessibilityLabels,
-            datasets: [{
-                label: 'Accessibilité',
-                data: themeData.accesPublics, // Default data
-                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'],
-                borderColor: '#fff',
-                borderWidth: 1,
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-    themeSelect.addEventListener("change", function() {
-        const selectedTheme = themeSelect.value;
-
-        if (selectedTheme) {
-            // Update the chart data based on the selected theme
-            chart.data.datasets[0].data = themeData[selectedTheme];
-        } else {
-            // Keep the chart empty if no theme is selected
-            chart.data.datasets[0].data = [];
-        }
-
-        // Re-render the chart
-        chart.update();
-    });
-</script>
-
+    
 
   </body>
 </html>

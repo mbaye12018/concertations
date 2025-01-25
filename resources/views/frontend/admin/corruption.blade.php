@@ -194,37 +194,47 @@
     <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
     <script src="../assets/js/kaiadmin.min.js"></script>
 
+
     <script>
-      var ctx = document.getElementById('themeChart').getContext('2d');
-      var themeChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Trés grave', 'Grave', 'Moyennement grave', 'Peu grave', 'Pas du tout grave'],
-          datasets: [{
-            label: 'Évaluations',
-            data: [12, 19, 8, 5, 2],
-            backgroundColor: ['#28a745', '#007bff', '#ffc107', '#dc3545', '#6c757d'],
-borderColor: ['#28a745', '#007bff', '#ffc107', '#dc3545', '#6c757d'],
-borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          },
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              enabled: true
-            }
-          }
+  var ctx = document.getElementById('themeChart').getContext('2d');
+  var themeChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Très grave', 'Grave', 'Moyennement grave', 'Peu grave', 'Pas du tout grave'],
+      datasets: [{
+        label: 'Évaluations',
+        data: [
+          {{ $evaluationCounts['tres_grave'] }},
+          {{ $evaluationCounts['grave'] }},
+          {{ $evaluationCounts['moyennement_grave'] }},
+          {{ $evaluationCounts['peu_grave'] }},
+          {{ $evaluationCounts['pas_grave'] }},
+        ],
+        backgroundColor: ['#28a745', '#007bff', '#ffc107', '#dc3545', '#6c757d'],
+        borderColor: ['#28a745', '#007bff', '#ffc107', '#dc3545', '#6c757d'],
+        borderWidth: 1
+      }]
+
+  
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
         }
-      });
-    </script>
+      },
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        tooltip: {
+          enabled: true
+        }
+      }
+    }
+  });
+</script>
+
   </body>
 </html>

@@ -195,36 +195,41 @@
     <script src="../assets/js/kaiadmin.min.js"></script>
 
     <script>
-      var ctx = document.getElementById('themeChart').getContext('2d');
-      var themeChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Trés abordable', 'Abordable', 'Moyennement cher', 'Cher', 'Trés Cher'],
-          datasets: [{
-            label: 'Évaluations',
-            data: [12, 19, 8, 5, 2],
-            backgroundColor: ['#4e73df', '#ff6347', '#ffa500', '#32cd32', '#8a2be2'],
-            borderColor: ['#4e73df', '#ff6347', '#ffa500', '#32cd32', '#8a2be2'],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          },
-          plugins: {
-            legend: {
-              position: 'top',
+        var evaluations = @json($evaluations);  // Récupérer les données passées du contrôleur
+        var ctx = document.getElementById('themeChart').getContext('2d');
+        var themeChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(evaluations),
+                datasets: [{
+                    label: 'Évaluations',
+                    data: Object.values(evaluations),
+                    backgroundColor: ['#4e73df', '#ff6347', '#ffa500', '#32cd32', '#8a2be2'],
+                    borderColor: ['#4e73df', '#ff6347', '#ffa500', '#32cd32', '#8a2be2'],
+                    borderWidth: 1
+                }]
             },
-            tooltip: {
-              enabled: true
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                }
             }
-          }
-        }
-      });
+        });
     </script>
+
+
+
+
   </body>
 </html>

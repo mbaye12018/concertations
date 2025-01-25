@@ -12,7 +12,7 @@ class Diligence extends Model
     protected $table = 'diligence';
 
     protected $fillable = [
-        'delais_long', 'raisons_delais', 'suggestions_delais',
+        'pourquoi_longues', 'raisons_delais', 'suggestions_delais',
         'formalites_complexes', 'raisons_formalites', 'suggestions_formalites'
     ];
 }

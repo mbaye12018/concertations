@@ -204,9 +204,9 @@
             label: 'Évaluations',
             data: [12, 19, 8, 5, 2],
             backgroundColor: ['#28a745', '#007bff', '#ffc107', '#dc3545', '#6c757d'],
-borderColor: ['#28a745', '#007bff', '#ffc107', '#dc3545', '#6c757d'],
-borderWidth: 1
-          }]
+          borderColor: ['#28a745', '#007bff', '#ffc107', '#dc3545', '#6c757d'],
+          borderWidth: 1
+                    }]
         },
         options: {
           responsive: true,

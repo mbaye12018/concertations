@@ -194,37 +194,63 @@
     <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
     <script src="../assets/js/kaiadmin.min.js"></script>
 
-    <script>
-      var ctx = document.getElementById('themeChart').getContext('2d');
-      var themeChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Trés clair', 'Clair', 'Moyennement clair', 'Peu clair', 'Trés peu clair'],
-          datasets: [{
-            label: 'Évaluations',
-            data: [12, 19, 8, 5, 2],
-            backgroundColor: ['#ff5733', '#33c1ff', '#ffeb3b', '#e74c3c', '#9b59b6'],
-borderColor: ['#ff5733', '#33c1ff', '#ffeb3b', '#e74c3c', '#9b59b6'],
-borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          },
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              enabled: true
-            }
-          }
+  <script>
+  var ctx = document.getElementById('themeChart').getContext('2d');
+
+  // Pass the data from the backend to the JavaScript
+  var reclamationsData = @json($reclamations);
+
+  // Prepare the chart data
+  var labels = Object.keys(reclamationsData); // Get the types of 'processus_clair'
+  var data = Object.values(reclamationsData); // Get the count for each type
+
+  // Find the index of the highest value
+  var maxIndex = data.indexOf(Math.max(...data));
+  var maxLabel = labels[maxIndex];  // The label of the highest value
+  var maxValue = data[maxIndex];    // The highest value
+
+  // Create the chart
+  var themeChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels, // Processus Clair types
+      datasets: [{
+        label: 'Réclamations',
+        data: data, // Count of each type
+        backgroundColor: ['#ff5733', '#33c1ff', '#ffeb3b', '#e74c3c', '#9b59b6'],
+        borderColor: ['#ff5733', '#33c1ff', '#ffeb3b', '#e74c3c', '#9b59b6'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
         }
-      });
-    </script>
+      },
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        tooltip: {
+          enabled: true
+        }
+      }
+    }
+  });
+
+  // Display the conclusion below the chart
+  var conclusionDiv = document.createElement('div');
+  conclusionDiv.style.textAlign = 'center';
+  conclusionDiv.style.marginTop = '20px';
+  conclusionDiv.style.fontSize = '1.2rem';
+  conclusionDiv.style.color = '#333';
+  conclusionDiv.innerHTML = `Le processus le plus fréquent est "${maxLabel}" avec ${maxValue} réclamation(s).`;
+  
+  document.querySelector('.card-body').appendChild(conclusionDiv);
+</script>
+
+
   </body>
 </html>

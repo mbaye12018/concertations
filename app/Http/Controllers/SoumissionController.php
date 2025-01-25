@@ -245,10 +245,10 @@ class SoumissionController extends Controller
 
          // 🔹 Étape 3: Validation des données
          $validatedData = $request->validate([
-             'procedures_longues'   => 'required|boolean',
+             'procedures_longues'   => 'required|in:0,1',
              'pourquoi_longues'     => 'required|string',
              'suggestions_delai'    => 'nullable|string',
-             'formalites_complexes' => 'required|boolean',
+             'formalites_complexes' => 'required|in:0,1',
              'pourquoi_complexes'   => 'required|string',
              'suggestions_formalites' => 'nullable|string',
          ]);
@@ -619,7 +619,7 @@ public function storeCorruption(Request $request)
   /**
      * Enregistrer les réponses pour rh
      */
-=     /**
+     /**
      * Enregistrer les réponses pour les autres thématiques.
      */
 

@@ -161,7 +161,7 @@
                   <div class="card-body">
                     <div class="container-fluid" style="min-height: 375px">
                       <div class="text-center mb-4">
-                        <h2 class="text-primary">Accueil et orientation</h2>
+                        <h2 class="text-primary">Dilligence</h2>
                       </div>
                       <div class="text-center mt-4">
                         <canvas id="themeChart" width="200" height="50"></canvas>
@@ -195,36 +195,42 @@
     <script src="../assets/js/kaiadmin.min.js"></script>
 
     <script>
-      var ctx = document.getElementById('themeChart').getContext('2d');
-      var themeChart = new Chart(ctx, {
+    var ctx = document.getElementById('themeChart').getContext('2d');
+    var themeChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['Longue', 'Pas Longue', 'Complexe', 'Pas complexe'],
-          datasets: [{
-            label: 'Évaluations',
-            data: [12, 19, 8, 5, 2],
-            backgroundColor: ['#4e73df', '#ff6347', '#ffa500', '#32cd32', '#8a2be2'],
-            borderColor: ['#4e73df', '#ff6347', '#ffa500', '#32cd32', '#8a2be2'],
-            borderWidth: 1
-          }]
+            labels: ['Longue', 'Pas Longue', 'Complexe', 'Pas complexe'],
+            datasets: [{
+                label: 'Évaluations',
+                data: [
+                    {{ $delaisLong }},
+                    {{ $pasLong }},
+                    {{ $complexe }},
+                    {{ $pasComplexe }}
+                ],
+                backgroundColor: ['#4e73df', '#ff6347', '#ffa500', '#32cd32'],
+                borderColor: ['#4e73df', '#ff6347', '#ffa500', '#32cd32'],
+                borderWidth: 1
+            }]
         },
         options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          },
-          plugins: {
-            legend: {
-              position: 'top',
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             },
-            tooltip: {
-              enabled: true
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    enabled: true
+                }
             }
-          }
         }
-      });
-    </script>
+    });
+</script>
+
   </body>
 </html>

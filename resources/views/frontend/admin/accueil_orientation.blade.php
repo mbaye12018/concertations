@@ -195,36 +195,47 @@
     <script src="../assets/js/kaiadmin.min.js"></script>
 
     <script>
-      var ctx = document.getElementById('themeChart').getContext('2d');
-      var themeChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Excellent', 'Bon', 'Moyen', 'Mauvais', 'Très mauvais'],
-          datasets: [{
+    var ctx = document.getElementById('themeChart').getContext('2d');
+var themeChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Excellent', 'Bon', 'Moyen', 'Mauvais', 'Très mauvais'],
+        datasets: [{
             label: 'Évaluations',
-            data: [12, 19, 8, 5, 2],
+            data: [
+                {{ $evaluations['excellent'] }},
+                {{ $evaluations['bon'] }},
+                {{ $evaluations['moyen'] }},
+                {{ $evaluations['mauvais'] }},
+                {{ $evaluations['tres_mauvais'] }}
+            ],
             backgroundColor: ['#28a745', '#007bff', '#ffc107', '#dc3545', '#6c757d'],
             borderColor: ['#28a745', '#007bff', '#ffc107', '#dc3545', '#6c757d'],
             borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
             y: {
-              beginAtZero: true
+                beginAtZero: true,  // Assurez-vous que cette ligne est présente
+                ticks: {
+                    min: 0 // Cela force le graphique à commencer à 0
+                }
             }
-          },
-          plugins: {
+        },
+        plugins: {
             legend: {
-              position: 'top',
+                position: 'top',
             },
             tooltip: {
-              enabled: true
+                enabled: true
             }
-          }
         }
-      });
-    </script>
+    }
+});
+
+</script>
+
   </body>
 </html>

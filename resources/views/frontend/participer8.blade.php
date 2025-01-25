@@ -1,10 +1,10 @@
-
+l
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Concertation Nationale - Formulaire Ludique</title>
+  <title>Plateforme des concertations nationales pour la réforme du service public</title>
 
   <!-- Bootstrap 5 -->
 
@@ -20,6 +20,10 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
   />
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+/>
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
@@ -242,39 +246,95 @@ form {
   .hidden-section {
   display: none !important;
 }
+     @media (max-width: 768px) {
+  .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centre tous les éléments */
+    position: relative; /* Nécessaire pour positionner le menu hamburger */
+  }
 
+  .logo {
+    position: relative; /* Le logo reste centré */
+    z-index: 2; /* Le logo reste au-dessus des autres éléments */
+  }
+
+  .mobile-nav-toggle {
+    position: absolute; /* Positionne le menu hamburger de manière absolue */
+    right: 10px; /* Place le menu hamburger à l'extrémité droite */
+    top: 50%; /* Centre verticalement */
+    transform: translateY(-50%); /* Ajuste pour un centrage parfait */
+    z-index: 3; /* Le menu hamburger est au-dessus */
+    font-size: 1.5rem; /* Ajuste la taille si nécessaire */
+  }
+
+  .navmenu ul {
+    display: none; /* Le menu reste masqué par défaut pour les petits écrans */
+  }
+
+  body.nav-open .navmenu ul {
+    display: block; /* Affiche le menu lorsqu'il est ouvert */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white; /* Style du menu déroulant */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1;
+  }
+}
   </style>
+     <script>
+  // Gestion de l'affichage du menu mobile
+  document.querySelector('.mobile-nav-toggle').addEventListener('click', function() {
+    document.body.classList.toggle('nav-open');
+  });
+</script>
   </head>
     <body>
     <!-- HEADER -->
-    <header id="header" class="header d-flex align-items-center sticky-top">
-        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-        <a href="{{ route('home') }}" class="logo d-flex align-items-center">
-            <img src="assets/img/logg.png" alt="Logo">
-        </a>
 
-        <nav id="navmenu" class="navmenu">
-            <ul>
-                <li>
-                    <a href="{{ route('home') }}" class="{{ request()->is('/') ? 'active' : '' }}">Accueil</a>
-                </li>
-                <li>
-                    <a href="{{ route('contexte') }}">Contexte</a>
-                </li>
-                <li>
-                    <a href="{{ route('objectif') }}">Objectif</a>
-                </li>
-                <li>
-                    <a href="{{ route('participation.form') }}">Donnez-nous votre avis</a>
-                </li>
-                <li>
-                    <a href="{{ route('login') }}">Connexion</a>
-                </li>
-            </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-        </div>
-    </header>
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <!--
+    Utilisez les classes Bootstrap "justify-content-center" pour les petits écrans
+    et "justify-content-md-between" pour les écrans à partir de la taille md.
+    Ainsi, le logo sera centré en dessous du breakpoint md, et justifié à gauche/droite au-dessus de md.
+  -->
+  <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-center justify-content-md-between">
+
+    <a href="{{ route('home') }}" class="logo d-flex align-items-center">
+      <img src="assets/img/logg.PNG" alt="">
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li>
+          <a href="{{ route('home') }}" class="{{ request()->is('/') ? 'active' : '' }}">Accueil</a>
+        </li>
+        <li>
+          <a href="{{ route('contexte') }}">Contexte</a>
+        </li>
+        <li>
+          <a href="{{ route('objectif') }}">Objectif</a>
+        </li>
+        <!--
+
+        <li>
+          <a href="{{ route('participation.form') }}">Donnez-nous votre avis</a>
+        </li>
+
+        <li>
+          <a href="{{ route('login') }}">Connexion</a>
+        </li>
+         <li>
+          <a href="{{ route('participation.form') }}">Donnez-nous votre avis</a>
+        </li>-->
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi  bi-list" style=""></i>
+    </nav>
+
+  </div>
+</header>
     <!-- FIN HEADER -->
 
     <!-- TOAST Container -->
@@ -396,13 +456,13 @@ form {
           <!-- Sélection de la région et des départements -->
           <div id="region-container" style="display: none;" class="mt-3">
             <label for="region">Choisissez une région :</label>
-            <select id="region" onchange="updateDepartments()" class="form-select">
+            <select id="region" name='region' onchange="updateDepartments()" class="form-select">
               <option value="">-- Sélectionnez une région --</option>
             </select>
           </div>
           <div id="department-container" style="display: none;" class="mt-3">
             <label for="department">Choisissez un département :</label>
-            <select id="department" class="form-select"></select>
+            <select id="department" class="form-select" name='department'></select>
           </div>
 
           <!-- Sélection des pays de la diaspora -->
@@ -558,225 +618,337 @@ form {
       >
         @csrf
 
-        <!-- Q1: Services utilisés fréquemment -->
-        <div class="mb-3">
-          <label class="form-label">Quels services publics utilisez-vous le plus fréquemment ?</label>
-          <!-- name="servicesFrequents[]" => obliger au moins 1 coché -->
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="papiersAdmin"
-              name="servicesFrequents[]"
-              value="Délivrance de papiers administratifs"
-            >
-            <label class="form-check-label" for="papiersAdmin">
-              Délivrance de papiers administratifs
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="defenseSecurite"
-              name="servicesFrequents[]"
-              value="Défense et sécurité"
-            >
-            <label class="form-check-label" for="defenseSecurite">
-              Défense et sécurité
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="santeProtection"
-              name="servicesFrequents[]"
-              value="Santé et protection sociale"
-            >
-            <label class="form-check-label" for="santeProtection">
-              Santé et protection sociale
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="educationEnseignement"
-              name="servicesFrequents[]"
-              value="Éducation et Enseignement"
-            >
-            <label class="form-check-label" for="educationEnseignement">
-              Éducation et Enseignement
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="habitatCadreVie"
-              name="servicesFrequents[]"
-              value="Habitat et cadre de vie"
-            >
-            <label class="form-check-label" for="habitatCadreVie">
-              Habitat et cadre de vie
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="transport"
-              name="servicesFrequents[]"
-              value="Transport"
-            >
-            <label class="form-check-label" for="transport">
-              Transport
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="environnement"
-              name="servicesFrequents[]"
-              value="Environnement"
-            >
-            <label class="form-check-label" for="environnement">
-              Environnement
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="finances"
-              name="servicesFrequents[]"
-              value="Finances"
-            >
-            <label class="form-check-label" for="finances">
-              Finances
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="sportLoisirCulture"
-              name="servicesFrequents[]"
-              value="Sport, Loisirs, culture"
-            >
-            <label class="form-check-label" for="sportLoisirCulture">
-              Sport, Loisirs, culture
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="industrie"
-              name="servicesFrequents[]"
-              value="Industrie"
-            >
-            <label class="form-check-label" for="industrie">
-              Industrie
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="agriculturePecheElevage"
-              name="servicesFrequents[]"
-              value="Agriculture, pêche, élevage"
-            >
-            <label class="form-check-label" for="agriculturePecheElevage">
-              Agriculture, pêche, élevage
-            </label>
-          </div>
-        </div>
+       <!-- Q1: Services utilisés fréquemment -->
+<!-- Q1: Services utilisés fréquemment -->
+<div class="mb-3">
+  <label class="form-label">Quels services publics utilisez-vous le plus fréquemment ?<span style="color: red;">*</span> Cocher et évaluer les services concernés</label>
 
-        <!-- Q2: Accessibilité -->
-        <div class="mb-3">
-          <label class="form-label">Comment évaluez-vous l’accessibilité de ces services ?</label>
-          <select class="form-select" name="accessibilite" required>
-            <option value="">-- Sélectionnez --</option>
-            <option value="tres_accessible">Très accessible</option>
-            <option value="accessible">Accessible</option>
-            <option value="moyennement_accessible">Moyennement accessible</option>
-            <option value="difficilement_accessible">Difficilement accessible</option>
-            <option value="tres_difficilement_accessible">Très difficilement accessible</option>
-          </select>
-        </div>
+  <!-- Service Item: Délivrance de papiers administratifs -->
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input toggle-checkbox"
+      id="papiersAdmin"
+      name="servicesFrequents[]"
+      value="Delivrance de papiers administratifs"
+      data-target="#evaluation_papiersAdmin"
+    >
+    <label class="form-check-label" for="papiersAdmin">
+      Délivrance de papiers administratifs
+    </label>
+    <select class="form-select" name="accessibilite[]" id="evaluation_papiersAdmin" style="margin-top: 10px;" disabled>
+      <option value="">Comment évaluez-vous l'accessibilité</option>
+      <option value="tres_accessible">Très accessible</option>
+      <option value="accessible">Accessible</option>
+      <option value="moyennement_accessible">Moyennement accessible</option>
+      <option value="difficilement_accessible">Difficilement accessible</option>
+      <option value="tres_difficilement_accessible">Très difficilement accessible</option>
+    </select>
+  </div>
 
-        <!-- Explication sur l'accessibilité -->
-        <div class="mb-3">
-          <label class="form-label">Pourquoi ?</label>
-          <textarea class="form-control" name="pourquoi_accessibilite" rows="2" required></textarea>
-        </div>
+  <!-- Service Item: Défense et sécurité -->
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input toggle-checkbox"
+      id="defenseSecurite"
+      name="servicesFrequents[]"
+      value="Defense et sécurité"
+      data-target="#evaluation_defenseSecurite"
+    >
+    <label class="form-check-label" for="defenseSecurite">
+      Défense et sécurité
+    </label>
+    <select class="form-select" name="accessibilite[]" id="evaluation_defenseSecurite" style="margin-top: 10px;" disabled>
+      <option value="">Comment évaluez-vous l'accessibilité</option>
+      <option value="tres_accessible">Très accessible</option>
+      <option value="accessible">Accessible</option>
+      <option value="moyennement_accessible">Moyennement accessible</option>
+      <option value="difficilement_accessible">Difficilement accessible</option>
+      <option value="tres_difficilement_accessible">Très difficilement accessible</option>
+    </select>
+  </div>
 
-        <!-- Suggestions -->
-        <div class="mb-3">
-          <label class="form-label">
-            Avez-vous des suggestions spécifiques pour améliorer l’accès aux services publics ?
-          </label>
-          <textarea class="form-control" name="suggestions_acces" rows="2" required></textarea>
-        </div>
+  <!-- Service Item: Santé et protection sociale -->
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input toggle-checkbox"
+      id="santeProtectionSociale"
+      name="servicesFrequents[]"
+      value="Sante et protection sociale"
+      data-target="#evaluation_santeProtectionSociale"
+    >
+    <label class="form-check-label" for="santeProtectionSociale">
+      Santé et protection sociale
+    </label>
+    <select class="form-select" name="accessibilite[]" id="evaluation_santeProtectionSociale" style="margin-top: 10px;" disabled>
+      <option value="">Comment évaluez-vous l'accessibilité</option>
+      <option value="tres_accessible">Très accessible</option>
+      <option value="accessible">Accessible</option>
+      <option value="moyennement_accessible">Moyennement accessible</option>
+      <option value="difficilement_accessible">Difficilement accessible</option>
+      <option value="tres_difficilement_accessible">Très difficilement accessible</option>
+    </select>
+  </div>
 
-        <!-- Q4: Mode d'information -->
-        <div class="mb-3">
-          <label class="form-label">Comment préférez-vous être informé(e) ?</label>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="infoCourrier"
-              name="infoPreferences[]"
-              value="Courrier"
-            >
-            <label class="form-check-label" for="infoCourrier">Courrier</label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="infoMedias"
-              name="infoPreferences[]"
-              value="Médias"
-            >
-            <label class="form-check-label" for="infoMedias">Médias</label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="infoApps"
-              name="infoPreferences[]"
-              value="Applications"
-            >
-            <label class="form-check-label" for="infoApps">Applications</label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="infoAutres"
-              name="infoPreferences[]"
-              value="Autres"
-            >
-            <label class="form-check-label" for="infoAutres">Autres</label>
-          </div>
-        </div>
+  <!-- Service Item: Éducation et Enseignement -->
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input toggle-checkbox"
+      id="educationEnseignement"
+      name="servicesFrequents[]"
+      value="Education et Enseignement"
+      data-target="#evaluation_educationEnseignement"
+    >
+    <label class="form-check-label" for="educationEnseignement">
+      Éducation et Enseignement
+    </label>
+    <select class="form-select" name="accessibilite[]" id="evaluation_educationEnseignement" style="margin-top: 10px;" disabled>
+      <option value="">Comment évaluez-vous l'accessibilité</option>
+      <option value="tres_accessible">Très accessible</option>
+      <option value="accessible">Accessible</option>
+      <option value="moyennement_accessible">Moyennement accessible</option>
+      <option value="difficilement_accessible">Difficilement accessible</option>
+      <option value="tres_difficilement_accessible">Très difficilement accessible</option>
+    </select>
+  </div>
 
-        <!-- Bouton de soumission (Accès Publics) -->
-        <div class="d-grid">
-          <button type="button" id="submitAccesPublics" class="btn btn-primary">
-            <i class="fas fa-paper-plane me-1"></i>Soumettre
-          </button>
-        </div>
+  <!-- Service Item: Habitat et cadre de vie -->
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input toggle-checkbox"
+      id="habitatCadreVie"
+      name="servicesFrequents[]"
+      value="Habitat et cadre de vie"
+      data-target="#evaluation_habitatCadreVie"
+    >
+    <label class="form-check-label" for="habitatCadreVie">
+      Habitat et cadre de vie
+    </label>
+    <select class="form-select" name="accessibilite[]" id="evaluation_habitatCadreVie" style="margin-top: 10px;" disabled>
+      <option value="">Comment évaluez-vous l'accessibilité</option>
+      <option value="tres_accessible">Très accessible</option>
+      <option value="accessible">Accessible</option>
+      <option value="moyennement_accessible">Moyennement accessible</option>
+      <option value="difficilement_accessible">Difficilement accessible</option>
+      <option value="tres_difficilement_accessible">Très difficilement accessible</option>
+    </select>
+  </div>
 
-      </form>
+  <!-- Service Item: Transport -->
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input toggle-checkbox"
+      id="transport"
+      name="servicesFrequents[]"
+      value="Transport"
+      data-target="#evaluation_transport"
+    >
+    <label class="form-check-label" for="transport">
+      Transport
+    </label>
+    <select class="form-select" name="accessibilite[]" id="evaluation_transport" style="margin-top: 10px;" disabled>
+      <option value="">Comment évaluez-vous l'accessibilité</option>
+      <option value="tres_accessible">Très accessible</option>
+      <option value="accessible">Accessible</option>
+      <option value="moyennement_accessible">Moyennement accessible</option>
+      <option value="difficilement_accessible">Difficilement accessible</option>
+      <option value="tres_difficilement_accessible">Très difficilement accessible</option>
+    </select>
+  </div>
+
+  <!-- Service Item: Environnement -->
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input toggle-checkbox"
+      id="environnement"
+      name="servicesFrequents[]"
+      value="Environnement"
+      data-target="#evaluation_environnement"
+    >
+    <label class="form-check-label" for="environnement">
+      Environnement
+    </label>
+    <select class="form-select" name="accessibilite[]" id="evaluation_environnement" style="margin-top: 10px;" disabled>
+      <option value="">Comment évaluez-vous l'accessibilité</option>
+      <option value="tres_accessible">Très accessible</option>
+      <option value="accessible">Accessible</option>
+      <option value="moyennement_accessible">Moyennement accessible</option>
+      <option value="difficilement_accessible">Difficilement accessible</option>
+      <option value="tres_difficilement_accessible">Très difficilement accessible</option>
+    </select>
+  </div>
+
+  <!-- Service Item: Finances -->
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input toggle-checkbox"
+      id="finances"
+      name="servicesFrequents[]"
+      value="Finances"
+      data-target="#evaluation_finances"
+    >
+    <label class="form-check-label" for="finances">
+      Finances
+    </label>
+    <select class="form-select" name="accessibilite[]" id="evaluation_finances" style="margin-top: 10px;" disabled>
+      <option value="">Comment évaluez-vous l'accessibilité</option>
+      <option value="tres_accessible">Très accessible</option>
+      <option value="accessible">Accessible</option>
+      <option value="moyennement_accessible">Moyennement accessible</option>
+      <option value="difficilement_accessible">Difficilement accessible</option>
+      <option value="tres_difficilement_accessible">Très difficilement accessible</option>
+    </select>
+  </div>
+
+  <!-- Service Item: Sport, Loisirs, culture -->
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input toggle-checkbox"
+      id="sportLoisirsCulture"
+      name="servicesFrequents[]"
+      value="Sport, Loisirs, culture"
+      data-target="#evaluation_sportLoisirsCulture"
+    >
+    <label class="form-check-label" for="sportLoisirsCulture">
+      Sport, Loisirs, culture
+    </label>
+    <select class="form-select" name="accessibilite[]" id="evaluation_sportLoisirsCulture" style="margin-top: 10px;" disabled>
+      <option value="">Comment évaluez-vous l'accessibilité</option>
+      <option value="tres_accessible">Très accessible</option>
+      <option value="accessible">Accessible</option>
+      <option value="moyennement_accessible">Moyennement accessible</option>
+      <option value="difficilement_accessible">Difficilement accessible</option>
+      <option value="tres_difficilement_accessible">Très difficilement accessible</option>
+    </select>
+  </div>
+
+  <!-- Service Item: Industrie -->
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input toggle-checkbox"
+      id="industrie"
+      name="servicesFrequents[]"
+      value="Industrie"
+      data-target="#evaluation_industrie"
+    >
+    <label class="form-check-label" for="industrie">
+      Industrie
+    </label>
+    <select class="form-select" name="accessibilite[]" id="evaluation_industrie" style="margin-top: 10px;" disabled>
+      <option value="">Comment évaluez-vous l'accessibilité</option>
+      <option value="tres_accessible">Très accessible</option>
+      <option value="accessible">Accessible</option>
+      <option value="moyennement_accessible">Moyennement accessible</option>
+      <option value="difficilement_accessible">Difficilement accessible</option>
+      <option value="tres_difficilement_accessible">Très difficilement accessible</option>
+    </select>
+  </div>
+
+  <!-- Service Item: Agriculture, pêche, élevage -->
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input toggle-checkbox"
+      id="agriculturePecheElevage"
+      name="servicesFrequents[]"
+      value="Agriculture, pêche, élevage"
+      data-target="#evaluation_agriculturePecheElevage"
+    >
+    <label class="form-check-label" for="agriculturePecheElevage">
+      Agriculture, peche, elevage
+    </label>
+    <select class="form-select" name="accessibilite[]" id="evaluation_agriculturePecheElevage" style="margin-top: 10px;" disabled>
+      <option value="">Comment évaluez-vous l'accessibilité</option>
+      <option value="tres_accessible">Très accessible</option>
+      <option value="accessible">Accessible</option>
+      <option value="moyennement_accessible">Moyennement accessible</option>
+      <option value="difficilement_accessible">Difficilement accessible</option>
+      <option value="tres_difficilement_accessible">Très difficilement accessible</option>
+    </select>
+  </div>
+</div>
+
+
+<!-- Explication sur l'accessibilité -->
+<div class="mb-3">
+  <label class="form-label">Pourquoi ?</label>
+  <textarea class="form-control" name="pourquoi_accessibilite" rows="2" required></textarea>
+</div>
+
+<!-- Suggestions -->
+<div class="mb-3">
+  <label class="form-label">
+    Avez-vous des suggestions spécifiques pour améliorer l’accès aux services publics ?
+  </label>
+  <textarea class="form-control" name="suggestions_acces" rows="2" ></textarea>
+</div>
+
+<!-- Q4: Mode d'information -->
+<div class="mb-3">
+  <label class="form-label">Comment préférez-vous être informé(e) ?</label>
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="infoCourrier"
+      name="infoPreferences[]"
+      value="Courrier"
+    >
+    <label class="form-check-label" for="infoCourrier">Courrier</label>
+  </div>
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="infoMedias"
+      name="infoPreferences[]"
+      value="Medias"
+    >
+    <label class="form-check-label" for="infoMedias">Médias</label>
+  </div>
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="infoApps"
+      name="infoPreferences[]"
+      value="Applications"
+    >
+    <label class="form-check-label" for="infoApps">Applications</label>
+  </div>
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="infoAutres"
+      name="infoPreferences[]"
+      value="Autres"
+    >
+    <label class="form-check-label" for="infoAutres">Autres</label>
+  </div>
+</div>
+
+<!-- Bouton de soumission -->
+<div class="d-grid">
+  <button type="button" id="submitAccesPublics" class="btn btn-primary">
+    <i class="fas fa-paper-plane me-1"></i>Soumettre
+  </button>
+</div>
+</form>
     </div>
+
+
+
+
     <!-- FIN : Accès aux services publics -->
 
     <!-- 2) Accueil & orientation -->
@@ -837,7 +1009,7 @@ form {
                 <label class="form-label">
                     Avez-vous des suggestions spécifiques pour améliorer l’accueil et l’orientation ?
                 </label>
-                <textarea class="form-control" name="suggestions_accueil" rows="2" required></textarea>
+                <textarea class="form-control" name="suggestions_accueil" rows="2" ></textarea>
             </div>
 
             <div class="d-grid">
@@ -877,7 +1049,7 @@ form {
         </div>
         <div class="mb-3">
             <label class="form-label">Avez-vous des suggestions ?</label>
-            <textarea class="form-control" name="suggestions_delai" rows="2" required></textarea>
+            <textarea class="form-control" name="suggestions_delai" rows="2" ></textarea>
         </div>
 
         <div class="mb-3">
@@ -897,7 +1069,7 @@ form {
         </div>
         <div class="mb-3">
             <label class="form-label">Avez-vous des suggestions ?</label>
-            <textarea class="form-control" name="suggestions_formalites" rows="2" required></textarea>
+            <textarea class="form-control" name="suggestions_formalites" rows="2" ></textarea>
         </div>
 
         <div class="d-grid">
@@ -972,7 +1144,7 @@ form {
             <label class="form-label">
                 Avez-vous des suggestions pour rendre les services publics plus abordables ?
             </label>
-            <textarea class="form-control" name="suggestions_cout" rows="2" required></textarea>
+            <textarea class="form-control" name="suggestions_cout" rows="2" ></textarea>
         </div>
 
         <div class="d-grid">
@@ -1045,7 +1217,7 @@ form {
             <label class="form-label">
                 Quelles suggestions auriez-vous pour améliorer la transparence et l’intégrité ?
             </label>
-            <textarea class="form-control" name="suggestions_corruption" rows="2" required></textarea>
+            <textarea class="form-control" name="suggestions_corruption" rows="2" ></textarea>
         </div>
 
         <div class="d-grid">
@@ -1263,7 +1435,7 @@ form {
 
         <div class="mb-3">
             <label class="form-label">Quelles améliorations aimeriez-vous voir ?</label>
-            <textarea class="form-control" name="suggestions_digitale" rows="2"></textarea>
+            <textarea class="form-control" name="suggestions_digitale" rows="2"required></textarea>
         </div>
 
         <div class="d-grid">
@@ -1342,7 +1514,7 @@ form {
           <label class="form-label">
             Quelles suggestions pour améliorer l’inclusion et la participation ?
           </label>
-          <textarea name='suggestions_inclusion' class="form-control" rows="2" required></textarea>
+          <textarea name='suggestions_inclusion' class="form-control" rows="2" ></textarea>
         </div>
         <div class="d-grid">
           <button type="button" id="submitParticipation" class="btn btn-primary">
@@ -1434,7 +1606,6 @@ form {
           <label class="form-label">Pourquoi ?</label>
           <textarea name='pourquoi_relations' class="form-control" rows="2" required></textarea>
         </div>
-
         <div class="d-grid">
           <button type="button" id="submitRessourcesHumaines" class="btn btn-primary">
             <i class="fas fa-paper-plane me-1"></i>Soumettre
@@ -1442,6 +1613,9 @@ form {
         </div>
       </form>
     </div>
+    <!-- FIN : Ressources Humaines -->
+  </div><!-- FIN .container -->
+</div>
     <!-- FIN : Ressources Humaines -->
 
   </div><!-- FIN .container -->
@@ -1495,42 +1669,52 @@ form {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
- <script>
-        /* ======================
-        GÉNÉRATION ET VALIDATION DU CAPTCHA
-        ====================== */
+<script>
+/* ======================
+   GÉNÉRATION ET VALIDATION DU CAPTCHA
+====================== */
 
-        function generateCaptcha() {
-        let num1 = Math.floor(Math.random() * 10) + 1;
-        let num2 = Math.floor(Math.random() * 10) + 1;
-        let operators = ['+', '-'];
-        let operator = operators[Math.floor(Math.random() * operators.length)];
-        let correctAnswer = operator === '+' ? num1 + num2 : num1 - num2;
 
-        const captchaQuestion = document.getElementById('captcha-question');
-        const captchaCorrectAnswer = document.getElementById('captcha-correct-answer');
+function generateCaptcha() {
+  let num1 = Math.floor(Math.random() * 5) + 1; // 1 à 5
+  let num2 = Math.floor(Math.random() * 5) + 1; // 1 à 5
+  let operators = ['+', '-'];
+  let operator = operators[Math.floor(Math.random() * operators.length)];
 
-        if (captchaQuestion && captchaCorrectAnswer) {
-            captchaQuestion.textContent = `${num1} ${operator} ${num2} = ?`;
-            captchaCorrectAnswer.value = correctAnswer;
-        }
-        }
+  // Pour éviter le négatif, on peut forcer num1 >= num2 si on a un "-"
+  if (operator === '-' && num2 > num1) {
+    // on swap les valeurs
+    [num1, num2] = [num2, num1];
+  }
 
-        document.addEventListener("DOMContentLoaded", function () {
-        generateCaptcha(); // Générer un premier CAPTCHA au chargement
-        });
+  // Calcul du résultat
+  let correctAnswer = (operator === '+') ? (num1 + num2) : (num1 - num2);
 
-    /* ==================================================
-    CONTRÔLE DU FORMULAIRE INFOS GÉNÉRALES (step1)
-    ================================================== */
-    const step1Div = document.getElementById("step1");
-    const generalInfoForm = document.getElementById("generalInfoForm");
-    const themeSelectionDiv = document.getElementById("themeSelection");
+  // Affichage dans la page
+  const captchaQuestion = document.getElementById('captcha-question');
+  const captchaCorrectAnswer = document.getElementById('captcha-correct-answer');
 
-    generalInfoForm.addEventListener("submit", async function (e) {
-    e.preventDefault(); // Empêche l'action par défaut
+  if (captchaQuestion && captchaCorrectAnswer) {
+    captchaQuestion.textContent = `${num1} ${operator} ${num2} = ?`;
+    captchaCorrectAnswer.value = correctAnswer;
+  }
+}
 
-    if (!generalInfoForm.checkValidity()) {
+document.addEventListener("DOMContentLoaded", function () {
+  generateCaptcha(); // Générer un premier CAPTCHA au chargement
+});
+
+/* ==================================================
+   CONTRÔLE DU FORMULAIRE INFOS GÉNÉRALES (step1)
+================================================== */
+const step1Div = document.getElementById("step1");
+const generalInfoForm = document.getElementById("generalInfoForm");
+const themeSelectionDiv = document.getElementById("themeSelection");
+
+generalInfoForm.addEventListener("submit", async function (e) {
+  e.preventDefault(); // Empêche l'action par défaut
+
+  if (!generalInfoForm.checkValidity()) {
     generalInfoForm.reportValidity();
     return;
   }
@@ -1611,26 +1795,26 @@ form {
     submitButton.disabled = false;
     submitButton.innerHTML = "Valider mes informations";
   }
-  });
+});
 
 
 
-    /* ============================
-    1) RÉFÉRENCES GÉNÉRALES
-    ============================ */
-    const themeCardsContainer = document.getElementById("themeCardsContainer");
+/* ============================
+   1) RÉFÉRENCES GÉNÉRALES
+============================ */
+const themeCardsContainer = document.getElementById("themeCardsContainer");
 
-    // Toast container
-    const toastContainer = document.getElementById("toastContainer") || null;
-    // Modal final
-    const finalModalEl = document.getElementById("finalModal") || null;
-    let finalModal = null;
-    if (finalModalEl) {
-    finalModal = new bootstrap.Modal(finalModalEl, { keyboard: false });
-    }
+// Toast container
+const toastContainer = document.getElementById("toastContainer") || null;
+// Modal final
+const finalModalEl = document.getElementById("finalModal") || null;
+let finalModal = null;
+if (finalModalEl) {
+  finalModal = new bootstrap.Modal(finalModalEl, { keyboard: false });
+}
 
-    // Formulaires (DIV conteneur)
-    const formAccesPublics     = document.getElementById("formAccesPublics");
+// Formulaires (DIV conteneur)
+const formAccesPublics     = document.getElementById("formAccesPublics");
 const formAccueilOrientation = document.getElementById("formAccueilOrientation");
 const formDiligence        = document.getElementById("formDiligence");
 const formCoutService      = document.getElementById("formCoutService");
@@ -2007,8 +2191,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            submitCorruption.disabled = true;
-            submitCorruption.innerHTML = "Envoi en cours...";
 
             let formData = new FormData(formCorruption);
             let jsonData = {};
@@ -2112,16 +2294,6 @@ document.getElementById("submitReclamations").addEventListener("click", function
 });
 // fin envoi reclamation
 
-
-//envoi digital
-document.getElementById("submitDigitale").addEventListener("click", function() {
-    sendThemeForm("digitale", document.getElementById("formDigitaleForm"));
-
-
-const autresServicesDigitaux = document.querySelector("input[name='services_digitaux_autres']")?.value || "";
-formData.append("services_digitaux_autres", autresServicesDigitaux);
-
-//participation
 document.addEventListener("DOMContentLoaded", function () {
     const formParticipationForm = document.getElementById("formParticipationForm");
     const submitParticipation = document.getElementById("submitParticipation");
@@ -2183,6 +2355,24 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+//envoi digital
+let isSubmitting = false;  // Flag pour empêcher la soumission multiple
+
+document.getElementById("submitDigitale").addEventListener("click", function() {
+    if (isSubmitting) return;  // Si un envoi est déjà en cours, on ne fait rien.
+
+    isSubmitting = true;  // Indique que la soumission est en cours.
+
+    sendThemeForm("digitale", document.getElementById("formDigitaleForm"))
+        .finally(() => {
+            isSubmitting = false;  // Réinitialise le flag après l'envoi.
+        });
+
+    const autresServicesDigitaux = document.querySelector("input[name='services_digitaux_autres']")?.value || "";
+    formData.append("services_digitaux_autres", autresServicesDigitaux);
+});
+
+// Fonction de traitement du formulaire pour l'envoi
 async function sendThemeForm(themeKey, formEl) {
     // 1) Vérifier la validité HTML5
     if (!formEl.checkValidity()) {
@@ -2191,7 +2381,7 @@ async function sendThemeForm(themeKey, formEl) {
     }
 
     // 2) Contrôler les checkboxes obligatoires, selon le thème
-    switch(themeKey) {
+    switch (themeKey) {
         case "digitale":
             const serdigOui = formEl.querySelector("#serdig_oui");
             if (serdigOui && serdigOui.checked) {
@@ -2229,7 +2419,7 @@ async function sendThemeForm(themeKey, formEl) {
 
     // ✅ Correction du champ "evaluation_accessibilite"
     const evaluationAccessibilite = document.querySelector("select[name='evaluation_accessibilite']").value;
-formData.append('evaluation_accessibilite', evaluationAccessibilite);
+    formData.append('evaluation_accessibilite', evaluationAccessibilite);
 
     // Gérer CHAQUE ensemble de checkboxes dans ce thème
     if (themeKey === "digitale") {
@@ -2279,7 +2469,7 @@ formData.append('evaluation_accessibilite', evaluationAccessibilite);
         alert("Erreur de communication avec le serveur.");
     }
 }
-});
+
 
 
 
@@ -2419,7 +2609,7 @@ btnReturn9 && btnReturn9.addEventListener("click", () => goBack(formRessourcesHu
     submitCoutService       && submitCoutService.addEventListener("click", () => sendThemeForm("coutService", formCoutServiceForm));
     submitCorruption        && submitCorruption.addEventListener("click", () => sendThemeForm("corruption", formCorruptionForm));
     submitReclamations      && submitReclamations.addEventListener("click", () => sendThemeForm("reclamations", formReclamationsForm));
-    submitDigitale          && submitDigitale.addEventListener("click", () => sendThemeForm("digitale", formDigitaleForm));
+
     submitParticipation     && submitParticipation.addEventListener("click", () => sendThemeForm("participation", formParticipationForm));
     submitRessourcesHumaines&& submitRessourcesHumaines.addEventListener("click", () => sendThemeForm("ressourcesHumaines", formRessourcesHumainesForm));
 
@@ -2736,6 +2926,64 @@ function updateDepartments() {
     document.getElementById("department-container").style.display = "none";
   }
 }
+</script>
+<script>
+  // Lorsque la case à cocher est activée/désactivée
+  document.querySelectorAll('.toggle-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      const select = document.querySelector(this.dataset.target);
+      if (this.checked) {
+        select.removeAttribute('disabled');
+      } else {
+        select.setAttribute('disabled', true);
+        select.selectedIndex = 0; // Réinitialise le choix
+      }
+    });
+  });
+
+  // Validation et soumission du formulaire
+  document.querySelector('#submitAccesPublics').addEventListener('click', function() {
+    const form = document.querySelector('#formAccesPublics');
+
+    // Collection des services et de l'accessibilité
+    const servicesFrequents = [];
+    const accessibilite = [];
+
+    document.querySelectorAll('.toggle-checkbox:checked').forEach(checkbox => {
+      const service = checkbox.value;
+      const select = document.querySelector(checkbox.dataset.target);
+      const evaluation = select.value;
+
+      // Ajout des données collectées
+      servicesFrequents.push(service);
+      accessibilite.push(evaluation);
+    });
+
+    // Validation des champs obligatoires
+    if (servicesFrequents.length > 0 && accessibilite.includes('')) {
+      alert('Veuillez remplir l\'accessibilité pour chaque service sélectionné.');
+      return;
+    }
+
+    // Fonction pour ajouter un champ caché
+    function addHiddenInput(name, value) {
+      const hiddenInput = document.createElement('input');
+      hiddenInput.type = 'hidden';
+      hiddenInput.name = name;
+      hiddenInput.value = value;
+      form.appendChild(hiddenInput);
+    }
+
+    // Ajout des services et évaluations au formulaire comme champs cachés
+    addHiddenInput('servicesFrequents', JSON.stringify(servicesFrequents));
+    addHiddenInput('accessibilite', JSON.stringify(accessibilite));
+    addHiddenInput('pourquoi_accessibilite', document.querySelector('textarea[name="pourquoi_accessibilite"]').value);
+    addHiddenInput('suggestions_acces', document.querySelector('textarea[name="suggestions_acces"]').value);
+    addHiddenInput('infoPreferences', JSON.stringify([...document.querySelectorAll('input[name="infoPreferences[]"]:checked')].map(input => input.value)));
+
+    // Soumettre le formulaire
+    form.submit();
+  });
 </script>
 
 

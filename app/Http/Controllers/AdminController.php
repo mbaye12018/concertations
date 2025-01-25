@@ -10,9 +10,18 @@ use App\Models\Departement;
 use App\Models\EnqueteRapporteur;
 use Illuminate\Support\Facades\DB; 
 use App\Models\Soumission; 
-
+use App\Models\AccesServicesPublics;
+use App\Models\AccueilOrientation;
+use App\Models\Corruption;
+use App\Models\CoutService;
+use App\Models\Digitale;
+use App\Models\Diligence;
+use App\Models\Participation;
+use App\Models\Reclamations;
+use App\Models\RessourcesHumaines;
 class AdminController extends Controller
 {
+   
     public function index()
     {
         // Fetch location data (Sénégal et Diaspora) et calculer leur total
@@ -21,6 +30,16 @@ class AdminController extends Controller
             ->groupBy('lieu_residence')
             ->get();
         
+            $accesPublicsTotal = AccesServicesPublics::count(); // Compte des soumissions
+            $accueilOrientationTotal = AccueilOrientation::count(); // Compte des soumissions
+            $corruptionTotal = Corruption::count(); // Compte des soumissions
+            $coutServiceTotal = CoutService::count(); // Compte des soumissions
+            $DigitaleTotal = Digitale::count(); // Compte des soumissions
+            $DiligenceTotal = Diligence::count(); // Compte des soumissions
+            $ParticipationTotal = Participation::count(); // Compte des soumissions
+            $ReclamationsTotal = Reclamations::count(); // Compte des soumissions
+            $RessourcesHumainesTotal = RessourcesHumaines::count(); // Compte des soumissions
+
         // Get the totals for Senegal and Diaspora
         $senegalTotal = $les_donnees->firstWhere('lieu_residence', 'Senegal')->total ?? 0;
         $diasporaTotal = $les_donnees->firstWhere('lieu_residence', 'Diaspora')->total ?? 0;
@@ -51,7 +70,18 @@ class AdminController extends Controller
             'regions' => $regions,
             'departements' => $departements,
             'regionCounts' => $regionCounts,
-            'departementCounts' => $departementCounts
+            'departementCounts' => $departementCounts,
+            'accesPublicsTotal'=> $accesPublicsTotal,
+            'accueilOrientationTotal' => $accueilOrientationTotal ,
+           'corruptionTotal' =>  $corruptionTotal ,
+            'coutServiceTotal'=>  $coutServiceTotal ,
+            'DigitaleTotal'=>  $DigitaleTotal ,
+           'DiligenceTotal' =>   $DiligenceTotal ,
+            'ParticipationTotal'=>   $ParticipationTotal ,
+           'ReclamationsTotal' =>   $ReclamationsTotal ,
+           'RessourcesHumainesTotal' =>  $RessourcesHumainesTotal 
+
+
         ]);
     }
     
@@ -87,7 +117,8 @@ class AdminController extends Controller
     
         return view('frontend.admin.dashboard', compact('regions', 'departements', 'secteurs'));
     }
-
+   
+    
   
   
     

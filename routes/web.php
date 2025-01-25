@@ -160,3 +160,9 @@ Route::get('/reclamations', [ReclamationsController::class, 'index']);
 Route::get('/digitale', [DigitaleController::class, 'index']);
 Route::get('/participation', [ParticipationController::class, 'index']);
 Route::get('/ressources-humaines', [RessourcesHumainesController::class, 'index']);
+Route::get('/service-public/{service}', 'ServicePublicController@getData');
+//use App\Http\Controllers\AccesPublicsController;
+
+//Route::get('/acces-publics', [AccesPublicsController::class, 'index']);
+Route::post('/acces-publics/data', [AccesPublicsController::class, 'getData']);
+Route::get('/graphique/{service}', [GraphiqueController::class, 'getGraphData']);

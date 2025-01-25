@@ -325,76 +325,78 @@
          <div class="theme-grid" id="themeCardsContainer">
     <!-- 1) Accès aux services publics -->
     <a href="/acces-publics" class="theme-card" data-theme="accesPublics">
-        <h4>
-            <i class="fas fa-door-open theme-icon animate__animated animate__heartBeat"></i>
-            Accès aux services publics
-        </h4>
-        <p>Fréquence, accessibilité, etc.</p>
-    </a>
+    <h4>
+        <i class="fas fa-door-open theme-icon animate__animated animate__heartBeat"></i>
+        Accès aux services publics
+    </h4>
+       <p><strong>Avis reçus : {{ $accesPublicsTotal }}</strong></p> <!-- Affichage du total -->
+</a>
+
     <!-- 2) Accueil & orientation -->
     <a href="/accueil-orientation" class="theme-card" data-theme="accueilOrientation">
         <h4>
             <i class="fas fa-info-circle theme-icon animate__animated animate__heartBeat"></i>
             Accueil & orientation
         </h4>
-        <p>Qualité de l'accueil, clarté des indications...</p>
-    </a>
+        <p><strong>Avis reçus : {{ $accueilOrientationTotal }}</strong></p> <!-- Affichage du total -->
+        </a>
     <!-- 3) Diligence -->
     <a href="/diligence" class="theme-card" data-theme="diligence">
         <h4>
             <i class="fas fa-clock theme-icon animate__animated animate__heartBeat"></i>
             Diligence
         </h4>
-        <p>Délais, complexité, etc.</p>
-    </a>
+        <p><strong>Avis reçus : {{ $DigitaleTotal }}</strong></p> <!-- Affichage du total -->
+     
+        </a>
     <!-- 4) Coût du service -->
     <a href="/cout-service" class="theme-card" data-theme="coutService">
         <h4>
             <i class="fas fa-money-bill-wave theme-icon animate__animated animate__heartBeat"></i>
             Coût du service
         </h4>
-        <p>Tarifs, paiement, rapport qualité-prix.</p>
-    </a>
+        <p><strong>Avis reçus : {{ $coutServiceTotal }}</strong></p> <!-- Affichage du total -->
+       </a>
     <!-- 5) Corruption -->
     <a href="/corruption" class="theme-card" data-theme="corruption">
         <h4>
             <i class="fas fa-shield-alt theme-icon animate__animated animate__heartBeat"></i>
             Corruption
         </h4>
-        <p>Transparence, pots-de-vin, etc.</p>
-    </a>
+        <p><strong>Avis reçus : {{ $corruptionTotal }}</strong></p> <!-- Affichage du total -->
+        </a>
     <!-- 6) Réclamations -->
     <a href="/reclamations" class="theme-card" data-theme="reclamations">
         <h4>
             <i class="fas fa-bullhorn theme-icon animate__animated animate__heartBeat"></i>
             Réclamations
         </h4>
-        <p>Procédure, clarté, délais...</p>
-    </a>
+        <p><strong>Avis reçus : {{ $ReclamationsTotal }}</strong></p> <!-- Affichage du total -->
+        </a>
     <!-- 7) Digitale -->
     <a href="/digitale" class="theme-card" data-theme="digitale">
         <h4>
             <i class="fas fa-laptop-code theme-icon animate__animated animate__heartBeat"></i>
             Transformation digitale
         </h4>
-        <p>Services en ligne, bugs, etc.</p>
-    </a>
+        <p><strong>Avis reçus : {{ $DigitaleTotal }}</strong></p> <!-- Affichage du total -->
+        </a>
     <!-- 8) Participation -->
     <a href="/participation" class="theme-card" data-theme="participation">
         <h4>
             <i class="fas fa-users theme-icon animate__animated animate__heartBeat"></i>
             Participation citoyenne
         </h4>
-        <p>Implication, satisfaction, impact...</p>
-    </a>
+        <p><strong>Avis reçus : {{ $ParticipationTotal }}</strong></p> <!-- Affichage du total -->
+      </a>
     <!-- 9) Ressources Humaines -->
     <a href="/ressources-humaines" class="theme-card" data-theme="ressourcesHumaines">
         <h4>
             <i class="fas fa-handshake theme-icon animate__animated animate__heartBeat"></i>
             Ressources humaines
         </h4>
-        <p>Relations agents/usagers, etc.</p>
-    </a>
+        <p><strong>Avis reçus : {{ $RessourcesHumainesTotal }}</strong></p> <!-- Affichage du total -->
+     </a>
 </div>
 
 
