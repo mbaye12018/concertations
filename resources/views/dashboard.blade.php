@@ -113,7 +113,7 @@
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-           
+
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
                 <i class="gg-menu-right"></i>
@@ -131,12 +131,12 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-             
+
               <li class="nav-item active">
                 <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
                   <i class="fas fa-home"></i>
                 <p>Accueil</p>
-                </a>                
+                </a>
               </li>
               <li class="nav-item">
                 <a href="{{ route('utilisateur.create') }}">
@@ -144,7 +144,7 @@
                 <p>Utilisateur</p>
             </a>
               </li>
-             
+
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('statistique.statistique') }}">
                   <i class="far fa-chart-bar"></i>
@@ -184,27 +184,27 @@
             <!-- End Logo Header -->
           </div>
           <!-- Navbar Header -->
-        
+
           <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
             <div class="container-fluid">
             <span class="op-7">Bienvenue,</span>
             <span class="fw-bold">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</span>
-              
+
 
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-               
-               
-                        
+
+
+
                 <div class="dropdown">
                   <button class="btn  dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-user"></i>
-                  
+
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li><button class="dropdown-item" type="button"><a href="{{ route('login') }}">Deconnexion</button></li> 
+                    <li><button class="dropdown-item" type="button"><a href="{{ route('login') }}">Deconnexion</button></li>
                   </ul>
                 </div>
-                          
+
               </ul>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="#">Action</a></li>
@@ -212,7 +212,7 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
           </nav>
-             
+
           <!-- End Navbar -->
         </div>
 
@@ -285,7 +285,7 @@
                   </div>
                 </div>
               </div>
-              
+
             </div>
             <div class="row">
               <div class="col-md-12">
@@ -313,11 +313,11 @@
                   </div>
                   <div class="card-body">
                     <div class="container-fluid" style="min-height: 375px">
-                    
+
                  <div id="themeSelection" class="hidden-section mt-5">
             <div class="text-center mb-4">
             <!-- <h2 class="text-primary">Sur quelles thématiques souhaitez-vous donner votre avis ?</h2> -->
-          
+
             </div>
 
             <!-- Cartes en grille (3 par ligne) -->
@@ -400,36 +400,36 @@
 
 
 
-                          
-                           
+
+
 
                         </body>
                         </html>
-                          
+
                       </table>
                     </div>
                     <div id="myChartLegend"></div>
                   </div>
                 </div>
               </div>
-             
+
             </div>
-           
+
           </div>
         </div>
 
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
-            
+
                     <footer class="footer">
               <div class="container-fluid d-flex justify-content-center">
                   <div class="copyright text-center">
-                      © 2024 Copyright MFPRSP
+                      © 2025 Copyright MFPRSP
                   </div>
               </div>
           </footer>
 
-           
+
           </div>
         </footer>
       </div>
@@ -450,7 +450,7 @@
     <script src="../assets/js/setting-demo.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                         
+
 
   </body>
 </html>

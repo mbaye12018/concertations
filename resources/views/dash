@@ -14,7 +14,7 @@
 
     <!-- Fonts and icons -->
     <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
-    
+
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
@@ -24,7 +24,7 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="../assets/css/demo.css" />
     <style>
-         
+
     </style>
   </head>
 
@@ -35,7 +35,7 @@
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-           
+
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
                 <i class="gg-menu-right"></i>
@@ -63,18 +63,18 @@
                   <i class="fas fa-home"></i>
                   <p>Accueil</p>
                     </a>
-              
-                
+
+
               </li>
               <li class="nav-item">
                 <a href="{{ route('utilisateur.create') }}">
                   <i class="fas fa-user"></i>
                   <p>Utilisateur</p>
                    </a>
-               
+
               </li>
-              
-             
+
+
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('statistique.statistique') }}">
                   <i class="far fa-chart-bar"></i>
@@ -82,7 +82,7 @@
                 </a>
             </li>
 
-             
+
             </ul>
           </div>
         </div>
@@ -116,28 +116,28 @@
             </div>
             <!-- End Logo Header -->
           </div>
-          
+
           <!-- Navbar Header -->
           <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
             <div class="container-fluid">
             <span class="op-7">Bienvenue,</span>
             <span class="fw-bold">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</span>
-              
+
 
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-               
-               
-                        
+
+
+
                 <div class="dropdown">
                   <button class="btn  dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-user"></i>
-                  
+
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li><button class="dropdown-item" type="button"><a href="{{ route('login') }}">Deconnexion</button></li> 
+                    <li><button class="dropdown-item" type="button"><a href="{{ route('login') }}">Deconnexion</button></li>
                   </ul>
                 </div>
-                          
+
               </ul>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="#">Action</a></li>
@@ -146,13 +146,13 @@
           </ul>
           </nav>
           <!-- End Navbar -->
-      
+
 
         <div class="container">
           <div class="page-inner">
             <div
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-             
+
             </div>
             <div class="row">
 
@@ -399,8 +399,8 @@
 </script>
 
 
-           
-            
+
+
           </div>
         </div>
 
@@ -408,12 +408,12 @@
           <div class="container-fluid d-flex justify-content-between">
             <nav class="pull-left">
               <ul class="nav">
-               
+
               </ul>
             </nav>
             <div class="copyright">
-            © 2024 Copyright MFPRSP/D2I 
-            
+            © 2025 Copyright MFPRSP/D2I
+
             </div>
             <div>
             </div>
@@ -610,7 +610,7 @@
             </div>
           </div>
         </div>
-      
+
       </div>
       <!-- End Custom template -->
     </div>
@@ -680,3 +680,94 @@
     </script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ici que je coche oui ou non cela enregistre 0 dans la base de données
+<div id="formRessourcesHumaines" class="hidden-section">
+    <button class="btn btn-return" id="btnReturn9">
+      <i class="fas fa-arrow-left me-1"></i>Retour
+    </button>
+    <h3 class="section-title">
+      <i class="fas fa-handshake theme-icon"></i>
+      Ressources humaines
+    </h3>
+    <form id="formRessourcesHumainesForm" class="needs-validation" novalidate>
+  <div class="mb-3">
+        <label class="form-label">
+          Les agents publics fournissent-ils des informations claires,complétes et précises ?
+        </label>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" name="info_claire" value="1" id="info_claire_oui" required>
+          <label class="form-check-label" for="info_claire_oui">Oui</label>
+        </div>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" name="info_claire" value="0" id="info_claire_non" required>
+          <label class="form-check-label" for="info_clair_non">Non</label>
+        </div>
+  </div>
+    <div class="mb-3">
+        <label class="form-label">Pourquoi ?</label>
+        <textarea name='pourquoi_info_claire' class="form-control" rows="2" required></textarea>
+  </div>
+  <div class="mb-3">
+        <label class="form-label">
+          Pensez-vous que les agents publics ont l'esprit collaboratif ?
+        </label>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" name="esprit_collaboratif" value="1" id="esprit" required>
+          <label class="form-check-label" for="esprit_collaboratif_oui">Oui</label>
+        </div>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" name="esprit_collaboratif" value="0" id="esprit_non" required>
+          <label class="form-check-label" for="esprit_collaboratif_non">Non</label>
+        </div>
+  </div>
+  <div class="mb-3">
+        <label class="form-label">Pourquoi ?</label>
+        <textarea name='pourquoi_esprit_collaboratif' class="form-control" rows="2" required></textarea>
+  </div>
+  <div class="mb-3">
+        <label class="form-label">
+          Pensez-vous que les compétences des agents publics sont en phase avec les attentes des usagers ?
+        </label>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" name="competence_agents" value="1" id="competence_agents_oui" required>
+          <label class="form-check-label" for="competence_agents_oui">Oui</label>
+        </div>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" name="competence_agents" value="0" id="competence_agents_non" required>
+          <label class="form-check-label" for="competence_agents_non">Non</label>
+        </div>
+  </div>
+  <div class="mb-3">
+        <label class="form-label">Pourquoi ?</label>
+        <textarea name='pourquoi_competence_agents' class="form-control" rows="2" required></textarea>
+  </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Que pensez-vous des relations entre agents publics et usagers ?
+        </label>
+        <textarea name='avis_relations' class="form-control" rows="2" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Pourquoi ?</label>
+        <textarea name='pourquoi_relations' class="form-control" rows="2" required></textarea>
+      </div>
+      <div class="d-grid">
+        <button type="button" id="submitRessourcesHumaines" class="btn btn-primary">
+          <i class="fas fa-paper-plane me-1"></i>Soumettre
+        </button>
+      </div>
+    </form>
+  </div>

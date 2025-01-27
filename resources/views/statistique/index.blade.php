@@ -131,7 +131,7 @@
       <footer class="footer">
         <div class="container-fluid d-flex justify-content-center">
           <div class="copyright text-center">
-            © 2024 Copyright MFPRSP
+            © 2025 Copyright MFPRSP
           </div>
         </div>
       </footer>

@@ -7,11 +7,11 @@
 
 
 <footer id="footer" class="footer">
-  
+
 
 <div class="container footer-top">
   <div class="row gy-4">
-   
+
     <div class="row gy-4">
         <div class="col-lg-5 col-md-12 footer-about">
           <a href="#" class="logo d-flex align-items-center">
@@ -55,7 +55,7 @@
 
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
           <h4>Localisation</h4>
-         
+
           <p>52, Vincens x </p>
           <p>Abdou Karim BOURGI,</p>
           <p>Dakar</p>
@@ -64,16 +64,16 @@
         </div>
 
       </div>
-  
 
-   
+
+
 
   </div>
 </div>
 
 <div class="container copyright text-center mt-4">
-  <p>© <span>2024 Copyright</span> <strong class="px-1 sitename">MFPRSP/D2I</strong> <span></span></p>
- 
+  <p>© <span>2025 Copyright</span> <strong class="px-1 sitename">MFPRSP/D2I</strong> <span></span></p>
+
 </div>
 
 </footer>

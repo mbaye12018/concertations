@@ -13,7 +13,7 @@
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
         custom: {
-          families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+          families: ["Font Awesome 5 Solid","Font Awesome 5 Regular","Font Awesome 5 Brands","simple-line-icons"],
           urls: ["assets/css/fonts.min.css"],
         },
         active: function () {
@@ -47,7 +47,9 @@
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-            height: 400px; /* Hauteur fixée pour un rendu uniforme */
+
+            /* On peut augmenter la hauteur si la légende est très longue */
+            height: 420px;
         }
         .chart-header {
             margin-bottom: 15px;
@@ -75,8 +77,9 @@
             background-color: #f2f2f2;
         }
 
-        /* Hide default DataTables elements if not needed */
-        .dataTables_length, .dataTables_filter {
+        /* DataTables minimal adjustments */
+        .dataTables_length,
+        .dataTables_filter {
             margin-bottom: 10px;
         }
         .dataTables_wrapper .dataTables_info {
@@ -86,7 +89,7 @@
         /* Responsive Adjustments */
         @media (max-width: 768px) {
             .chart-container {
-                height: 300px;
+                height: 350px; /* Un peu moins haut sur mobile */
             }
         }
     </style>
@@ -99,6 +102,8 @@
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
                 <div class="nav-toggle">
+                    <!-- le logo des concertations dans le sidebar
+                    <img src="assets/img/logg.PNG" alt="" style="height: 90px;margin-top:20px;margin-right:50px"> -->
                     <button class="btn btn-toggle toggle-sidebar">
                         <i class="gg-menu-right"></i>
                     </button>
@@ -243,7 +248,7 @@
 
                                                 <!-- Accessibility Chart -->
                                                 <div class="col-md-4">
-                                                    <div class="chart-container" style="height: 400px;">
+                                                    <div class="chart-container" style="height: 420px;">
                                                         <div class="chart-header">
                                                             <h4>Accessibilité des Services</h4>
                                                         </div>
@@ -341,7 +346,7 @@
         <footer class="footer">
             <div class="container-fluid d-flex justify-content-center">
                 <div class="copyright text-center">
-                    © 2024 Copyright MFPRSP
+                    © 2024 Copyright MFPRSP/DSI/D2I
                 </div>
             </div>
         </footer>
@@ -364,7 +369,7 @@
 <script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 <script src="../assets/js/kaiadmin.min.js"></script>
 <script src="../assets/js/setting-demo.js"></script>
-<!-- Chart.js CDN (version plus à jour si souhaité) -->
+<!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
 
 <script>
@@ -377,7 +382,7 @@
                 datasets: [{
                     label: "Nombre d’utilisations",
                     data: @json($servicesData),
-                    backgroundColor: "rgba(255, 165, 0, 0.7)", // orange-ish
+                    backgroundColor: "rgba(255, 165, 0, 0.7)",
                     borderColor: "#FF9900",
                     borderWidth: 1
                 }]
@@ -385,6 +390,9 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                layout: {
+                    padding: 20
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -407,11 +415,11 @@
                 datasets: [{
                     data: @json($accessibilityData),
                     backgroundColor: [
-                        "#2ecc71",  // vert clair
-                        "#27ae60",  // vert foncé
-                        "#f39c12",  // orange
-                        "#e74c3c",  // rouge
-                        "#c0392b"   // rouge foncé
+                        "#2ecc71", // vert clair
+                        "#27ae60", // vert foncé
+                        "#f39c12", // orange
+                        "#e74c3c", // rouge
+                        "#c0392b"  // rouge foncé
                     ],
                     hoverOffset: 10
                 }]
@@ -419,14 +427,23 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                layout: {
+                    padding: 20
+                },
                 plugins: {
                     legend: {
-                        position: 'bottom'
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 12 // Réduire la police pour que tout tienne
+                            },
+                            boxWidth: 14, // Taille du carré de couleur
+                            padding: 8   // Espacement entre légendes
+                        }
                     },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                // Affiche le label + pourcentage
                                 let label = context.label || '';
                                 let value = context.raw || 0;
                                 return label + ': ' + value + '%';
@@ -451,6 +468,9 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                layout: {
+                    padding: 20
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -460,7 +480,14 @@
                     }
                 },
                 plugins: {
-                    legend: { display: false }
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -478,9 +505,17 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                layout: {
+                    padding: 20
+                },
                 plugins: {
                     legend: {
-                        position: 'bottom'
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 12
+                            }
+                        }
                     }
                 }
             }
@@ -499,9 +534,17 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                layout: {
+                    padding: 20
+                },
                 plugins: {
                     legend: {
-                        position: 'bottom'
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 12
+                            }
+                        }
                     }
                 }
             }
@@ -509,8 +552,7 @@
 
         // -- DataTables Initialization (si besoin)
         $("#servicesTable").DataTable({
-            // Personnalisez les options si nécessaire
-            pageLength: 10,
+            pageLength: 15,
             lengthChange: true,
             searching: true,
             ordering: true,
@@ -521,3 +563,5 @@
 </script>
 </body>
 </html>
+
+
