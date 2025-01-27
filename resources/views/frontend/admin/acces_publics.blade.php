@@ -114,6 +114,33 @@
 }
 
 </style>
+<style>
+        /* Custom Styling */
+        body {
+            background-color: #f4f7fc;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Adjust Chart Size */
+        #servicesChart {
+            height: 400px !important;
+        }
+
+        #accessibilityChart {
+            height: 250px !important;
+        }
+    </style>
     <!-- CSS Files -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../assets/css/plugins.min.css" />
@@ -129,7 +156,7 @@
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-           
+
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
                 <i class="gg-menu-right"></i>
@@ -147,12 +174,12 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-             
+
               <li class="nav-item active">
                 <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
                   <i class="fas fa-home"></i>
                 <p>Accueil</p>
-                </a>                
+                </a>
               </li>
               <li class="nav-item">
                 <a href="{{ route('utilisateur.create') }}">
@@ -160,7 +187,7 @@
                 <p>Utilisateur</p>
             </a>
               </li>
-             
+
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('statistique.statistique') }}">
                   <i class="far fa-chart-bar"></i>
@@ -200,31 +227,31 @@
             <!-- End Logo Header -->
           </div>
           <!-- Navbar Header -->
-        
+
           <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
             <div class="container-fluid">
             <span class="op-7">Bienvenue,</span>
             <span class="fw-bold">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</span>
-              
+
 
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-               
-               
-                        
+
+
+
                 <div class="dropdown">
                   <button class="btn  dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-user"></i>
-                  
+
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li><button class="dropdown-item" type="button"><a href="{{ route('login') }}">Deconnexion</button></li> 
+                    <li><button class="dropdown-item" type="button"><a href="{{ route('login') }}">Deconnexion</button></li>
                   </ul>
                 </div>
-                          
+
               </ul>
-         
+
           </nav>
-             
+
           <!-- End Navbar -->
         </div>
 
@@ -233,7 +260,7 @@
             <div
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
             </div>
-           
+
             <div class="row">
               <div class="col-md-12">
                 <div class="card card-round">
@@ -260,111 +287,152 @@
                   </div>
                   <div class="card-body">
                     <div class="container-fluid" style="min-height: 375px">
-                    
+
                  <div id="themeSelection" class="hidden-section mt-5">
             <div class="text-center mb-4">
             <!-- <h2 class="text-primary">Sur quelles thématiques souhaitez-vous donner votre avis ?</h2> -->
-          
+
             </div>
+<div class="container">
+    <h2 class="text-center text-primary">Accès aux Services Publics</h2>
 
-         
-       
-</div>
-
-<div class="text-center mb-4">
-    <h2 class="text-primary">Accès aux services publics</h2>
-    <select id="themeSelect" class="form-select">
-        <option value="" disabled selected>Veuillez choisir un service public</option>
-        <option value="delivrancePapierAdmin">Délivrance de papiers administratifs</option>
-        <option value="defenseSecurite">Défense et sécurité</option>
-        <option value="santeProtection">Santé et protection sociale</option>
-        <option value="educationEnseignement">Éducation et Enseignement</option>
-        <option value="habitatCadreVie">Habitat et cadre de vie</option>
-        <option value="transport">Transport</option>
-        <option value="environnement">Environnement</option>
-        <option value="finances">Finances</option>
-        <option value="sportLoisirsCulture">Sport, Loisirs, culture</option>
-        <option value="industrie">Industrie</option>
-        <option value="agriculture">Agriculture, pêche, élevage</option>
-</select>
-
-
-</div>
-<div class="text-center mt-4">
-    <canvas id="themeChart" width="600" height="400"></canvas>
-</div>
-
-
-
-             <a href="{{ route('admin.dashboard') }}" class="btn-choose-theme">
-  <span class="btn-text">Choisir un autre thème</span>
-</a>
-
-<style>
-  /* Button for choosing another theme */
-  .btn-choose-theme {
-    display: inline-flex;
-    align-items: center;
-    padding: 12px 24px;
-    background-color: #28a745; /* Green background for a fresh look */
-    color: white;
-    border: 2px solid #28a745;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .btn-choose-theme:hover {
-    background-color: #218838;
-    border-color: #218838;
-    transform: translateY(-3px);
-  }
-
-  .btn-choose-theme:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .btn-choose-theme .btn-text {
-    margin-left: 8px;
-    font-size: 1rem;
-  }
-
-  /* Add a left arrow icon before the text */
-  .btn-choose-theme::before {
-    content: '\f0a8'; /* Font Awesome left arrow icon */
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    font-size: 1.3rem;
-    margin-right: 8px;
-  }
-</style>
-
-
-                          
-                           
-
-                        </body>
-                        </html>
-                          
-                      </table>
-                    </div>
-                    </div>
-                </div>
-              </div>
-             
-            </div>
-           
-          </div>
+    <div class="row">
+        <div class="col-md-8">
+        <h4 class="text-center">les services publics les plus fréquemment utilisés</h4>
+            <canvas id="servicesChart"></canvas>
         </div>
-       
+        <div class="col-md-4">
+        <h4 class="text-center">l'Accessibilité à ses services</h4>
+            <canvas id="accessibilityChart"></canvas>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h4 class="text-center">Tranche d'âge</h4>
+            <canvas id="ageChart"></canvas>
+        </div>
+        <div class="col-md-4">
+            <h4 class="text-center">Répartition par Sexe</h4>
+            <canvas id="genderChart"></canvas>
+        </div>
+        <div class="col-md-4">
+            <h4 class="text-center">Répartition par Localité</h4>
+            <canvas id="localityChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        new Chart(document.getElementById("servicesChart"), {
+            type: "bar",
+            data: {
+                labels: @json($servicesLabels),
+                datasets: [{ data: @json($servicesData), backgroundColor: "orange" }]
+            }
+        });
+
+        new Chart(document.getElementById("accessibilityChart"), {
+            type: "pie",
+            data: {
+                labels: @json($accessibilityLabels),
+                datasets: [{
+                    data: @json($accessibilityData),
+                    backgroundColor: ["#2ecc71", "#27ae60", "#f39c12", "#e74c3c", "#c0392b"]
+                }]
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.raw + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+        new Chart(document.getElementById("ageChart"), {
+            type: "bar",
+            data: {
+                labels: @json($ageLabels),
+                datasets: [{ data: @json($ageData), backgroundColor: "#3498db" }]
+            }
+        });
+
+        new Chart(document.getElementById("genderChart"), {
+            type: "pie",
+            data: {
+                labels: @json($genderLabels),
+                datasets: [{ data: @json($genderData), backgroundColor: ["#3498db", "#e74c3c"] }]
+            }
+        });
+
+        new Chart(document.getElementById("localityChart"), {
+            type: "pie",
+            data: {
+                labels: @json($localityLabels),
+                datasets: [{ data: @json($localityData), backgroundColor: ["#27ae60", "#e67e22"] }]
+            }
+        });
+    });
+</script>
+
+<h3 class="text-center mt-4">📋 Détail des Services</h3>
+<div class="table-responsive">
+    <table id="servicesTable" class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Service</th>
+                <th>Nombre d'accès</th>
+                <th>Très Accessible</th>
+                <th>Accessible</th>
+                <th>Moyennement Accessible</th>
+                <th>Difficilement Accessible</th>
+                <th>Très Difficilement Accessible</th>
+                <th>Tranche d'âge majoritaire</th>
+                <th>Nombre d'hommes</th>
+                <th>Nombre de femmes</th>
+                <th>Nombre venant du Sénégal</th>
+                <th>Nombre venant de la Diaspora</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($detailedServices as $service => $details)
+            <tr>
+                <td>{{ $service }}</td>
+                <td>{{ $details['count'] }}</td>
+                <td>{{ $details['accessibility']['très accessible'] ?? 0 }}</td>
+                <td>{{ $details['accessibility']['accessible'] ?? 0 }}</td>
+                <td>{{ $details['accessibility']['moyennement accessible'] ?? 0 }}</td>
+                <td>{{ $details['accessibility']['difficilement accessible'] ?? 0 }}</td>
+                <td>{{ $details['accessibility']['très difficilement accessible'] ?? 0 }}</td>
+                <td>{{ $details['major_age_group'] ?? 'N/A' }}</td>
+                <td>{{ $details['gender']['Masculin'] ?? 0 }}</td>
+                <td>{{ $details['gender']['Féminin'] ?? 0 }}</td>
+                <td>{{ $details['locality']['Sénégal'] ?? 0 }}</td>
+                <td>{{ $details['locality']['Diaspora'] ?? 0 }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
-            
+
                     <footer class="footer">
               <div class="container-fluid d-flex justify-content-center">
                   <div class="copyright text-center">
@@ -373,7 +441,7 @@
               </div>
           </footer>
 
-           
+
           </div>
         </footer>
       </div>
@@ -394,10 +462,10 @@
     <script src="../assets/js/setting-demo.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                         
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    
+
 
   </body>
 </html>
