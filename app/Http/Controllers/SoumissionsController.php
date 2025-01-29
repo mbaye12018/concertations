@@ -130,9 +130,21 @@ class SoumissionsController extends Controller
                 'bonne_orientation'   => 'required|in:0,1',
                 'suggestions_accueil' => 'nullable|string',
             ]);
+            $validatedData['signaletique_claire'] = (int) $validatedData['signaletique_claire'];
+            $validatedData['bonne_orientation'] = (int) $validatedData['bonne_orientation'];
+
+            Log::info("🔍 Valeurs validées après conversion :", [
+                'signaletique_claire' => gettype($validatedData['signaletique_claire']) . " " . $validatedData['signaletique_claire'],
+                'bonne_orientation'   => gettype($validatedData['bonne_orientation']) . " " . $validatedData['bonne_orientation']
+            ]);
 
             // 🔹 Ajout de l'ID de soumission validé
             $validatedData['id_soumission'] = $idSoumission;
+            Log::info("🔍 Valeurs validées AVANT INSERTION :", [
+                'signaletique_claire' => gettype($validatedData['signaletique_claire']) . " " . $validatedData['signaletique_claire'],
+                'bonne_orientation'   => gettype($validatedData['bonne_orientation']) . " " . $validatedData['bonne_orientation']
+            ]);
+
 
             // 🔍 Vérification des données avant insertion
             Log::info("✅ Données à enregistrer :", $validatedData);
@@ -217,6 +229,7 @@ class SoumissionsController extends Controller
             'error' => $e->getMessage()
         ], 500);
     }
+
 }
 
 

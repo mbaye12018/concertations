@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Concertation nationale - Accueil & Orientation</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
+    <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Webfont -->
+    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: ["Font Awesome 5 Solid","Font Awesome 5 Regular","Font Awesome 5 Brands","simple-line-icons"],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- Bootstrap & Kaiadmin CSS -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+
+    <style>
+        body {
+            background-color: #f4f7fc;
+            font-family: 'Public Sans', sans-serif;
+        }
+        .card-round {
+            border-radius: 12px !important;
+        }
+
+        /* Chart container style */
+        .chart-container {
+            background: #fff;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: 400px; /* Fix a height if needed */
+        }
+        .chart-header h4 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Table style */
+        #accueilTable thead th {
+            background-color: #2e59d9;
+            color: #fff;
+        }
+        #accueilTable tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- SIDEBAR -->
+    <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+            <div class="logo-header" data-background-color="dark">
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar">
+                        <i class="gg-menu-right"></i>
+                    </button>
+                    <button class="btn btn-toggle sidenav-toggler">
+                        <i class="gg-menu-left"></i>
+                    </button>
+                </div>
+                <button class="topbar-toggler more">
+                    <i class="gg-more-vertical-alt"></i>
+                </button>
+            </div>
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+            <div class="sidebar-content">
+                <ul class="nav nav-secondary">
+                    <li class="nav-item">
+                        <a href="#">
+                            <i class="fas fa-home"></i>
+                            <p>Accueil</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">
+                            <i class="fas fa-user"></i>
+                            <p>Utilisateur</p>
+                        </a>
+                    </li>
+                    <!-- Ajoutez d'autres liens si nécessaire -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END SIDEBAR -->
+
+    <div class="main-panel">
+        <!-- HEADER -->
+        <div class="container">
+            <div class="page-inner pt-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-round">
+                            <div class="card-header">
+                                <div class="card-head-row">
+                                    <div class="card-title">Statistiques : Accueil & Orientation</div>
+                                    <div class="card-tools">
+                                        <a href="#" class="btn btn-label-success btn-round btn-sm me-2">
+                                            <span class="btn-label">
+                                                <i class="fa fa-pencil"></i>
+                                            </span>
+                                            Export
+                                        </a>
+                                        <a href="#" class="btn btn-label-info btn-round btn-sm">
+                                            <span class="btn-label">
+                                                <i class="fa fa-print"></i>
+                                            </span>
+                                            Print
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- CONTENU -->
+                                <div class="container-fluid" style="min-height: 375px">
+
+                                    <!-- Titre principal -->
+                                    <h2 class="text-center text-primary mb-4">
+                                        Accueil & Orientation
+                                    </h2>
+
+                                    <div class="row">
+                                        <!-- EVALUATIONS (BAR CHART) -->
+                                        <div class="col-md-6">
+                                            <div class="chart-container">
+                                                <div class="chart-header">
+                                                    <h4>Évaluation de l'Accueil</h4>
+                                                </div>
+                                                <canvas id="evaluationChart"></canvas>
+                                            </div>
+                                        </div>
+
+                                        <!-- SIGNALETIQUE (DOUGHNUT) -->
+                                        <div class="col-md-6">
+                                            <div class="chart-container">
+                                                <div class="chart-header">
+                                                    <h4>Signalétique Claire</h4>
+                                                </div>
+                                                <canvas id="signaletiqueChart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <!-- ORIENTATION (DOUGHNUT) -->
+                                        <div class="col-md-6">
+                                            <div class="chart-container">
+                                                <div class="chart-header">
+                                                    <h4>Bonne Orientation</h4>
+                                                </div>
+                                                <canvas id="orientationChart"></canvas>
+                                            </div>
+                                        </div>
+
+                                        <!-- SEXE (PIE) -->
+                                        <div class="col-md-6">
+                                            <div class="chart-container">
+                                                <div class="chart-header">
+                                                    <h4>Répartition par Sexe</h4>
+                                                </div>
+                                                <canvas id="genderChart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <!-- TRANCHE AGE (BAR) -->
+                                        <div class="col-md-6">
+                                            <div class="chart-container">
+                                                <div class="chart-header">
+                                                    <h4>Tranche d'âge</h4>
+                                                </div>
+                                                <canvas id="ageChart"></canvas>
+                                            </div>
+                                        </div>
+
+                                        <!-- LOCALITÉ (PIE) -->
+                                        <div class="col-md-6">
+                                            <div class="chart-container">
+                                                <div class="chart-header">
+                                                    <h4>Répartition par Localité</h4>
+                                                </div>
+                                                <canvas id="localityChart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- TABLEAU RECAP -->
+                                    <h3 class="text-center mt-4">Détails des Enregistrements</h3>
+                                    <div class="table-responsive">
+                                        <table id="accueilTable" class="table table-bordered table-striped">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Évaluation Accueil</th>
+                                                    <th>Signalétique Claire</th>
+                                                    <th>Bonne Orientation</th>
+                                                    <th>Sexe</th>
+                                                    <th>Tranche d'âge</th>
+                                                    <th>Localité</th>
+                                                    <th>Date d'insertion</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($accueilOrientations as $item)
+                                                <tr>
+                                                    <td>{{ $item->id_accueil }}</td>
+                                                    <td>{{ $item->evaluation_accueil }}</td>
+                                                    <td>{{ $item->signaletique_claire ? 'Oui' : 'Non' }}</td>
+                                                    <td>{{ $item->bonne_orientation ? 'Oui' : 'Non' }}</td>
+                                                    <td>{{ $item->sexe ?? 'N/A' }}</td>
+                                                    <td>{{ $item->tranche_age ?? 'N/A' }}</td>
+                                                    <td>{{ $item->localite ?? 'N/A' }}</td>
+                                                    <td>{{ $item->date_insertion }}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- FIN TABLEAU -->
+
+                                </div> <!-- end container-fluid -->
+                            </div> <!-- end card-body -->
+                        </div> <!-- end card -->
+                    </div> <!-- end col-md-12 -->
+                </div> <!-- end row -->
+            </div> <!-- end page-inner -->
+        </div> <!-- end container -->
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="container-fluid d-flex justify-content-center">
+                <div class="copyright text-center">
+                    © 2024 Copyright MFPRSP
+                </div>
+            </div>
+        </footer>
+    </div> <!-- end main-panel -->
+</div> <!-- end wrapper -->
+
+<!-- JS SCRIPTS -->
+<script src="../assets/js/core/jquery-3.7.1.min.js"></script>
+<script src="../assets/js/core/popper.min.js"></script>
+<script src="../assets/js/core/bootstrap.min.js"></script>
+<script src="../assets/js/plugin/chart.js/chart.min.js"></script>
+<script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+<script src="../assets/js/kaiadmin.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    // -- EVALUATIONS (bar chart)
+    let evalCtx = document.getElementById('evaluationChart').getContext('2d');
+    new Chart(evalCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Excellent','Bon','Moyen','Mauvais','Très mauvais'],
+            datasets: [{
+                label: 'Évaluations',
+                data: [
+                    {{ $evaluations['excellent'] }},
+                    {{ $evaluations['bon'] }},
+                    {{ $evaluations['moyen'] }},
+                    {{ $evaluations['mauvais'] }},
+                    {{ $evaluations['tres_mauvais'] }},
+                ],
+                backgroundColor: ['#28a745','#007bff','#ffc107','#dc3545','#6c757d'],
+                borderColor: ['#28a745','#007bff','#ffc107','#dc3545','#6c757d'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+
+    // -- SIGNALETIQUE (doughnut)
+    let sigCtx = document.getElementById('signaletiqueChart').getContext('2d');
+    new Chart(sigCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Oui','Non'],
+            datasets: [{
+                data: [{{ $signalCountYes }}, {{ $signalCountNo }}],
+                backgroundColor: ['#2ecc71','#e74c3c'],
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // -- ORIENTATION (doughnut)
+    let orientCtx = document.getElementById('orientationChart').getContext('2d');
+    new Chart(orientCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Oui','Non'],
+            datasets: [{
+                data: [{{ $orientationYes }}, {{ $orientationNo }}],
+                backgroundColor: ['#3498db','#c0392b'],
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // -- GENDER (pie)
+    let genderCtx = document.getElementById('genderChart').getContext('2d');
+    new Chart(genderCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Masculin','Féminin'],
+            datasets: [{
+                data: [{{ $sexCounts['Masculin'] ?? 0 }}, {{ $sexCounts['Féminin'] ?? 0 }}],
+                backgroundColor: ['#3498db','#e74c3c']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // -- AGE (bar)
+    let ageCtx = document.getElementById('ageChart').getContext('2d');
+    let ageLabels = {!! json_encode(array_keys($ages)) !!};
+    let ageValues = {!! json_encode(array_values($ages)) !!};
+
+    new Chart(ageCtx, {
+        type: 'bar',
+        data: {
+            labels: ageLabels,
+            datasets: [{
+                label: 'Nombre de personnes',
+                data: ageValues,
+                backgroundColor: '#f39c12'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+
+    // -- LOCALITÉ (pie)
+    let locCtx = document.getElementById('localityChart').getContext('2d');
+    new Chart(locCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Sénégal','Diaspora'],
+            datasets: [{
+                data: [{{ $locality['Sénégal'] ?? 0 }}, {{ $locality['Diaspora'] ?? 0 }}],
+                backgroundColor: ['#27ae60','#e67e22']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // -- TABLE (DataTables si besoin)
+    $('#accueilTable').DataTable({
+        pageLength: 10,
+        lengthChange: true,
+        searching: true,
+        ordering: true,
+        info: true
+    });
+});
+</script>
+
+</body>
+</html>

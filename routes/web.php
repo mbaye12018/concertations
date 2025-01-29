@@ -166,3 +166,18 @@ Route::get('/service-public/{service}', 'ServicePublicController@getData');
 //Route::get('/acces-publics', [AccesPublicsController::class, 'index']);
 Route::post('/acces-publics/data', [AccesPublicsController::class, 'getData']);
 Route::get('/graphique/{service}', [GraphiqueController::class, 'getGraphData']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

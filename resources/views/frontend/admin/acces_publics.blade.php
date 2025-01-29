@@ -4,11 +4,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Concertation nationale</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
-    <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
 
     <!-- Font Awesome + Webfont -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -23,10 +23,10 @@
     </script>
 
     <!-- Bootstrap & Plugins CSS -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="assets/css/demo.css" />
 
     <style>
         /* GLOBAL STYLES */
@@ -85,6 +85,28 @@
         .dataTables_wrapper .dataTables_info {
             margin-top: 10px;
         }
+      .btn-choose-theme {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 24px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .btn-choose-theme:hover {
+        background-color: #0056B3;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+      .btn-choose-theme:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
@@ -98,10 +120,13 @@
 <div class="wrapper">
     <!-- SIDEBAR -->
     <div class="sidebar" data-background-color="dark">
+
         <div class="sidebar-logo">
+
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
                 <div class="nav-toggle">
+                <h6 style="color:white">Concertations nationales</h6>
                     <!-- le logo des concertations dans le sidebar
                     <img src="assets/img/logg.PNG" alt="" style="height: 90px;margin-top:20px;margin-right:50px"> -->
                     <button class="btn btn-toggle toggle-sidebar">
@@ -126,7 +151,7 @@
                             <p>Accueil</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                   <!--  <li class="nav-item">
                         <a href="{{ route('utilisateur.create') }}">
                             <i class="fas fa-user"></i>
                             <p>Utilisateur</p>
@@ -134,6 +159,18 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('statistique.statistique') }}">
+                            <i class="far fa-chart-bar"></i>
+                            <p>Statistique</p>
+                        </a>
+                    </li>-->
+                     <li class="nav-item">
+                        <a href="#">
+                            <i class="fas fa-user"></i>
+                            <p>Utilisateur</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
                             <i class="far fa-chart-bar"></i>
                             <p>Statistique</p>
                         </a>
@@ -223,7 +260,11 @@
                                         </a>
                                     </div>
                                 </div>
+                                <a href="{{ route('admin.dashboard') }}" class="btn-choose-theme">
+                        <span class="btn-text">Choisir un autre thème</span>
+                      </a>
                             </div>
+
                             <div class="card-body">
                                 <div class="container-fluid" style="min-height: 375px">
                                     <!-- SECTION: ACCES AUX SERVICES PUBLICS -->
@@ -299,17 +340,17 @@
                                                 <thead class="table-dark">
                                                     <tr>
                                                         <th>Service</th>
-                                                        <th>Nombre d'accès</th>
+                                                        <th>Nombre de participants qui l'utilisent</th>
                                                         <th>Très Accessible</th>
                                                         <th>Accessible</th>
                                                         <th>Moyennement Accessible</th>
                                                         <th>Difficilement Accessible</th>
                                                         <th>Très Difficilement Accessible</th>
                                                         <th>Tranche d'âge majoritaire</th>
-                                                        <th>Nombre d'hommes</th>
-                                                        <th>Nombre de femmes</th>
-                                                        <th>Nombre venant du Sénégal</th>
-                                                        <th>Nombre venant de la Diaspora</th>
+                                                        <th>Participants hommes</th>
+                                                        <th>Participants femmes</th>
+                                                        <th>Participants Sénégal</th>
+                                                        <th>Participants Diaspora</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -332,6 +373,90 @@
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <!-- ... votre HTML principal ... -->
+
+                                            <!-- SECTION SUGGESTIONS -->
+<!-- SECTION SUGGESTIONS -->
+<h3 class="text-center mt-5">💡 Suggestions des Participants</h3>
+<div id="suggestionsContainer" class="mx-auto"
+     style="max-width: 600px; min-height: 150px;
+            background: #fff; border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px; padding: 20px;
+            overflow: hidden; position: relative;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; font-size: 1.1rem; color: #555;">
+
+    <button id="prevBtn" class="nav-btn" style="position: absolute; left: 10px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888;">❮</button>
+
+    <p id="suggestionText" style="margin: 0; max-width: 90%; transition: opacity 0.5s;"></p>
+
+    <button id="nextBtn" class="nav-btn" style="position: absolute; right: 10px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888;">❯</button>
+</div>
+
+<!-- SCRIPT DE DÉFILEMENT -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const suggestions = @json($suggestionsAll);
+
+    if (!suggestions || !suggestions.length) {
+        document.getElementById('suggestionText').textContent = "Aucune suggestion pour le moment.";
+        return;
+    }
+
+    let currentIndex = 0;
+    let interval;
+
+    const suggestionEl = document.getElementById('suggestionText');
+    const container = document.getElementById('suggestionsContainer');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function showSuggestion(index) {
+        suggestionEl.style.opacity = 0;
+        setTimeout(() => {
+            suggestionEl.textContent = suggestions[index];
+            suggestionEl.style.opacity = 1;
+        }, 300);
+    }
+
+    function startAutoScroll() {
+        interval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % suggestions.length;
+            showSuggestion(currentIndex);
+        }, 5000);
+    }
+
+    function stopAutoScroll() {
+        clearInterval(interval);
+    }
+
+    // Init
+    showSuggestion(currentIndex);
+    startAutoScroll();
+
+    // Boutons
+    prevBtn.addEventListener('click', () => {
+        stopAutoScroll();
+        currentIndex = (currentIndex - 1 + suggestions.length) % suggestions.length;
+        showSuggestion(currentIndex);
+        startAutoScroll();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        stopAutoScroll();
+        currentIndex = (currentIndex + 1) % suggestions.length;
+        showSuggestion(currentIndex);
+        startAutoScroll();
+    });
+
+    // Passage de mouseenter / mouseleave => mouseover / mouseout
+    container.addEventListener('mouseover', stopAutoScroll);
+    container.addEventListener('mouseout', startAutoScroll);
+});
+</script>
+
+
                                         <!-- END TABLEAU -->
                                     </div> <!-- end #themeSelection -->
                                 </div> <!-- end .container-fluid -->
@@ -355,20 +480,20 @@
 </div> <!-- end .wrapper -->
 
 <!-- SCRIPTS -->
-<script src="../assets/js/core/jquery-3.7.1.min.js"></script>
-<script src="../assets/js/core/popper.min.js"></script>
-<script src="../assets/js/core/bootstrap.min.js"></script>
+<script src="assets/js/core/jquery-3.7.1.min.js"></script>
+<script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/core/bootstrap.min.js"></script>
 <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-<script src="../assets/js/plugin/chart.js/chart.min.js"></script>
-<script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
-<script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
-<script src="../assets/js/plugin/datatables/datatables.min.js"></script>
-<script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-<script src="../assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-<script src="../assets/js/plugin/jsvectormap/world.js"></script>
-<script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
-<script src="../assets/js/kaiadmin.min.js"></script>
-<script src="../assets/js/setting-demo.js"></script>
+<script src="assets/js/plugin/chart.js/chart.min.js"></script>
+<script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="assets/js/plugin/datatables/datatables.min.js"></script>
+<script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+<script src="assets/js/plugin/jsvectormap/world.js"></script>
+<script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+<script src="assets/js/kaiadmin.min.js"></script>
+<script src="assets/js/setting-demo.js"></script>
 <!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
 
@@ -380,7 +505,7 @@
             data: {
                 labels: @json($servicesLabels),
                 datasets: [{
-                    label: "Nombre d’utilisations",
+                    label: "Nombre de citoyens qui l'utilisent",
                     data: @json($servicesData),
                     backgroundColor: "rgba(255, 165, 0, 0.7)",
                     borderColor: "#FF9900",

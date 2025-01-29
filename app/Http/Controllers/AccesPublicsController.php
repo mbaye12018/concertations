@@ -18,9 +18,27 @@ class AccesPublicsController extends Controller
                 'accessibilite',
                 'tranche_age',
                 'sexe',
-                'pays_diaspora'
+                'pays_diaspora',
+                'suggestions_acces'
             )
             ->get();
+
+            $suggestionsAll = $services->map(function ($row) {
+                if (is_string($row->suggestions_acces) && json_decode($row->suggestions_acces, true) !== null) {
+                    return json_decode($row->suggestions_acces, true); // Convertir JSON en tableau
+                }
+                return $row->suggestions_acces; // Sinon, garder la chaîne telle quelle
+            })
+            ->flatten() // Aplatir si plusieurs suggestions sont sous forme de tableau
+            ->filter()  // Supprimer les valeurs nulles ou vides
+            ->map(function ($s) {
+                return trim(str_replace(["\n", "\r"], ' ', $s)); // Enlever les sauts de ligne et espaces inutiles
+            })
+            ->values()  // Ré-indexer proprement
+            ->all();    // Retourner un tableau PHP
+
+
+
 
         // 2) Définir le mapping (correspondance) pour transformer
         //    "moyennement_accessible" => "moyennement accessible", etc.
@@ -210,7 +228,8 @@ class AccesPublicsController extends Controller
             'accessibilityLabels', 'accessibilityData',
             'detailedServices', 'ageLabels', 'ageData',
             'genderLabels', 'genderData',
-            'localityLabels', 'localityData'
+            'localityLabels', 'localityData',
+            'suggestionsAll'
         ));
     }
 }

@@ -8,11 +8,11 @@
       name="viewport"/>
     <link
       rel="icon"
-      href="../assets/img/kaiadmin/favicon.ico"
+      href="/assets/img/kaiadmin/favicon.ico"
       type="image/x-icon"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Fonts and icons -->
-    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -23,7 +23,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["assets/css/fonts.min.css"],
+          urls: ["/assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -52,7 +52,14 @@
     max-width: 300px;
     width: 100%;
 }
-
+.theme-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 colonnes fixes */
+            gap: 20px;
+            padding: 20px;
+            justify-items: center;
+            background-color: #f4f7fc;
+        }
 /* Add hover effects */
 .theme-card:hover {
     transform: translateY(-10px);
@@ -99,12 +106,12 @@
 
 </style>
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
   </head>
   <body>
     <div class="wrapper">
@@ -113,7 +120,10 @@
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-           
+          <h6 style="color:white">Concertations nationales</h6>
+          <img src="/assets/img/logg.PNG" alt="" style="height: 90px;margin-top:20px;margin-right:50px">
+
+
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
                 <i class="gg-menu-right"></i>
@@ -131,22 +141,34 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-             
+
               <li class="nav-item active">
                 <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
                   <i class="fas fa-home"></i>
                 <p>Accueil</p>
-                </a>                
+                </a>
               </li>
+              <li class="nav-item">
+                <a href="#">
+                  <i class="fas fa-user"></i>
+                <p>Utilisateur</p>
+            </a>
+              </li><!-- End Logo Header
               <li class="nav-item">
                 <a href="{{ route('utilisateur.create') }}">
                   <i class="fas fa-user"></i>
                 <p>Utilisateur</p>
             </a>
               </li>
-             
+
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('statistique.statistique') }}">
+                  <i class="far fa-chart-bar"></i>
+                  <p>Statistique</p>
+                </a>
+            </li>-->
+            <li class="nav-item">
+                <a class="nav-link" href="#">
                   <i class="far fa-chart-bar"></i>
                   <p>Statistique</p>
                 </a>
@@ -164,7 +186,7 @@
             <div class="logo-header" data-background-color="dark">
               <a href="index.html" class="logo">
                 <img
-                  src="assets/img/kaiadmin/logo_light.svg"
+                  src="/assets/img/kaiadmin/logo_light.svg"
                   alt="navbar brand"
                   class="navbar-brand"
                   height="20"/>
@@ -184,27 +206,27 @@
             <!-- End Logo Header -->
           </div>
           <!-- Navbar Header -->
-        
+
           <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
             <div class="container-fluid">
             <span class="op-7">Bienvenue,</span>
             <span class="fw-bold">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</span>
-              
+
 
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-               
-               
-                        
+
+
+
                 <div class="dropdown">
                   <button class="btn  dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-user"></i>
-                  
+
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li><button class="dropdown-item" type="button"><a href="{{ route('login') }}">Deconnexion</button></li> 
+                    <li><button class="dropdown-item" type="button"><a href="{{ route('login') }}">Deconnexion</button></li>
                   </ul>
                 </div>
-                          
+
               </ul>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="#">Action</a></li>
@@ -212,7 +234,7 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
           </nav>
-             
+
           <!-- End Navbar -->
         </div>
 
@@ -242,7 +264,7 @@
                     </div>
                   </div>
                 </div>
-              </div> 
+              </div>
               <div class="col-sm-6 col-md-4">
                 <div class="card card-stats card-round">
                   <div class="card-body">
@@ -285,9 +307,9 @@
                   </div>
                 </div>
               </div>
-              
+
             </div>
-            
+
             <div class="row">
               <div class="col-md-12">
                 <div class="card card-round">
@@ -314,11 +336,11 @@
                   </div>
                   <div class="card-body">
                     <div class="container-fluid" style="min-height: 375px">
-                    
+
                  <div id="themeSelection" class="hidden-section mt-5">
             <div class="text-center mb-4">
             <!-- <h2 class="text-primary">Sur quelles thématiques souhaitez-vous donner votre avis ?</h2> -->
-          
+
             </div>
 
             <!-- Cartes en grille (3 par ligne) -->
@@ -346,8 +368,8 @@
             <i class="fas fa-clock theme-icon animate__animated animate__heartBeat"></i>
             Diligence
         </h4>
-        <p><strong>Avis reçus : {{ $DigitaleTotal }}</strong></p> <!-- Affichage du total -->
-     
+        <p><strong>Avis reçus : {{ $DiligenceTotal }}</strong></p> <!-- Affichage du total -->
+
         </a>
     <!-- 4) Coût du service -->
     <a href="/cout-service" class="theme-card" data-theme="coutService">
@@ -403,27 +425,27 @@
 
 
 
-                          
-                           
+
+
 
                         </body>
                         </html>
-                          
+
                       </table>
                     </div>
                     <div id="myChartLegend"></div>
                   </div>
                 </div>
               </div>
-             
+
             </div>
-           
+
           </div>
         </div>
 
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
-            
+
                     <footer class="footer">
               <div class="container-fluid d-flex justify-content-center">
                   <div class="copyright text-center">
@@ -432,28 +454,28 @@
               </div>
           </footer>
 
-           
+
           </div>
         </footer>
       </div>
     </div>
-    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
-    <script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
-    <script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
-    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
-    <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-    <script src="../assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="../assets/js/plugin/jsvectormap/world.js"></script>
-    <script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
-    <script src="../assets/js/kaiadmin.min.js"></script>
-    <script src="../assets/js/setting-demo.js"></script>
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/js/plugin/chart.js/chart.min.js"></script>
+    <script src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+    <script src="/assets/js/plugin/chart-circle/circles.min.js"></script>
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script src="/assets/js/kaiadmin.min.js"></script>
+    <script src="/assets/js/setting-demo.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                         
+
 
   </body>
 </html>

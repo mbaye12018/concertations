@@ -299,3 +299,5 @@ input:checked + .slider:before {
 .switch:hover .slider {
   background-color: #b3e6b3; /* Light green on hover */
 }
+
+

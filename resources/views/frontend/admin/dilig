@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Concertation Nationale - Diligence</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
+    <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+
+    <!-- Font Awesome + Webfont -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: ["Font Awesome 5 Solid","Font Awesome 5 Regular","Font Awesome 5 Brands","simple-line-icons"],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- Bootstrap + Kaiadmin CSS -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+
+    <style>
+        body {
+            background-color: #f4f7fc;
+            font-family: 'Public Sans', sans-serif;
+        }
+        .chart-container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            height: 420px;
+        }
+        .chart-header h4 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Table style */
+        .table-container {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .table-container h4 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        #diligenceTable thead th {
+            background-color: #2e59d9;
+            color: #fff;
+        }
+        #diligenceTable tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- SIDEBAR -->
+    <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+            <div class="logo-header" data-background-color="dark">
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+                    <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
+                </div>
+                <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+            </div>
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+            <div class="sidebar-content">
+                <ul class="nav nav-secondary">
+                    <li class="nav-item active">
+                        <a href="#">
+                            <i class="fas fa-home"></i>
+                            <p>Accueil</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('statistique.statistique') }}">
+                            <i class="far fa-chart-bar"></i>
+                            <p>Statistique</p>
+                        </a>
+                    </li>
+                    <!-- Ajoutez d'autres liens si besoin -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END SIDEBAR -->
+
+    <div class="main-panel">
+        <div class="main-header">
+            <div class="main-header-logo">
+                <!-- Logo Header -->
+                <div class="logo-header" data-background-color="dark">
+                    <a href="#" class="logo">
+                        <img src="assets/img/kaiadmin/logo_light.svg"
+                             alt="navbar brand" class="navbar-brand"
+                             height="20"/>
+                    </a>
+                    <div class="nav-toggle">
+                        <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+                        <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
+                    </div>
+                    <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+                </div>
+                <!-- End Logo Header -->
+            </div>
+
+            <!-- NAVBAR HEADER -->
+            <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+                <div class="container-fluid">
+                    <span class="op-7">Bienvenue,</span>
+                    <span class="fw-bold">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</span>
+
+                    <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenu2"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <li>
+                                    <button class="dropdown-item" type="button">
+                                        <a href="{{ route('login') }}">Deconnexion</a>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+            <!-- END NAVBAR HEADER -->
+        </div>
+
+        <div class="container">
+            <div class="page-inner pt-3">
+                <h2 class="text-center text-primary mb-4">Statistiques : Diligence</h2>
+
+                <!-- 1ère ligne : Procédures vs Formalités -->
+                <div class="row">
+                    <!-- Procédures (Longues vs Courtes) -->
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h4>Procédures (Longues vs Courtes)</h4>
+                            </div>
+                            <canvas id="proceduresChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Formalités (Complexes vs Simples) -->
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h4>Formalités (Complexes vs Simples)</h4>
+                            </div>
+                            <canvas id="formalitesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2ème ligne : Tranche d'âge vs Sexe -->
+                <div class="row">
+                    <!-- Tranche d'âge -->
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h4>Répartition par Âge</h4>
+                            </div>
+                            <canvas id="ageChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Répartition par sexe -->
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h4>Répartition par Sexe</h4>
+                            </div>
+                            <canvas id="genderChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3ème ligne : Localité -->
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h4>Répartition par Localité</h4>
+                            </div>
+                            <canvas id="localityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLEAU RÉCAPITULATIF -->
+                <div class="table-container">
+                    <h4>Tableau Récapitulatif</h4>
+                    <table id="diligenceTable" class="table table-bordered table-striped text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Tranche d'âge majoritaire</th>
+                                <th>Sexe majoritaire</th>
+                                <th>Localité majoritaire</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <!-- On récupère le label d'âge majoritaire -->
+                                <td>
+                                    {{ count($ageData) ? $ageLabels[array_search(max($ageData), $ageData)] : 'N/A' }}
+                                </td>
+                                <!-- On récupère le sexe majoritaire -->
+                                <td>
+                                    {{ count($genderData) ? $genderLabels[array_search(max($genderData), $genderData)] : 'N/A' }}
+                                </td>
+                                <!-- On récupère la localité majoritaire -->
+                                <td>
+                                    {{ count($localityData) ? $localityLabels[array_search(max($localityData), $localityData)] : 'N/A' }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- FIN TABLEAU -->
+
+            </div><!-- end page-inner -->
+        </div> <!-- end container -->
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="container-fluid d-flex justify-content-center">
+                <div class="copyright text-center">
+                    © 2024 Copyright MFPRSP
+                </div>
+            </div>
+        </footer>
+        <!-- END FOOTER -->
+    </div> <!-- end main-panel -->
+</div> <!-- end wrapper -->
+
+<!-- SCRIPTS -->
+<script src="../assets/js/core/jquery-3.7.1.min.js"></script>
+<script src="../assets/js/core/popper.min.js"></script>
+<script src="../assets/js/core/bootstrap.min.js"></script>
+<script src="../assets/js/plugin/chart.js/chart.min.js"></script>
+<script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+<script src="../assets/js/kaiadmin.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // On récupère la distribution Complexité
+    // ex. ["Procédures Longues","Procédures Courtes","Formalités Complexes","Formalités Simples"]
+    const complexityLabels = @json($complexityLabels);
+    const complexityData = @json($complexityData);
+
+    // 1) ProcéduresChart => indices 0,1
+    new Chart(document.getElementById('proceduresChart'), {
+        type: 'pie',
+        data: {
+            labels: [complexityLabels[0], complexityLabels[1]],
+            datasets: [{
+                data: [complexityData[0], complexityData[1]],
+                backgroundColor: ['#3498db','#e74c3c']
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    // 2) FormalitesChart => indices 2,3
+    new Chart(document.getElementById('formalitesChart'), {
+        type: 'pie',
+        data: {
+            labels: [complexityLabels[2], complexityLabels[3]],
+            datasets: [{
+                data: [complexityData[2], complexityData[3]],
+                backgroundColor: ['#2ecc71','#f1c40f']
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    // Répartition par Âge
+    new Chart(document.getElementById('ageChart'), {
+        type: 'bar',
+        data: {
+            labels: @json($ageLabels),
+            datasets: [{
+                label: "Tranche d'âge",
+                data: @json($ageData),
+                backgroundColor: "#4e73df"
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // Répartition par Sexe
+    new Chart(document.getElementById('genderChart'), {
+        type: 'pie',
+        data: {
+            labels: @json($genderLabels),
+            datasets: [{
+                data: @json($genderData),
+                backgroundColor: ['#8e44ad','#e74c3c']
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    // Répartition par Localité
+    new Chart(document.getElementById('localityChart'), {
+        type: 'doughnut',
+        data: {
+            labels: @json($localityLabels),
+            datasets: [{
+                data: @json($localityData),
+                backgroundColor: ['#27ae60','#d35400']
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    // DataTables sur le tableau
+    $('#diligenceTable').DataTable({
+        searching: false, // On peut le désactiver si on veut
+        ordering: false,
+        info: false,
+        lengthChange: false,
+        pageLength: 1
+    });
+});
+</script>
+</body>
+</html>

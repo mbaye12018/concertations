@@ -1957,8 +1957,8 @@ function showForm(themeKey) {
                 });
 
                 // Conversion des boutons radio en booléens (1 ou 0)
-                jsonData["signaletique_claire"] = document.querySelector('input[name="signaletique"]:checked') ? 1 : 0;
-                jsonData["bonne_orientation"] = document.querySelector('input[name="guide_service"]:checked') ? 1 : 0;
+                jsonData["signaletique_claire"] = document.querySelector('input[name="signaletique_claire"]:checked')?.value || "0";
+                jsonData["bonne_orientation"] = document.querySelector('input[name="bonne_orientation"]:checked')?.value || "0";
 
 
                 jsonData["id_soumission"] = idSoumission; // Ajouter l'ID de soumission
@@ -2006,6 +2006,7 @@ function showForm(themeKey) {
                     submitAccueilOrientation.disabled = false;
                     submitAccueilOrientation.innerHTML = "<i class='fas fa-paper-plane me-1'></i>Soumettre";
                 }
+
             });
         }
     });
