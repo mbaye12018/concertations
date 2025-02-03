@@ -2046,6 +2046,8 @@ document.addEventListener("DOMContentLoaded", function () {
             jsonData["id_soumission"] = idSoumission;
 
             // Conversion des boutons radio en booléens (1 ou 0)
+
+
             jsonData["procedures_longues"] = document.querySelector('input[name="procedures_longues"]:checked') ? 1 : 0;
             jsonData["formalites_complexes"] = document.querySelector('input[name="formComplexes"]:checked') ? 1 : 0;
 
@@ -2723,7 +2725,7 @@ problemes.forEach(value => formData.append('problemes_digitaux_types[]', value))
         } break;
     }
 
-    // 4) Envoi AJAX
+            // 4) Envoi AJAX
     try {
         const response = await fetch(routeUrl, {
         method: "POST",
