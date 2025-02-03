@@ -121,7 +121,7 @@
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
           <h6 style="color:white">Concertations nationales</h6>
-          <img src="/assets/img/logg.PNG" alt="" style="height: 90px;margin-top:20px;margin-right:50px">
+
 
 
             <div class="nav-toggle">

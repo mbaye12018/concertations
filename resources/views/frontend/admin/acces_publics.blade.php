@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Concertation nationale</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
-    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="assets/img/logg.PNG" type="image/x-icon"/>
 
     <!-- Font Awesome + Webfont -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -70,7 +70,7 @@
             background: #fff;
         }
         #servicesTable thead th {
-            background-color: #2e59d9;
+            background-color: #0092F4;
             color: #fff;
         }
         #servicesTable tbody tr:hover {
@@ -126,7 +126,7 @@
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
                 <div class="nav-toggle">
-                <h6 style="color:white">Concertations nationales</h6>
+                <h6 style="color:white"><i class="fas fa-comments" style="color:green"></i>Concertations nationales</h6>
                     <!-- le logo des concertations dans le sidebar
                     <img src="assets/img/logg.PNG" alt="" style="height: 90px;margin-top:20px;margin-right:50px"> -->
                     <button class="btn btn-toggle toggle-sidebar">
@@ -243,7 +243,7 @@
                             <div class="card-header">
                                 <div class="card-head-row">
                                     <div class="card-title">
-                                        Statistiques relatifs à l'accès aux services publics
+
                                     </div>
                                     <div class="card-tools">
                                         <a href="#" class="btn btn-label-success btn-round btn-sm me-2">
@@ -272,16 +272,19 @@
                                         <div class="text-center mb-4"></div>
 
                                         <div class="container">
-                                            <h2 class="text-center text-primary mb-4">
-                                                Accès aux Services Publics
-                                            </h2>
+                                        <h2 class="text-center mb-4" style="color: black;">
+                                        <i class="fas fa-building" style="color: green;"></i> Accès aux Services Publics
+                                    </h2>
+
+
 
                                             <div class="row">
                                                 <!-- Services Chart -->
                                                 <div class="col-md-8">
                                                     <div class="chart-container">
                                                         <div class="chart-header">
-                                                            <h4>Services publics les plus utilisés</h4>
+                                                        <h4><i class="fas fa-cogs" style="color: green;"></i> Services publics les plus utilisés</h4>
+
                                                         </div>
                                                         <canvas id="servicesChart"></canvas>
                                                     </div>
@@ -291,7 +294,10 @@
                                                 <div class="col-md-4">
                                                     <div class="chart-container" style="height: 420px;">
                                                         <div class="chart-header">
-                                                            <h4>Accessibilité des Services</h4>
+                                                        <h4><i class="fas fa-hands-helping" style="color: green;"></i> Accessibilité des Services</h4>
+
+
+
                                                         </div>
                                                         <canvas id="accessibilityChart"></canvas>
                                                     </div>
@@ -305,7 +311,7 @@
                                                 <div class="col-md-4">
                                                     <div class="chart-container">
                                                         <div class="chart-header">
-                                                            <h4>Tranche d'âge</h4>
+                                                        <h4><i class="fas fa-users" style="color: green;"></i> Tranche d'Âge ayant participé à cette thématique</h4>
                                                         </div>
                                                         <canvas id="ageChart"></canvas>
                                                     </div>
@@ -315,7 +321,7 @@
                                                 <div class="col-md-4">
                                                     <div class="chart-container">
                                                         <div class="chart-header">
-                                                            <h4>Répartition par Sexe</h4>
+                                                        <h4><i class="fas fa-venus-mars" style="color: green;"></i> Répartition de ces participants par Sexe</h4>
                                                         </div>
                                                         <canvas id="genderChart"></canvas>
                                                     </div>
@@ -325,7 +331,9 @@
                                                 <div class="col-md-4">
                                                     <div class="chart-container">
                                                         <div class="chart-header">
-                                                            <h4>Répartition par Localité</h4>
+                                                        <h4><i class="fas fa-venus-mars"></i> Répartition de ces participants par localité</h4>
+
+
                                                         </div>
                                                         <canvas id="localityChart"></canvas>
                                                     </div>
@@ -471,7 +479,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <footer class="footer">
             <div class="container-fluid d-flex justify-content-center">
                 <div class="copyright text-center">
-                    © 2024 Copyright MFPRSP/DSI/D2I
+                    © 2025 Copyright MFPRSP/DSI/D2I
                 </div>
             </div>
         </footer>
@@ -507,7 +515,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 datasets: [{
                     label: "Nombre de citoyens qui l'utilisent",
                     data: @json($servicesData),
-                    backgroundColor: "rgba(255, 165, 0, 0.7)",
+                    backgroundColor: [
+                        "#2ecc71", // vert clair
+                        ],
+
                     borderColor: "#FF9900",
                     borderWidth: 1
                 }]
@@ -594,7 +605,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 responsive: true,
                 maintainAspectRatio: false,
                 layout: {
-                    padding: 20
+                    padding: 50
                 },
                 scales: {
                     y: {
@@ -631,7 +642,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 responsive: true,
                 maintainAspectRatio: false,
                 layout: {
-                    padding: 20
+                    padding: 50
                 },
                 plugins: {
                     legend: {
@@ -660,7 +671,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 responsive: true,
                 maintainAspectRatio: false,
                 layout: {
-                    padding: 20
+                    padding: 50
                 },
                 plugins: {
                     legend: {

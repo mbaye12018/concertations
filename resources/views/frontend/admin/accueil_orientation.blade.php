@@ -4,7 +4,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Accueil & Orientation</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
-    <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+
+    <link rel="icon" href="../assets/img/logg.png" type="image/x-icon"/>
 
     <!-- FontAwesome + Webfont -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -88,7 +89,7 @@
         <div class="sidebar-logo">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
-            <h6 style="color:white">Concertations nationales</h6>
+            <h6 style="color:white"><i class="fas fa-comments" style="color:green"></i> Concertations nationales</h6>
                 <div class="nav-toggle">
                     <button class="btn btn-toggle toggle-sidebar">
                         <i class="gg-menu-right"></i>
@@ -205,7 +206,7 @@
 
                                 <div class="card-head-row">
 
-                                    <div class="card-title">Statistiques : Accueil & Orientation</div>
+                                    <div class="card-title"> </div>
                                     <div class="card-tools">
                                         <!-- Vos éventuels boutons Export / Print -->
 
@@ -218,14 +219,20 @@
                       </a>
                             </div>
                             <div class="card-body">
-                                <h2 class="text-center text-primary mb-4">Accueil & Orientation</h2>
+                            <h2 style="text-align:center">
+                                <i class="fas fa-door-open" style="color: green;"></i>
+                                <i class="fas fa-compass" style="color: green;"></i>
+                                Accueil & Orientation
+                            </h2>
+
 
                                 <!-- Première ligne de graphiques : Évaluation + Signalétique -->
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="chart-container">
                                             <div class="chart-header">
-                                                <h4>Évaluation de l'Accueil</h4>
+                                            <h4><i class="fas fa-door-open" style="color: green;"></i> Évaluation de l'Accueil dans l'administration</h4>
+
                                             </div>
                                             <canvas id="evaluationChart"></canvas>
                                         </div>
@@ -233,7 +240,8 @@
                                     <div class="col-md-6">
                                         <div class="chart-container">
                                             <div class="chart-header">
-                                                <h4>Signalétique Claire</h4>
+                                            <h5><i class="fas fa-map-signs" style="color: green;"></i> Les indications et signalétiques étaient-elles claires et suffisantes ?</h5>
+
                                             </div>
                                             <canvas id="signaletiqueChart"></canvas>
                                         </div>
@@ -245,7 +253,8 @@
                                     <div class="col-md-6">
                                         <div class="chart-container">
                                             <div class="chart-header">
-                                                <h4>Bonne Orientation</h4>
+                                            <h4><i class="fas fa-compass" style="color: green;"></i> Bonne Orientation</h4>
+
                                             </div>
                                             <canvas id="orientationChart"></canvas>
                                         </div>
@@ -253,7 +262,9 @@
                                     <div class="col-md-6">
                                         <div class="chart-container">
                                             <div class="chart-header">
-                                                <h4>Répartition par Sexe</h4>
+                                            <h4><i class="fas fa-venus-mars" style="color: green;"></i> Répartition par Sexe</h4>
+
+
                                             </div>
                                             <canvas id="genderChart"></canvas>
                                         </div>
@@ -265,7 +276,8 @@
                                     <div class="col-md-6">
                                         <div class="chart-container">
                                             <div class="chart-header">
-                                                <h4>Tranche d'âge</h4>
+                                            <h4><i class="fas fa-users" style="color: green;"></i> Tranche d'Âge</h4>
+
                                             </div>
                                             <canvas id="ageChart"></canvas>
                                         </div>
@@ -273,7 +285,8 @@
                                     <div class="col-md-6">
                                         <div class="chart-container">
                                             <div class="chart-header">
-                                                <h4>Répartition par Localité</h4>
+                                            <h4><i class="fas fa-map-marked-alt" style="color: green;"></i> Répartition par Localité</h4>
+
                                             </div>
                                             <canvas id="localityChart"></canvas>
                                         </div>
@@ -468,7 +481,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <footer class="footer">
             <div class="container-fluid d-flex justify-content-center">
                 <div class="copyright text-center">
-                    © 2024 Copyright MFPRSP
+                    © 2025 Copyright MFPRSP/DSI/D2I
                 </div>
             </div>
         </footer>

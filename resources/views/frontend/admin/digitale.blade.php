@@ -4,7 +4,7 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
    <title>Transformation Digitale</title>
    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
-   <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+   <link rel="icon" href="../assets/img/logg.png" type="image/x-icon"/>
 
 
    <!-- FontAwesome + Webfont -->
@@ -62,6 +62,28 @@
            text-align: center;
            margin-bottom: 10px;
        }
+       .btn-choose-theme {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 24px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .btn-choose-theme:hover {
+        background-color: #0056B3;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+      .btn-choose-theme:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
    </style>
 </head>
 <body>
@@ -150,65 +172,94 @@
                 </div>
 
             </nav>
+
        <div class="container">
+       <a href="{{ route('admin.dashboard') }}" class="btn-choose-theme">
+            <span class="btn-text"><i class="fas fa-palette" style="color: green;"></i> Choisir un autre thème</span>
+        </a>
 
-           <div class="page-inner">
+       <div class="page-inner">
+    <h2 class="text-center text-primary mt-3">
+        <i class="fas fa-chart-line" style="color: green;"></i> <span style="color: black;">Statistiques - Transformation Digitale</span>
+    </h2>
 
-               <h2 class="text-center text-primary mt-3">Statistiques - Transformation Digitale</h2>
+    <div class="row">
+        <!-- Évaluation Accessibilité -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h4 style="color: black;">
+                        <i class="fas fa-universal-access" style="color: green;"></i> Comment l’accessibilité des services digitaux  est évalué?
+                    </h4>
+                </div>
+                <canvas id="evaluationChart"></canvas>
+            </div>
+        </div>
 
+        <!-- Utilisation Services Numériques -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h4 style="color: black;">
+                        <i class="fas fa-laptop" style="color: green;"></i> Utilisez-vous les services publics digitalisés ?
+                    </h4>
+                </div>
+                <canvas id="usageChart"></canvas>
+            </div>
+        </div>
+    </div>
 
-               <div class="row">
-                   <!-- Évaluation Accessibilité -->
-                   <div class="col-md-6">
-                       <div class="chart-container">
-                           <div class="chart-header"><h4>Évaluation de l'Accessibilité</h4></div>
-                           <canvas id="evaluationChart"></canvas>
-                       </div>
-                   </div>
-                   <!-- Utilisation Services Numériques -->
-                   <div class="col-md-6">
-                       <div class="chart-container">
-                           <div class="chart-header"><h4>Utilisation (Oui / Non)</h4></div>
-                           <canvas id="usageChart"></canvas>
-                       </div>
-                   </div>
-               </div>
+    <div class="row">
+        <!-- Problèmes Rencontrés -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h4 style="color: black;">
+                        <i class="fas fa-exclamation-triangle" style="color: green;"></i> Problèmes Rencontrés (Oui / Non)
+                    </h4>
+                </div>
+                <canvas id="problemChart"></canvas>
+            </div>
+        </div>
 
+        <!-- Tranche d'âge -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h4 style="color: black;">
+                        <i class="fas fa-user-clock" style="color: green;"></i> Tranche d'âge
+                    </h4>
+                </div>
+                <canvas id="ageChart"></canvas>
+            </div>
+        </div>
+    </div>
 
-               <div class="row">
-                   <!-- Problèmes Rencontrés -->
-                   <div class="col-md-6">
-                       <div class="chart-container">
-                           <div class="chart-header"><h4>Problèmes Rencontrés (Oui / Non)</h4></div>
-                           <canvas id="problemChart"></canvas>
-                       </div>
-                   </div>
-                   <!-- Tranche d'âge -->
-                   <div class="col-md-6">
-                       <div class="chart-container">
-                           <div class="chart-header"><h4>Tranche d'âge</h4></div>
-                           <canvas id="ageChart"></canvas>
-                       </div>
-                   </div>
-               </div>
+    <div class="row">
+        <!-- Répartition par Sexe -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h4 style="color: black;">
+                        <i class="fas fa-venus-mars" style="color: green;"></i> Répartition par Sexe
+                    </h4>
+                </div>
+                <canvas id="genderChart"></canvas>
+            </div>
+        </div>
 
+        <!-- Répartition par Localité -->
+        <div class="col-md-6">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h4 style="color: black;">
+                        <i class="fas fa-map-marker-alt" style="color: green;"></i> Répartition par Localité
+                    </h4>
+                </div>
+                <canvas id="localityChart"></canvas>
+            </div>
+        </div>
 
-               <div class="row">
-                   <!-- Répartition par Sexe -->
-                   <div class="col-md-6">
-                       <div class="chart-container">
-                           <div class="chart-header"><h4>Répartition par Sexe</h4></div>
-                           <canvas id="genderChart"></canvas>
-                       </div>
-                   </div>
-                   <!-- Répartition par Localité -->
-                   <div class="col-md-6">
-                       <div class="chart-container">
-                           <div class="chart-header"><h4>Répartition par Localité</h4></div>
-                           <canvas id="localityChart"></canvas>
-                       </div>
-                   </div>
-               </div>
 
 
                <!-- SECTION SUGGESTIONS -->
@@ -230,6 +281,7 @@
     background-color: #f8f9fa;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-height: 250px;
 }
 
 h4 {
@@ -279,7 +331,7 @@ h4 i {
        <footer class="footer">
            <div class="container-fluid d-flex justify-content-center">
                <div class="copyright text-center">
-                   © 2024 Copyright MFPRSP
+                   © 2025 Copyright MFPRSP/DSI/D2I
                </div>
            </div>
        </footer>

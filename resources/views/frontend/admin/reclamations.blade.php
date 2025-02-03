@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Concertation Nationale - Réclamations</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
-    <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="../assets/img/logg.png" type="image/x-icon"/>
 
     <!-- Font Awesome + Webfont -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -190,94 +190,98 @@
         </div>
 
         <div class="container">
-            <div class="page-inner">
-                <h2 class="text-center text-primary mt-3">Statistiques - Réclamations</h2>
+    <div class="page-inner">
+        <h2 class="text-center text-primary mt-3">
+            <i class="fas fa-chart-bar" style="color: green;"></i> Statistiques - Réclamations
+        </h2>
 
-                <!-- ROW 1 : deja_deposee + services concernés -->
-                <a href="{{ route('admin.dashboard') }}" class="btn-choose-theme">
-                        <span class="btn-text">Choisir un autre thème</span>
-                      </a>
-                <div class="row">
-                    <!-- Déjà Déposée (Pie) -->
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Avez-vous déjà déposé une réclamation ?</h4>
-                            </div>
-                            <canvas id="alreadyChart"></canvas>
-                        </div>
-                    </div>
+        <!-- Bouton pour choisir un autre thème -->
+        <a href="{{ route('admin.dashboard') }}" class="btn-choose-theme">
+            <span class="btn-text"><i class="fas fa-palette" style="color: green;"></i> Choisir un autre thème</span>
+        </a>
 
-                    <!-- Services Concernés (Bar) -->
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Services Concernés</h4>
-                            </div>
-                            <canvas id="servicesChart"></canvas>
-                        </div>
+        <!-- ROW 1 : deja_deposee + services concernés -->
+        <div class="row">
+            <!-- Déjà Déposée (Pie) -->
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h4><i class="fas fa-file-alt" style="color: green;"></i> Avez-vous déjà déposé une réclamation ?</h4>
                     </div>
+                    <canvas id="alreadyChart"></canvas>
                 </div>
+            </div>
 
-                <!-- ROW 2 : mode_reclamation + processus_clair -->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Mode de Réclamation</h4>
-                            </div>
-                            <canvas id="modeChart"></canvas>
-                        </div>
+            <!-- Services Concernés (Bar) -->
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h4><i class="fas fa-building" style="color: green;"></i> Services Concernés</h4>
                     </div>
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Processus Clair ?</h4>
-                            </div>
-                            <canvas id="processChart"></canvas>
-                        </div>
-                    </div>
+                    <canvas id="servicesChart"></canvas>
                 </div>
+            </div>
+        </div>
 
-                <!-- ROW 3 : delai_traitement + Tranche d'âge -->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Délai de Traitement</h4>
-                            </div>
-                            <canvas id="delaiChart"></canvas>
-                        </div>
+        <!-- ROW 2 : mode_reclamation + processus_clair -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h4><i class="fas fa-envelope-open-text" style="color: green;"></i> Mode de Réclamation</h4>
                     </div>
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Tranche d'âge</h4>
-                            </div>
-                            <canvas id="ageChart"></canvas>
-                        </div>
-                    </div>
+                    <canvas id="modeChart"></canvas>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h4><i class="fas fa-check-circle" style="color: green;"></i> Processus Clair ?</h4>
+                    </div>
+                    <canvas id="processChart"></canvas>
+                </div>
+            </div>
+        </div>
 
-                <!-- ROW 4 : Sexe + Localité -->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Répartition par Sexe</h4>
-                            </div>
-                            <canvas id="genderChart"></canvas>
-                        </div>
+        <!-- ROW 3 : delai_traitement + Tranche d'âge -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h4><i class="fas fa-clock" style="color: green;"></i> Délai de Traitement</h4>
                     </div>
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Localité</h4>
-                            </div>
-                            <canvas id="localityChart"></canvas>
-                        </div>
-                    </div>
+                    <canvas id="delaiChart"></canvas>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h4><i class="fas fa-user-clock" style="color: green;"></i> Tranche d'âge</h4>
+                    </div>
+                    <canvas id="ageChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 4 : Sexe + Localité -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h4><i class="fas fa-venus-mars" style="color: green;"></i> Répartition par Sexe</h4>
+                    </div>
+                    <canvas id="genderChart"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h4><i class="fas fa-map-marker-alt" style="color: green;"></i> Localité</h4>
+                    </div>
+                    <canvas id="localityChart"></canvas>
+                </div>
+            </div>
+        </div>
 
                 <!-- TABLEAU DE SYNTHÈSE -->
               <!-- TABLEAU DE SYNTHÈSE
@@ -333,7 +337,7 @@
         </div><!-- end container -->
         <h3 class="text-center mt-5">💬 Suggestions des Participants</h3>
 <div id="suggestionsContainer" class="mx-auto"
-     style="max-width: 600px; min-height: 150px;
+     style="max-width: 600px; min-height: 250px;
             background: #fff; border-radius: 12px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             margin-bottom: 30px; padding: 20px;
@@ -378,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <footer class="footer">
             <div class="container-fluid d-flex justify-content-center">
                 <div class="copyright text-center">
-                    © 2024 Copyright MFPRSP
+                    © 2025 Copyright MFPRSP/DSI/D2I
                 </div>
             </div>
         </footer>

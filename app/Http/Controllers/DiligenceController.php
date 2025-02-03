@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Diligence;
@@ -12,21 +13,22 @@ class DiligenceController extends Controller
             ->select('tranche_age', 'sexe', 'pays_diaspora', 'procedures_longues', 'formalites_complexes', 'suggestions_delai', 'suggestions_formalites')
             ->get();
 
-        // Initialiser les compteurs et les suggestions
-        $ageGroups = [];
-        $genderCount = ['Masculin' => 0, 'Féminin' => 0];
-        $localityCount = ['Sénégal' => 0, 'Diaspora' => 0];
-        $complexityCount = [
-            'Procédures Longues' => 0,
-            'Procédures Courtes' => 0,
-            'Formalités Complexes' => 0,
-            'Formalités Simples' => 0,
-        ];
+        // Initialiser les compteurs
+        $ageGroups    = [];
+        $genderCount  = ['Masculin' => 0, 'Féminin' => 0];
+        $localityCount= ['Sénégal' => 0, 'Diaspora' => 0];
+
+        // Au lieu d’un tableau global, on sépare :
+        $proceduresLongues = 0;
+        $proceduresCourtes = 0;
+        $formalitesComplexes = 0;
+        $formalitesSimples   = 0;
+
         $suggestions = [];
 
         // Parcourir les enregistrements
         foreach ($services as $row) {
-            // Répartition par âge
+            // Tranche d’âge
             $age = trim($row->tranche_age);
             if ($age) {
                 if (!isset($ageGroups[$age])) {
@@ -35,13 +37,13 @@ class DiligenceController extends Controller
                 $ageGroups[$age]++;
             }
 
-            // Répartition par sexe
+            // Sexe
             $gender = ucfirst(strtolower(trim($row->sexe)));
             if ($gender === "Masculin" || $gender === "Féminin") {
                 $genderCount[$gender]++;
             }
 
-            // Répartition par localité
+            // Localité
             $isDiaspora = !empty($row->pays_diaspora);
             if ($isDiaspora) {
                 $localityCount['Diaspora']++;
@@ -49,20 +51,21 @@ class DiligenceController extends Controller
                 $localityCount['Sénégal']++;
             }
 
-            // Répartition par complexité
+            // Procédures longues / courtes
             if ($row->procedures_longues) {
-                $complexityCount['Procédures Longues']++;
+                $proceduresLongues++;
             } else {
-                $complexityCount['Procédures Courtes']++;
+                $proceduresCourtes++;
             }
 
+            // Formalités complexes / simples
             if ($row->formalites_complexes) {
-                $complexityCount['Formalités Complexes']++;
+                $formalitesComplexes++;
             } else {
-                $complexityCount['Formalités Simples']++;
+                $formalitesSimples++;
             }
 
-            // 🔹 Ajout des suggestions
+            // Suggestions (delai, formalites)
             if (!empty(trim($row->suggestions_delai))) {
                 $suggestions[] = trim($row->suggestions_delai);
             }
@@ -71,32 +74,38 @@ class DiligenceController extends Controller
             }
         }
 
-        // Nettoyage des suggestions (supprimer valeurs vides & doublons)
-        $suggestions = array_filter($suggestions, function ($value) {
-            return !empty($value);
-        });
+        // Nettoyage des suggestions
+        $suggestions = array_filter($suggestions, fn($val) => !empty($val));
         $suggestions = array_unique($suggestions);
         $suggestions = array_values($suggestions); // Réindexation
 
-        // 🔍 Vérification avec dd()
-        // dd($suggestions); // Activer pour vérifier si des suggestions existent bien
-
         // Préparer les données pour les graphiques
-        $ageLabels = array_keys($ageGroups);
-        $ageData = array_values($ageGroups);
-        $genderLabels = array_keys($genderCount);
-        $genderData = array_values($genderCount);
-        $localityLabels = array_keys($localityCount);
-        $localityData = array_values($localityCount);
-        $complexityLabels = array_keys($complexityCount);
-        $complexityData = array_values($complexityCount);
+        $ageLabels    = array_keys($ageGroups);
+        $ageData      = array_values($ageGroups);
 
-        // Retourner la vue avec les suggestions
+        $genderLabels = array_keys($genderCount);
+        $genderData   = array_values($genderCount);
+
+        $localityLabels = array_keys($localityCount);
+        $localityData   = array_values($localityCount);
+
+        // Procédures
+        $proceduresLabels = ["Procédures Longues","Procédures Courtes"];
+        $proceduresData   = [$proceduresLongues, $proceduresCourtes];
+
+        // Formalités
+        $formalitesLabels = ["Formalités Complexes","Formalités Simples"];
+        $formalitesData   = [$formalitesComplexes, $formalitesSimples];
+
+        // Retourner la vue
         return view('frontend.admin.diligence', compact(
-            'ageLabels', 'ageData',
-            'genderLabels', 'genderData',
-            'localityLabels', 'localityData',
-            'complexityLabels', 'complexityData',
+            'ageLabels','ageData',
+            'genderLabels','genderData',
+            'localityLabels','localityData',
+
+            'proceduresLabels','proceduresData',
+            'formalitesLabels','formalitesData',
+
             'suggestions'
         ));
     }

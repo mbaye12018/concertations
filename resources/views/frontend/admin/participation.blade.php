@@ -94,7 +94,28 @@
 h2 i {
     color: #000; /* Icône en noir aussi */
 }
-
+.btn-choose-theme {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 24px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .btn-choose-theme:hover {
+        background-color: #0056B3;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+      .btn-choose-theme:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
     </style>
 </head>
 <body>
@@ -103,7 +124,9 @@ h2 i {
         <div class="sidebar-logo">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
-            <h6 style="color:white">Concertations nationales</h6>
+            <h6 style="color:white"><i class="fas fa-comments" style="color:green"></i>Concertations nationales</h6>
+
+
                 <div class="nav-toggle">
                     <button class="btn btn-toggle toggle-sidebar">
                         <i class="gg-menu-right"></i>
@@ -162,6 +185,7 @@ h2 i {
 
     <div class="main-panel">
     <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+
                 <div class="container-fluid">
                     <span class="op-7">Bienvenue,</span>
                     <span class="fw-bold">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</span>
@@ -185,11 +209,14 @@ h2 i {
 
             </nav>
         <div class="container">
+        <a href="{{ route('admin.dashboard') }}" class="btn-choose-theme">
+            <span class="btn-text"><i class="fas fa-palette" style="color: green;"></i> Choisir un autre thème</span>
+        </a>
 
             <div class="page-inner pt-3">
             <h2 class="text-center text-dark mb-4">
-    <i class="fas fa-users"></i> Participation Citoyenne
-</h2>
+                    <i class="fas fa-users"></i> Participation Citoyenne  </h2>
+
 
 
                 <div class="row">
@@ -197,7 +224,8 @@ h2 i {
                     <div class="col-md-6">
                         <div class="chart-container">
                             <div class="chart-header">
-                                <h4>Satisfaction du niveau de Participation des citoyens</h4>
+                            <h4 style="color:black"><i class="fas fa-thumbs-up"></i> Satisfaction du niveau de Participation des citoyens</h4>
+
                             </div>
                             <canvas id="satisfactionChart"></canvas>
                         </div>
@@ -207,7 +235,8 @@ h2 i {
                     <div class="col-md-6">
                         <div class="chart-container">
                             <div class="chart-header">
-                                <h4>sont- ils  informés des réformes des services publics dans leur région ?</h4>
+                            <h4 style="color:black"><i class="fas fa-info-circle"></i> Sont-ils informés des réformes des services publics dans leur région ?</h4>
+
                             </div>
                             <canvas id="infoChart"></canvas>
                         </div>
@@ -219,70 +248,80 @@ h2 i {
                     <div class="col-md-6">
                         <div class="chart-container">
                             <div class="chart-header">
-                                <h4>Pensent-ils  que l’utilisation de plateformes numériques facilite la participation ?</h4>
+                            <h4 style="color:black"><i class="fas fa-laptop"></i> Pensent-ils que l’utilisation de plateformes numériques facilite la participation </h4>
+
                             </div>
                             <canvas id="faciliteChart"></canvas>
                         </div>
                     </div>
 
-                    <!-- Impact réel -->
-                    <div class="col-md-6">
+                     <!-- Répartition par Âge -->
+                     <div class="col-md-6">
                         <div class="chart-container">
                             <div class="chart-header">
-                                <h4>Impact Réel (Oui/Non)</h4>
-                            </div>
-                            <canvas id="impactChart"></canvas>
-                        </div>
-                    </div>
-                </div>
+                            <h4 style="color:black"><i class="fas fa-users"></i> Tranche d'Âge ayant participé à cette thématique</h4>
 
-                <div class="row">
-                    <!-- Répartition par Âge -->
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Tranche d'Âge ayant participé à cette thématique</h4>
                             </div>
                             <canvas id="ageChart"></canvas>
                         </div>
                     </div>
-
-                    <!-- Répartition par Sexe / Localité -->
+                </div>
+                <div class="row">
+                    <!-- Facilité numérique -->
                     <div class="col-md-6">
-                        <div class="chart-container" style="height: 200px;">
+                    <div class="chart-container" >
                             <div class="chart-header">
-                                <h4>Répartition de ces participants par Sexe</h4>
+                            <h4 style="color:black"><i class="fas fa-venus-mars"></i> Répartition de ces participants par Sexe</h4>
+
                             </div>
                             <canvas id="genderChart"></canvas>
                         </div>
+                    </div>
 
-                        <div class="chart-container" style="height: 200px;">
+                     <!-- Répartition par Âge -->
+                     <div class="col-md-6">
+                     <div class="chart-container" >
                             <div class="chart-header">
-                                <h4>Répartition de ces participants par Localité</h4>
+                                <h4 style="color:black"><i class="fas fa-map-marker-alt"></i> Répartition de ces participants par Localité</h4>
+
                             </div>
                             <canvas id="localityChart"></canvas>
                         </div>
                     </div>
                 </div>
 
+
+                </div>
+
                     <!-- SECTION SUGGESTIONS -->
-<div class="suggestions-container" id="suggestionsContainer">
-    <h4><i class="fas fa-users"></i> Leurs Suggestions pour une Meilleure Inclusion Citoyenne</h4>
+                    <div class="suggestions-container" id="suggestionsContainer">
+    <h4 style="color:black"><i class="fas fa-users"></i> Leurs Suggestions pour une Meilleure Inclusion Citoyenne</h4>
     <button id="prevBtn" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
     <p id="suggestionText"></p>
     <button id="nextBtn" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
 </div>
+<h1></h1>
+<h5><footer class="footer">
+          <div class="container-fluid d-flex justify-content-center">
+            <div class="copyright text-center">
+              © 2025 Copyright MFPRSP/DSI/D2I
+            </div>
+          </div>
+        </footer></h5>
 
 
             </div>
+
         </div>
     </div>
+
 </div>
+
 <style>
     .suggestions-container {
     position: relative;
     text-align: center;
-    padding: 20px;
+    padding: 60px;
     background-color: #f8f9fa;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -327,12 +366,15 @@ h4 i {
 }
 
 </style>
+
+
 <!-- jQuery + Bootstrap + Chart.js + KaiAdmin -->
 <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
 <script src="../assets/js/core/popper.min.js"></script>
 <script src="../assets/js/core/bootstrap.min.js"></script>
 <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
 <script src="../assets/js/kaiadmin.min.js"></script>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -350,7 +392,7 @@ document.addEventListener('DOMContentLoaded', function() {
         options: {
             responsive: true,
             layout: {
-          padding: 30
+          padding: 10
           },
             scales: { y: { beginAtZero: true } }
         }
@@ -387,28 +429,11 @@ document.addEventListener('DOMContentLoaded', function() {
         options: {
             responsive: true,
             layout: {
-          padding: 30
+          padding: 10
           },
         }
     });
 
-    // 4) Impact Réel
-    new Chart(document.getElementById('impactChart'), {
-        type: 'pie',
-        data: {
-            labels: @json($impactLabels),
-            datasets: [{
-                data: @json($impactData),
-                backgroundColor: ["#34495e","#95a5a6"]
-            }]
-        },
-        options: {
-            responsive: true,
-            layout: {
-          padding: 30
-          },
-        }
-    });
 
     // 5) Tranche d'Âge
     new Chart(document.getElementById('ageChart'), {
@@ -424,7 +449,7 @@ document.addEventListener('DOMContentLoaded', function() {
         options: {
             responsive: true,
             layout: {
-          padding: 30
+          padding: 10
           },
             scales: { y: { beginAtZero: true } }
         }
@@ -443,7 +468,7 @@ document.addEventListener('DOMContentLoaded', function() {
         options: {
             responsive: true,
             layout: {
-          padding: 30
+          padding: 10
           },
         }
     });
@@ -521,5 +546,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
 </body>
 </html>

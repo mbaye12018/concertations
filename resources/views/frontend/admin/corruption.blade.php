@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Concertation nationale - Corruption</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
-    <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="../assets/img/logg.png" type="image/x-icon"/>
 
     <!-- FontAwesome + Webfont -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -209,63 +209,64 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <h2 class="text-center text-primary mb-4">Corruption</h2>
+                            <h2 class="text-center text-primary mb-4">
+    <i class="fas fa-hand-holding-usd" style="color: red;"></i> Corruption
+</h2>
 
-                                <!-- Row 1 : Gravité (Bar) + Corruption existante (Doughnut) -->
-                                <div class="row">
-                                    <div class="col-md-6">
-                                    <a href="{{ route('admin.dashboard') }}" class="btn-choose-theme">
-                        <span class="btn-text">Choisir un autre thème</span>
-                      </a>
-                                        <div class="chart-container">
-                                            <div class="chart-header">
-                                                <h4>Niveau de Gravité</h4>
-                                            </div>
-                                            <canvas id="graviteChart"></canvas>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="chart-container">
-                                            <div class="chart-header">
-                                                <h4>Corruption Existante</h4>
-                                            </div>
-                                            <canvas id="existChart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
+<!-- Row 1 : Gravité (Bar) + Corruption existante (Doughnut) -->
+<div class="row">
+    <div class="col-md-6">
+        <a href="{{ route('admin.dashboard') }}" class="btn-choose-theme">
+            <span class="btn-text">Choisir un autre thème</span>
+        </a>
+        <div class="chart-container">
+            <div class="chart-header">
+                <h4><i class="fas fa-exclamation-triangle" style="color: red;"></i> Niveau de Gravité</h4>
+            </div>
+            <canvas id="graviteChart"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="chart-container">
+            <div class="chart-header">
+                <h4><i class="fas fa-balance-scale-left" style="color: red;"></i> Pensez-vous que la corruption est une réalité dans les services publics de votre région ?</h4>
+            </div>
+            <canvas id="existChart"></canvas>
+        </div>
+    </div>
+</div>
 
-                                <!-- Row 2 : Sexe (Pie) + Âge (Bar) -->
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="chart-container">
-                                            <div class="chart-header">
-                                                <h4>Répartition par Sexe</h4>
-                                            </div>
-                                            <canvas id="genderChart"></canvas>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="chart-container">
-                                            <div class="chart-header">
-                                                <h4>Tranche d'Âge</h4>
-                                            </div>
-                                            <canvas id="ageChart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
+<!-- Row 2 : Sexe (Pie) + Âge (Bar) -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="chart-container">
+            <div class="chart-header">
+                <h4><i class="fas fa-venus-mars" style="color: red;"></i> Répartition par Sexe</h4>
+            </div>
+            <canvas id="genderChart"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="chart-container">
+            <div class="chart-header">
+                <h4><i class="fas fa-user-clock" style="color: red;"></i> Tranche d'Âge</h4>
+            </div>
+            <canvas id="ageChart"></canvas>
+        </div>
+    </div>
+</div>
 
-                                <!-- Row 3 : Localité (Pie) -->
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="chart-container">
-                                            <div class="chart-header">
-                                                <h4>Répartition par Localité</h4>
-                                            </div>
-                                            <canvas id="localityChart"></canvas>
-                                        </div>
-                                    </div>
-                                    <!-- Vous pouvez ajouter un autre bloc si vous avez un 6-col, par ex. un top 5 suggestions -->
-                                </div>
+<!-- Row 3 : Localité (Pie) -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="chart-container">
+            <div class="chart-header">
+                <h4><i class="fas fa-map-marker-alt" style="color: red;"></i> Répartition par Localité</h4>
+            </div>
+            <canvas id="localityChart"></canvas>
+        </div>
+    </div>
+</div>
 
                                 <!-- TABLEAU DE SYNTHÈSE : types de corruption
                                 <h3 class="text-center mt-4">Synthèse par Type de Corruption</h3>
@@ -310,7 +311,7 @@
                                 <!-- Fin tableau --><!-- SECTION SUGGESTIONS -->
 <h3 class="text-center mt-5">🛡️ Suggestions pour Renforcer l'Intégrité</h3>
 <div id="suggestionsContainer" class="mx-auto"
-     style="max-width: 600px; min-height: 150px;
+     style="max-width: 600px; min-height: 250px;
             background: #fff; border-radius: 12px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             margin-bottom: 30px; padding: 20px;
@@ -353,7 +354,13 @@ document.addEventListener('DOMContentLoaded', function() {
     showSuggestion(currentIndex);
 });
 </script>
-
+<footer class="footer">
+            <div class="container-fluid d-flex justify-content-center">
+                <div class="copyright text-center">
+                    © 2025 MFPRSP/DSI/D2I
+                </div>
+            </div>
+        </footer>
 
                             </div> <!-- end card-body -->
                         </div> <!-- end card -->
@@ -414,7 +421,7 @@ document.addEventListener("DOMContentLoaded", function() {
             responsive: true,
             maintainAspectRatio: false,
             layout: {
-          padding: 30
+          padding: 55
           },
             plugins: {
                 legend: { position: 'bottom' }

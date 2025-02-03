@@ -5,8 +5,6 @@
     <title>Ressources Humaines - Statistiques</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
     <link rel="icon" href="../assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
-
-    <!-- Font Awesome + Webfont -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
@@ -21,8 +19,6 @@
         },
       });
     </script>
-
-    <!-- Bootstrap + Kaiadmin CSS -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../assets/css/plugins.min.css" />
     <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
@@ -46,12 +42,9 @@
             text-align: center;
             margin-bottom: 15px;
         }
-
-
-        /* Carrousel "pourquoi_relations" */
         #relationsContainer {
             max-width: 600px;
-            min-height: 150px;
+            min-height: 250px;
             background: #fff;
             border-radius: 12px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -65,6 +58,7 @@
             text-align: center;
             font-size: 1.1rem;
             color: #555;
+            margin-left:30%;
         }
         #relationText {
             margin: 0;
@@ -81,30 +75,98 @@
         }
         #prevBtn { left: 10px; }
         #nextBtn { right: 10px; }
+        .btn-choose-theme {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 24px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .btn-choose-theme:hover {
+        background-color: #0056B3;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+      .btn-choose-theme:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
     </style>
 </head>
 <body>
 <div class="wrapper">
     <!-- SIDEBAR (optionnel) -->
     <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+            <h6 style="color:white">Concertations nationales</h6>
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar">
+                        <i class="gg-menu-right"></i>
+                    </button>
+                    <button class="btn btn-toggle sidenav-toggler">
+                        <i class="gg-menu-left"></i>
+                    </button>
+                </div>
+                <button class="topbar-toggler more">
+                    <i class="gg-more-vertical-alt"></i>
+                </button>
+            </div>
+            <!-- End Logo Header -->
+        </div>
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
             <div class="sidebar-content">
-                <!-- Menu ou autres éléments -->
                 <ul class="nav nav-secondary">
                     <li class="nav-item active">
-                        <a href="#">
+                        <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
                             <i class="fas fa-home"></i>
                             <p>Accueil</p>
                         </a>
+                    </li><!-- End Logo Header
+                    <li class="nav-item">
+                        <a href="{{ route('utilisateur.create') }}">
+                            <i class="fas fa-user"></i>
+                            <p>Utilisateur</p>
+                        </a>
                     </li>
-                    <!-- Autres liens du menu -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('statistique.statistique') }}">
+                            <i class="far fa-chart-bar"></i>
+                            <p>Statistique</p>
+                        </a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a href="#">
+                            <i class="fas fa-user"></i>
+                            <p>Utilisateur</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="far fa-chart-bar"></i>
+                            <p>Statistique</p>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
     <!-- END SIDEBAR -->
 
-    <!-- NAVBAR HEADER (optionnel) -->
+
+
+
+    <div class="main-panel">
+
+    <div class="container">
+         <!-- NAVBAR HEADER (optionnel) -->
     <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
         <div class="container-fluid">
             <span class="op-7">Bienvenue,</span>
@@ -127,107 +189,110 @@
             </ul>
         </div>
     </nav>
-    <!-- END NAVBAR HEADER -->
+        <div class="page-inner pt-3">
+        <a href="{{ route('admin.dashboard') }}" class="btn-choose-theme">
+            <span class="btn-text"><i class="fas fa-palette" style="color: green;"></i> Choisir un autre thème</span>
+        </a>
+            <!-- Titre principal -->
+            <h2 class="text-center mb-4" style="color: black;">
+                <i class="fas fa-users" style="color: green;"></i> Ressources Humaines
+            </h2>
 
-    <div class="main-panel">
-        <div class="container">
-            <div class="page-inner pt-3">
-                <h2 class="text-center text-primary mb-4">Ressources Humaines</h2>
-
-                <!-- ROW 1 : Avis sur les Relations / Information Claire -->
-                <div class="row">
-                    <!-- Avis sur les Relations -->
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Avis sur les Relations Agents/Usagers</h4>
-                            </div>
-                            <canvas id="avisRelationsChart"></canvas>
+            <!-- ROW 1 : Clarté de l'Information / Esprit Collaboratif -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h4 style="color: black;">
+                                <i class="fas fa-info-circle" style="color: green;"></i> Les agents publics fournissent-ils des informations claires,complétes et précises ?
+                            </h4>
                         </div>
-                    </div>
-                    <!-- Information Claire -->
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Clarté de l'Information</h4>
-                            </div>
-                            <canvas id="infoClaireChart"></canvas>
-                        </div>
+                        <canvas id="infoClaireChart"></canvas>
                     </div>
                 </div>
-
-                <!-- ROW 2 : Esprit Collaboratif / Compétence Agents -->
-                <div class="row">
-                    <!-- Esprit Collaboratif -->
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Esprit Collaboratif</h4>
-                            </div>
-                            <canvas id="espritCollaboratifChart"></canvas>
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h4 style="color: black;">
+                                <i class="fas fa-handshake" style="color: green;"></i> Pensez-vous que les agents publics ont l'esprit collaboratif ?
+                            </h4>
                         </div>
+                        <canvas id="espritCollaboratifChart"></canvas>
                     </div>
-                    <!-- Compétence des Agents -->
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Compétence des Agents</h4>
-                            </div>
-                            <canvas id="competenceAgentsChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ROW 3 : Tranche d'Âge / Sexe + Localité -->
-                <div class="row">
-                    <!-- Tranche d'âge -->
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <div class="chart-header">
-                                <h4>Tranche d'Âge</h4>
-                            </div>
-                            <canvas id="ageChart"></canvas>
-                        </div>
-                    </div>
-                    <!-- Sexe et Localité (2 mini-charts côte à côte) -->
-                    <div class="col-md-6">
-                        <div class="chart-container" style="height: 200px;">
-                            <div class="chart-header">
-                                <h4>Répartition par Sexe</h4>
-                            </div>
-                            <canvas id="genderChart"></canvas>
-                        </div>
-
-                        <div class="chart-container" style="height: 200px;">
-                            <div class="chart-header">
-                                <h4>Répartition par Localité</h4>
-                            </div>
-                            <canvas id="localityChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SECTION COMMENTAIRES SUR LES RELATIONS AGENTS / USAGERS -->
-                <h3 class="text-center mt-5">🗣️ Avis des Utilisateurs sur les Relations Agents/Usagers</h3>
-                <div id="relationsContainer">
-                    <button id="prevBtn" class="nav-btn">❮</button>
-                    <p id="relationText"></p>
-                    <button id="nextBtn" class="nav-btn">❯</button>
-                </div>
-
-            </div> <!-- end page-inner -->
-        </div> <!-- end container -->
-
-        <!-- FOOTER -->
-        <footer class="footer mt-4">
-            <div class="container-fluid d-flex justify-content-center">
-                <div class="copyright text-center">
-                    © 2024 Copyright MFPRSP
                 </div>
             </div>
-        </footer>
-        <!-- END FOOTER -->
-    </div> <!-- end main-panel -->
+
+            <!-- ROW 2 : Compétence des Agents / Tranche d'Âge -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h4 style="color: black;">
+                                <i class="fas fa-user-tie" style="color: green;"></i>
+Pensez-vous que les compétences des agents publics sont en phase avec les attentes des usagers ?
+                            </h4>
+                        </div>
+                        <canvas id="competenceAgentsChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h4 style="color: black;">
+                                <i class="fas fa-chart-bar" style="color: green;"></i> Tranche d'Âge
+                            </h4>
+                        </div>
+                        <canvas id="ageChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 3 : Répartition par Sexe / Localité -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="chart-container" >
+                        <div class="chart-header">
+                            <h4 style="color: black;">
+                                <i class="fas fa-venus-mars" style="color: green;"></i> Répartition par Sexe
+                            </h4>
+                        </div>
+                        <canvas id="genderChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="chart-container" >
+                        <div class="chart-header">
+                            <h4 style="color: black;">
+                                <i class="fas fa-map-marker-alt" style="color: green;"></i> Répartition par Localité
+                            </h4>
+                        </div>
+                        <canvas id="localityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION COMMENTAIRES SUR LES RELATIONS AGENTS / USAGERS -->
+            <h3 class="text-center mt-5" style="color: black;">
+                🗣️ <i class="fas fa-comments" style="color: green;"></i> Avis des Utilisateurs sur les Relations Agents/Usagers
+            </h3>
+            <div id="relationsContainer">
+                <button id="prevBtn" class="nav-btn">❮</button>
+                <p id="relationText"></p>
+                <button id="nextBtn" class="nav-btn">❯</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer mt-4">
+        <div class="container-fluid d-flex justify-content-center">
+            <div class="copyright text-center">
+                © 2025 Copyright MFPRSP/DSI/D2I
+            </div>
+        </div>
+    </footer>
+</div>
+ <!-- end main-panel -->
 </div> <!-- end wrapper -->
 
 <!-- jQuery + Bootstrap + Chart.js -->
@@ -241,25 +306,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    // 1) Avis sur les Relations
-    new Chart(document.getElementById('avisRelationsChart'), {
-        type: 'bar',
-        data: {
-            labels: @json($avisRelationsLabels),
-            datasets: [{
-                label: "Avis sur les Relations",
-                data: @json($avisRelationsData),
-                backgroundColor: "#2ecc71"
-            }]
-        },
-        options: {
-            responsive: true,
-            layout: {
-          padding: 30
-          },
-            scales: { y: { beginAtZero: true } }
-        }
-    });
+
 
     // 2) Clarté de l'Information
     new Chart(document.getElementById('infoClaireChart'), {
@@ -370,8 +417,6 @@ document.addEventListener('DOMContentLoaded', function() {
           },
         }
     });
-
-    // --- Carrousel "pourquoi_relations" ---
     const relations = @json($pourquoiRelations);
 
     const relationText = document.getElementById('relationText');
